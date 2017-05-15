@@ -1,0 +1,95 @@
+@startuml
+autonumber
+' participant root as root
+start->root:StartSystem
+root->root: Create workers/s
+participant Validator as FileValidator
+participant WebChecker
+participant DataDispatcher
+participant DataDistributor
+participant FlowControl 
+participant WebCrawler
+
+root->FileValidator:Validate
+
+participant  FileReader as FileReader
+FileValidator->FileReader:CheckInputFile
+
+alt successful case
+  FileValidator<--FileReader:    FileValidated
+else file cannot be read
+  FileValidator x-- FileReader: CannotReadInput
+  root x-- FileValidator:CannotReadInput
+  start x-- root:Terminated
+note right
+All error responses are forwarded to root 
+and execution is terminated 
+(will be ommited in next cals for brevity and betterreading)
+end note
+end
+
+FileValidator <-- FileReader: header
+FileValidator -> FileValidator: validate header using regex
+
+participant  FileWriter as FileWriter
+
+FileValidator -> FileWriter:    CreateFile
+FileValidator <-- FileWriter:    FileCreated
+FileValidator -> FileWriter:    WriteHeader
+FileValidator <-- FileWriter:    Succes
+FileValidator -> WebChecker:CheckNetwork
+FileValidator <-- WebChecker:NetworkOK
+
+
+root<--FileValidator:AllChecksOK
+
+
+root -> DataDispatcher:StartProcessing
+
+
+== Repetition Until EOF ==
+DataDispatcher <-[#0000FF]-  FlowControl : GetNextChunk
+
+note left
+Flow control actor will count number of csv lines in every process state.
+This is a main thortle for the process
+end note
+
+DataDispatcher -> FileReader : ReadLines
+DataDispatcher <-- FileReader : Lines
+DataDispatcher -[#0000FF]->  FlowControl : NumberLinesRead
+DataDispatcher -> DataDispatcher:ValidateLine
+
+alt successful case
+DataDispatcher -> WebCrawler:GetData
+DataDispatcher -[#0000FF]->  FlowControl : ValidLineSentToCrawler
+else line Invalid
+DataDispatcher ->DataDispatcher :log error
+DataDispatcher -[#0000FF]->  FlowControl : InvalidLineSkipped
+end
+DataDispatcher -> DataDispatcher:GetNextLine
+
+alt successful case
+WebCrawler->FileWriter:Response
+WebCrawler -[#0000FF]->  FlowControl : GotValidResponse
+else cannot get data
+WebCrawler->WebCrawler:SetStatusAsError
+WebCrawler->FileWriter:Response
+WebCrawler -[#0000FF]->  FlowControl : GotNotValidResponse
+end
+
+
+FileWriter->FileWriter:timerMessage
+note left
+on timer message we are persisting received
+information on disk
+end note
+FileWriter -[#0000FF]->  FlowControl : #LinesSavedToDisk
+
+== Repetition END ==
+
+root <-- DataDispatcher: Process Finished
+root ->  FileWriter:Flush Buffer
+root x- root:terminate
+
+@enduml

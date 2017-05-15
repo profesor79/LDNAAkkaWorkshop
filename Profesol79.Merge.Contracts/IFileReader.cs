@@ -1,0 +1,42 @@
+﻿//  --------------------------------------------------------------------------------------------------------------------
+// <copyright company="WPE" file="IFileReader.cs">
+// Copyright (c) 2017 All Right Reserved
+// THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
+// KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
+// PARTICULAR PURPOSE.
+// </copyright>
+// <summary>
+// Created: 2017-04-15, 1:44 AM
+// Last changed by: profesor79, 2017-04-27, 4:04 PM 
+// </summary>
+//   --------------------------------------------------------------------------------------------------------------------
+
+namespace Profesor79.Merge.Contracts
+{
+    using System.Collections.Generic;
+
+    /// <summary>The FileReader interface.</summary>
+    public interface IFileReader
+    {
+        /// <summary>The can we read file.</summary>
+        /// <param name="fileName">The file name.</param>
+        /// <returns>The <see cref="bool"/>.</returns>
+        bool CanWeReadFile(string fileName);
+
+        /// <summary>The read all.</summary>
+        /// <param name="fileName">The file name.</param>
+        /// <returns>The <see cref="string"/>.</returns>
+        string ReadAll(string fileName);
+
+        /// <summary>The read first line.</summary>
+        /// <param name="fileName">The file name.</param>
+        /// <returns>The <see cref="string"/>.</returns>
+        string ReadFirstLine(string fileName);
+
+        /// <summary>The read lines.</summary>
+        /// <param name="howMany">The how many.</param>
+        /// <returns>The <see cref="List"/>.</returns>
+        List<string> ReadLines(uint howMany);
+    }
+}
