@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Profesor79.Merge.Consoler</RootNamespace>
-    <AssemblyName>wpe_merge</AssemblyName>
+    <AssemblyName>Profesor79.Merge.Consoler</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
