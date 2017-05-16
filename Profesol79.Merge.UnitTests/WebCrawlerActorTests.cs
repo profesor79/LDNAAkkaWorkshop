@@ -1,5 +1,5 @@
 ﻿//  --------------------------------------------------------------------------------------------------------------------
-// <copyright company="WPE" file="WebCrawlerActorTests.cs">
+// <copyright company="profesor79" file="WebCrawlerActorTests.cs">
 // Copyright (c) 2017 All Right Reserved
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
