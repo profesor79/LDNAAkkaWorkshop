@@ -1,0 +1,80 @@
+@startuml
+
+start
+partition "System Check" {
+:Validate arguments;
+        if (do we have two file paths?) then (true)  
+      else (false)
+        stop
+    endif
+:CreateActorSystem;
+
+partition "Perform file/network checks" {
+  fork
+    :Input file\nand header;
+   if (file exists and is accesible?) then (true)
+        if (file header matches?) then (true)  
+      else (false)
+        stop
+    endif
+       :Send OK;
+      else (invalid)
+        stop
+    endif
+  fork again
+    :Create output file\nwrite heahder;
+   if (can create output file?) then (true)
+        if (can write header?) then (true)  
+      else (false)
+        stop
+    endif
+       :Send OK;
+      else (false)
+        stop
+    endif
+
+  fork again
+    :Check if api\nis accesible ;
+        if (can connect to api?) then (true)  
+      else (false)
+        stop
+    endif
+  end fork
+}
+}
+partition "Process file"  {
+
+:Read file in chunks;
+        if (can read input file?) then (true)  
+      else (false)
+        stop
+    endif
+
+ repeat
+
+partition Multithread {
+ fork
+repeat
+:Worker process\nGetApiData;
+repeat while (can get api data)
+:"Worker process\nGetApiData";
+  end fork
+}
+
+repeat while (more data?)
+:Write to output file;
+        if (can write to output file?) then (true)  
+      else (false)
+        stop
+    endif
+
+}
+
+:Exit 0 (succes);
+
+stop
+
+
+
+
+@enduml
