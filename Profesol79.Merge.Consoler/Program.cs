@@ -1,5 +1,5 @@
 ﻿//  --------------------------------------------------------------------------------------------------------------------
-// <copyright company="WPE"git file="Program.cs">
+// <copyright company="WPE" file="Program.cs">
 // Copyright (c) 2017 All Right Reserved
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
@@ -8,7 +8,7 @@
 // </copyright>
 // <summary>
 // Created: 2017-05-15, 2:37 PM
-// Last changed by: A happy WPE candidate, 2017-05-16, 10:41 AM 
+// Last changed by: A happy WPE candidate, 2017-05-16, 10:48 AM 
 // </summary>
 //   --------------------------------------------------------------------------------------------------------------------
 
@@ -69,7 +69,7 @@ namespace Profesor79.Merge.Consoler
             Console.WriteLine("Press enter to close");
             Console.ReadLine();
 #endif
-            logger.Info("Stopping WP MERGE.");
+            logger.Info("Stopping....");
             logger.Info("Stopped WP MERGE.");
             return 0;
         }

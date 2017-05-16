@@ -1,5 +1,5 @@
 ﻿//  --------------------------------------------------------------------------------------------------------------------
-// <copyright company="profesor79" file="DataDistributorActorTests.cs">
+// <copyright company="WPE" file="DataDistributorActorTests.cs">
 // Copyright (c) 2017 All Right Reserved
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
@@ -7,8 +7,8 @@
 // PARTICULAR PURPOSE.
 // </copyright>
 // <summary>
-// Created: 2017-04-26, 5:10 PM
-// Last changed by: profesor79, 2017-04-27, 4:04 PM 
+// Created: 2017-05-15, 2:37 PM
+// Last changed by: A happy WPE candidate, 2017-05-16, 10:47 AM 
 // </summary>
 //   --------------------------------------------------------------------------------------------------------------------
 
@@ -21,11 +21,11 @@ namespace Profesor79.Merge.UnitTests
 
     using NUnit.Framework;
 
-    using Should;
-
     using Profesor79.Merge.ActorSystem.FileReader;
     using Profesor79.Merge.ActorSystem.RootActor;
     using Profesor79.Merge.ActorSystem.WebCrawler;
+
+    using Should;
 
     /// <summary>The data distributor actor tests.</summary>
     public class DataDistributorActorTests : BaseActorTestClass
@@ -58,13 +58,7 @@ namespace Profesor79.Merge.UnitTests
             _sut.Tell(new FileMessages.FileLines(line));
 
             // assert
-            _testProbe.ExpectMsg<CrawlerMessages.GetData>(
-                a =>
-                    {
-                        a.MergeObject.DataId.ShouldEqual(918293);
-
-                    },
-                TimeSpan.FromSeconds(1));
+            _testProbe.ExpectMsg<CrawlerMessages.GetData>(a => { a.MergeObject.DataId.ShouldEqual(918293); }, TimeSpan.FromSeconds(1));
 
             _testProbe.ExpectMsg<FlowControlMessages.ValidLine>(TimeSpan.FromSeconds(1));
         }
@@ -97,12 +91,7 @@ namespace Profesor79.Merge.UnitTests
             _sut.Tell(new FileMessages.FileLines(line));
 
             // assert
-            _testProbe.ExpectMsg<CrawlerMessages.GetData>(
-                a =>
-                    {
-                        a.MergeObject.DataId.ShouldEqual(918293);
-                    },
-                TimeSpan.FromSeconds(1));
+            _testProbe.ExpectMsg<CrawlerMessages.GetData>(a => { a.MergeObject.DataId.ShouldEqual(918293); }, TimeSpan.FromSeconds(1));
             _testProbe.ExpectMsg<FlowControlMessages.ValidLine>(TimeSpan.FromSeconds(1));
         }
 

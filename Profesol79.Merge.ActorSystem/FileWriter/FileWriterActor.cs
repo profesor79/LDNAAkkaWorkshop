@@ -1,5 +1,5 @@
 ﻿//  --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Profesor79. file="FileWriterActor.cs">
+// <copyright company="WPE" file="FileWriterActor.cs">
 // Copyright (c) 2017 All Right Reserved
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
@@ -7,8 +7,8 @@
 // PARTICULAR PURPOSE.
 // </copyright>
 // <summary>
-// Created: 2017-04-21, 12:20 AM
-// Last changed by: profesor79, 2017-04-27, 4:04 PM 
+// Created: 2017-05-15, 2:37 PM
+// Last changed by: A happy WPE candidate, 2017-05-16, 10:47 AM 
 // </summary>
 //   --------------------------------------------------------------------------------------------------------------------
 
@@ -25,7 +25,6 @@ namespace Profesor79.Merge.ActorSystem.FileWriter
     using Profesor79.Merge.ActorSystem.ValidatorActor;
     using Profesor79.Merge.ActorSystem.WebCrawler;
     using Profesor79.Merge.Contracts;
-
     using Profesor79.Merge.Models;
 
     /// <summary>The file writer actor.</summary>
@@ -34,10 +33,10 @@ namespace Profesor79.Merge.ActorSystem.FileWriter
         /// <summary>The _file writer.</summary>
         private readonly IFileWriter _fileWriter;
 
-        private readonly ISystemConfiguration _systemConfiguration;
-
         /// <summary>The _lines.</summary>
         private readonly List<string> _lines = new List<string>();
+
+        private readonly ISystemConfiguration _systemConfiguration;
 
         /// <summary>The _cancel timer.</summary>
         private ICancelable _cancelTimer;
@@ -69,8 +68,11 @@ namespace Profesor79.Merge.ActorSystem.FileWriter
                         }
                     });
 
-
-            Receive<FileWriterMessages.Timer>(t => { /* swallow */});
+            Receive<FileWriterMessages.Timer>(
+                t =>
+                    {
+                        /* swallow */
+                    });
         }
 
         /// <summary>Gets or sets the stash.</summary>
@@ -98,10 +100,7 @@ namespace Profesor79.Merge.ActorSystem.FileWriter
         {
             // order that we need to save fields
             // Account ID, First Name, Created On, Status, Status Set On
-            _lines.Add(
-                $"{data.DataId},"
-                + $"{data.SaleValue},"
-               );
+            _lines.Add($"{data.DataId}," + $"{data.SaleValue},");
         }
 
         /// <summary>The buffering data.</summary>
@@ -109,13 +108,13 @@ namespace Profesor79.Merge.ActorSystem.FileWriter
         {
             Receive<FileWriterMessages.Timer>(
                 t =>
-                {
-                    if (_lines.Any())
                     {
-                        _log.Info($"Saving {_lines.Count} lines");
-                        SaveLinesToFile();
-                    }
-                });
+                        if (_lines.Any())
+                        {
+                            _log.Info($"Saving {_lines.Count} lines");
+                            SaveLinesToFile();
+                        }
+                    });
 
             Receive<FileWriterMessages.SaveWebResponse>(line => { AddLineToList(line.MergeObjectDto); });
 

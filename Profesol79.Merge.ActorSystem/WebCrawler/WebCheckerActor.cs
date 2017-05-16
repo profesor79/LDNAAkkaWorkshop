@@ -1,5 +1,5 @@
 ﻿//  --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Profesor79. file="WebCheckerActor.cs">
+// <copyright company="WPE" file="WebCheckerActor.cs">
 // Copyright (c) 2017 All Right Reserved
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
@@ -7,8 +7,8 @@
 // PARTICULAR PURPOSE.
 // </copyright>
 // <summary>
-// Created: 2017-04-23, 10:57 PM
-// Last changed by: profesor79, 2017-04-27, 4:04 PM 
+// Created: 2017-05-15, 2:37 PM
+// Last changed by: A happy WPE candidate, 2017-05-16, 10:47 AM 
 // </summary>
 //   --------------------------------------------------------------------------------------------------------------------
 
@@ -38,7 +38,6 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
 
         /// <summary>The _is online.</summary>
         private bool _isOnline;
-
 
         /// <summary>The _reporting actor.</summary>
         private IActorRef _reportingActor;
@@ -89,7 +88,6 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
                     _isOnline = Ping();
                     if (_isOnline)
                     {
-
                         break;
                     }
 
@@ -125,7 +123,7 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
         {
             // the response can be whatever from 200 via 404 to 503 and beyond, but that means there is a link to server
             // if there is a network issue or bad addres then we will get exception here
-            Uri url = new Uri(_systemConfiguration.ApiEndPoint);
+            var url = new Uri(_systemConfiguration.ApiEndPoint);
             var address = url.GetLeftPart(UriPartial.Authority);
 
             var httpResponseMessage = _client.GetAsync(address).Result;

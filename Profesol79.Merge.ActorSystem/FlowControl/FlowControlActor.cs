@@ -1,5 +1,5 @@
 ﻿//  --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Profesor79. file="FlowControlActor.cs">
+// <copyright company="WPE" file="FlowControlActor.cs">
 // Copyright (c) 2017 All Right Reserved
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
@@ -7,8 +7,8 @@
 // PARTICULAR PURPOSE.
 // </copyright>
 // <summary>
-// Created: 2017-04-23, 10:09 PM
-// Last changed by: profesor79, 2017-04-27, 4:04 PM 
+// Created: 2017-05-15, 2:37 PM
+// Last changed by: A happy WPE candidate, 2017-05-16, 10:47 AM 
 // </summary>
 //   --------------------------------------------------------------------------------------------------------------------
 
@@ -84,7 +84,11 @@ namespace Profesor79.Merge.ActorSystem.FlowControl
                         _actorDictionary["DataDispatcherActor"].Tell(new FileMessages.StartProcessing(_actorDictionary));
                     });
 
-            Receive<FlowControlMessages.GetNewLinesForCrawler>(m => { /* swallow that as we are not ready yet */ });
+            Receive<FlowControlMessages.GetNewLinesForCrawler>(
+                m =>
+                    {
+                        /* swallow that as we are not ready yet */
+                    });
         }
 
         /// <summary>The pre start.</summary>

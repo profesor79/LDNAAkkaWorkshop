@@ -1,5 +1,5 @@
 ﻿//  --------------------------------------------------------------------------------------------------------------------
-// <copyright company="profesor79" file="SystemTestingConfiguration.cs">
+// <copyright company="WPE" file="SystemTestingConfiguration.cs">
 // Copyright (c) 2017 All Right Reserved
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
@@ -7,8 +7,8 @@
 // PARTICULAR PURPOSE.
 // </copyright>
 // <summary>
-// Created: 2017-04-18, 9:32 PM
-// Last changed by: profesor79, 2017-04-27, 4:04 PM 
+// Created: 2017-05-15, 2:37 PM
+// Last changed by: A happy WPE candidate, 2017-05-16, 10:48 AM 
 // </summary>
 //   --------------------------------------------------------------------------------------------------------------------
 
@@ -38,7 +38,6 @@ namespace Profesor79.Merge.UnitTests.Mocks
             HttpRetries = 2;
             HttpTimeoutInMiniseconds = 2500;
             OutputFileHeader = "data id,sale";
-
 
             WriteWaitCycleInMiniseconds = 500;
         }

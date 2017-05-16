@@ -1,12 +1,16 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="" file="WebApiResponseDto.cs">
-//   
+﻿//  --------------------------------------------------------------------------------------------------------------------
+// <copyright company="WPE" file="WebApiResponseDto.cs">
+// Copyright (c) 2017 All Right Reserved
+// THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
+// KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
+// PARTICULAR PURPOSE.
 // </copyright>
 // <summary>
-//   Created: 2017-04-18, 10:03 PM
-//   Last changed by: A happy WPE candidate, 2017-05-02, 10:33 AM
+// Created: 2017-05-15, 2:37 PM
+// Last changed by: A happy WPE candidate, 2017-05-16, 10:47 AM 
 // </summary>
-// --------------------------------------------------------------------------------------------------------------------
+//   --------------------------------------------------------------------------------------------------------------------
 
 namespace Profesor79.Merge.Models
 {

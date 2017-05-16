@@ -1,5 +1,5 @@
 ﻿//  --------------------------------------------------------------------------------------------------------------------
-// <copyright company="profesor79" file="WebCrawlerActorTests.cs">
+// <copyright company="WPE" file="WebCrawlerActorTests.cs">
 // Copyright (c) 2017 All Right Reserved
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
@@ -7,8 +7,8 @@
 // PARTICULAR PURPOSE.
 // </copyright>
 // <summary>
-// Created: 2017-04-18, 9:47 PM
-// Last changed by: profesor79, 2017-04-27, 4:04 PM 
+// Created: 2017-05-15, 2:37 PM
+// Last changed by: A happy WPE candidate, 2017-05-16, 10:48 AM 
 // </summary>
 //   --------------------------------------------------------------------------------------------------------------------
 
@@ -21,14 +21,14 @@ namespace Profesor79.Merge.UnitTests
 
     using NUnit.Framework;
 
-    using RichardSzalay.MockHttp;
-
-    using Should;
-
     using Profesor79.Merge.ActorSystem.FileWriter;
     using Profesor79.Merge.ActorSystem.RootActor;
     using Profesor79.Merge.ActorSystem.WebCrawler;
     using Profesor79.Merge.Models;
+
+    using RichardSzalay.MockHttp;
+
+    using Should;
 
     /// <summary>The web crawler actor tests.</summary>
     [TestFixture]
@@ -76,11 +76,11 @@ namespace Profesor79.Merge.UnitTests
             SetupValidResponse();
             var mergeDto = new MergeObjectDto { DataId = 1 };
             var message = new CrawlerMessages.WebApiErrorResponse
-            {
-                MergeObjectDto = mergeDto,
-                url = $"{_systemConfiguration.ApiEndPoint}/1",
-                attempt = 1,
-            };
+                              {
+                                  MergeObjectDto = mergeDto,
+                                  url = $"{_systemConfiguration.ApiEndPoint}/1",
+                                  attempt = 1,
+                              };
 
             // act
             _sut.Tell(message);
@@ -98,11 +98,11 @@ namespace Profesor79.Merge.UnitTests
             SetupInvaldResponse();
             var mergeDto = new MergeObjectDto { DataId = 1 };
             var message = new CrawlerMessages.WebApiErrorResponse
-            {
-                MergeObjectDto = mergeDto,
-                url = $"{_systemConfiguration.ApiEndPoint}/1",
-                attempt = 1,
-            };
+                              {
+                                  MergeObjectDto = mergeDto,
+                                  url = $"{_systemConfiguration.ApiEndPoint}/1",
+                                  attempt = 1,
+                              };
 
             // act
             _sut.Tell(message);

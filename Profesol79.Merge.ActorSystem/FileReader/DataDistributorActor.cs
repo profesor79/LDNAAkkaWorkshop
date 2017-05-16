@@ -1,5 +1,5 @@
 ﻿//  --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Profesor79. file="DataDistributorActor.cs">
+// <copyright company="WPE" file="DataDistributorActor.cs">
 // Copyright (c) 2017 All Right Reserved
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
@@ -7,8 +7,8 @@
 // PARTICULAR PURPOSE.
 // </copyright>
 // <summary>
-// Created: 2017-04-25, 11:30 PM
-// Last changed by: profesor79, 2017-04-27, 4:04 PM 
+// Created: 2017-05-15, 2:37 PM
+// Last changed by: A happy WPE candidate, 2017-05-16, 10:47 AM 
 // </summary>
 //   --------------------------------------------------------------------------------------------------------------------
 
@@ -130,10 +130,7 @@ namespace Profesor79.Merge.ActorSystem.FileReader
             var match = _lineValidator.Match(line);
             if (match.Success)
             {
-                var mergeObject = new MergeObjectDto
-                {
-                    DataId = int.Parse(match.Groups[1].Value)
-                };
+                var mergeObject = new MergeObjectDto { DataId = int.Parse(match.Groups[1].Value) };
 
                 _linesReadByRegex++;
                 _log.Debug($"Sending to crawler: {mergeObject.DataId}");

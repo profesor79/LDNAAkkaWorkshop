@@ -1,5 +1,5 @@
 ﻿//  --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Profesor79. file="WebCrawlerActor.cs">
+// <copyright company="WPE" file="WebCrawlerActor.cs">
 // Copyright (c) 2017 All Right Reserved
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
@@ -7,8 +7,8 @@
 // PARTICULAR PURPOSE.
 // </copyright>
 // <summary>
-// Created: 2017-04-17, 7:31 PM
-// Last changed by: profesor79, 2017-04-27, 4:04 PM 
+// Created: 2017-05-15, 2:37 PM
+// Last changed by: A happy WPE candidate, 2017-05-16, 10:47 AM 
 // </summary>
 //   --------------------------------------------------------------------------------------------------------------------
 
@@ -31,6 +31,9 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
     /// <summary>The web crawler actor.</summary>
     public class WebCrawlerActor : BaseActorClass, IWithUnboundedStash
     {
+        /// <summary>The _client.</summary>
+        private readonly HttpClient _client;
+
         /// <summary>The _error status.</summary>
         private readonly string _errorStatus = "----ErrorGettingData----";
 
@@ -44,9 +47,6 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
 
         /// <summary>The _cancel timer.</summary>
         private ICancelable _cancelTimer;
-
-        /// <summary>The _client.</summary>
-        private readonly HttpClient _client;
 
         /// <summary>The _got book.</summary>
         private bool _gotBook;

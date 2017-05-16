@@ -1,5 +1,5 @@
 //  --------------------------------------------------------------------------------------------------------------------
-// <copyright company="profesor79" file="AppSettingsConfiguration.cs">
+// <copyright company="WPE" file="AppSettingsConfiguration.cs">
 // Copyright (c) 2017 All Right Reserved
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
@@ -7,8 +7,8 @@
 // PARTICULAR PURPOSE.
 // </copyright>
 // <summary>
-// Created: 2017-04-24, 9:54 PM
-// Last changed by: profesor79, 2017-04-27, 4:04 PM 
+// Created: 2017-05-15, 2:37 PM
+// Last changed by: A happy WPE candidate, 2017-05-16, 10:48 AM 
 // </summary>
 //   --------------------------------------------------------------------------------------------------------------------
 
@@ -70,7 +70,6 @@ namespace Profesor79.Merge.Domain
             // this is main interval when buffered  lines are saved
             // on slow disk it is better to save in bigger gaps
             WriteWaitCycleInMiniseconds = (uint)config.GetInt($"{configBase}WriteWaitCycleInMiniseconds");
-
         }
 
         /// <summary>Gets or sets the api end point.</summary>
