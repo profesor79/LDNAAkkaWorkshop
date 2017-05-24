@@ -100,15 +100,18 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
         /// <summary>The pre start.</summary>
         protected override void PreStart()
         {
-            _cancelTimer = new Cancelable(Context.System.Scheduler);
+            if (Context.Self.Path.Name == "$a")
+            {
+                _cancelTimer = new Cancelable(Context.System.Scheduler);
 
-            Context.System.Scheduler.ScheduleTellRepeatedly(
-                TimeSpan.FromSeconds(2),
-                TimeSpan.FromSeconds(2),
-                Self,
-                new CrawlerMessages.Timer(),
-                Self,
-                _cancelTimer);
+                Context.System.Scheduler.ScheduleTellRepeatedly(
+                    TimeSpan.FromSeconds(2),
+                    TimeSpan.FromSeconds(2),
+                    Self,
+                    new CrawlerMessages.Timer(),
+                    Self,
+                    _cancelTimer);
+            }
 
             base.PreStart();
         }

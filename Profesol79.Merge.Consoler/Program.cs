@@ -34,7 +34,7 @@ namespace Profesor79.Merge.Consoler
             var assembly = Assembly.GetExecutingAssembly();
             var version = AssemblyName.GetAssemblyName(assembly.Location).Version.ToSt‌​ring();
             logger.Info($"Current version: {version}");
-            logger.Info("Starting WP MERGE.");
+            logger.Info("Starting LDNA DEMO.");
 
             // we need to have 2 elements in array as a parameters
             // input and output file
@@ -42,8 +42,8 @@ namespace Profesor79.Merge.Consoler
             {
                 logger.Error("Usage: wpe_merge <input_file> <output_file>");
                 logger.Error("Example: wpe_merge \"name with spaces\" noSpacesHere");
-                logger.Info("Stopping WP MERGE.");
-                logger.Info("Stopped WP MERGE.");
+                logger.Info("Stopping LDNA DEMO.");
+                logger.Info("Stopped LDNA DEMO.");
                 return -1;
             }
 
@@ -65,12 +65,12 @@ namespace Profesor79.Merge.Consoler
             system.Start(inputFile, outputFile);
 
 #if DEBUG
-            Console.WriteLine("Debug session finshed");
+            Console.WriteLine("Debug LDNA DEMO session finshed");
             Console.WriteLine("Press enter to close");
             Console.ReadLine();
 #endif
-            logger.Info("Stopping....");
-            logger.Info("Stopped WP MERGE.");
+            logger.Info("Stopping LDNA DEMO....");
+            logger.Info("Stopped LDNA DEMO.");
             return 0;
         }
     }

@@ -1,0 +1,76 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InputFile", "InputFile", "{B712BAFE-6507-497F-A1B9-892D0C0AAA91}"
+	ProjectSection(SolutionItems) = preProject
+		InputFile\input.csv = InputFile\input.csv
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documents", "documents", "{28454684-7932-44D2-8BB3-675FD991F7B9}"
+	ProjectSection(SolutionItems) = preProject
+		documents\ActorSequenceDiagram.plantuml = documents\ActorSequenceDiagram.plantuml
+		documents\ActorSequenceDiagram.svg = documents\ActorSequenceDiagram.svg
+		documents\BlockDiagram.plantuml = documents\BlockDiagram.plantuml
+		documents\BlockDiagram.svg = documents\BlockDiagram.svg
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profesor79.Merge.ActorSystem", "Profesol79.Merge.ActorSystem\Profesor79.Merge.ActorSystem.csproj", "{F6F862EF-751D-4D6C-B836-2AB3C3A64752}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profesor79.Merge.Consoler", "Profesol79.Merge.Consoler\Profesor79.Merge.Consoler.csproj", "{5F109F93-8DB3-42C2-8B0B-32901D3BD670}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profesor79.Merge.Contracts", "Profesol79.Merge.Contracts\Profesor79.Merge.Contracts.csproj", "{C1689B69-5F82-489C-A611-D7FD0736959B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3B546A62-1779-4AAA-A898-1C3500F0AAE1}"
+	ProjectSection(SolutionItems) = preProject
+		Profesol79.Merge.Domian\Profesor79.Merge.Domain.csproj = Profesol79.Merge.Domian\Profesor79.Merge.Domain.csproj
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profesor79.Merge.Models", "Profesol79.Merge.Models\Profesor79.Merge.Models.csproj", "{1D605057-329E-441D-8E97-632B44D2DADD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profesor79.Merge.UnitTests", "Profesol79.Merge.UnitTests\Profesor79.Merge.UnitTests.csproj", "{CD08DE2B-3888-4B9A-93BA-25AE7E21F280}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profesor79.Merge.WebApiMock", "Profesol79.Merge.WebApiMock\Profesor79.Merge.WebApiMock.csproj", "{BA37B177-6068-42FC-9A7A-29834EC549BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profesor79.Merge.Domain", "Profesol79.Merge.Domian\Profesor79.Merge.Domain.csproj", "{5E0F57E8-CB85-400C-8D61-A2F48CB8DB1A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F6F862EF-751D-4D6C-B836-2AB3C3A64752}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6F862EF-751D-4D6C-B836-2AB3C3A64752}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6F862EF-751D-4D6C-B836-2AB3C3A64752}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6F862EF-751D-4D6C-B836-2AB3C3A64752}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F109F93-8DB3-42C2-8B0B-32901D3BD670}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F109F93-8DB3-42C2-8B0B-32901D3BD670}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F109F93-8DB3-42C2-8B0B-32901D3BD670}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F109F93-8DB3-42C2-8B0B-32901D3BD670}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1689B69-5F82-489C-A611-D7FD0736959B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1689B69-5F82-489C-A611-D7FD0736959B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1689B69-5F82-489C-A611-D7FD0736959B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1689B69-5F82-489C-A611-D7FD0736959B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D605057-329E-441D-8E97-632B44D2DADD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D605057-329E-441D-8E97-632B44D2DADD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D605057-329E-441D-8E97-632B44D2DADD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D605057-329E-441D-8E97-632B44D2DADD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD08DE2B-3888-4B9A-93BA-25AE7E21F280}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD08DE2B-3888-4B9A-93BA-25AE7E21F280}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD08DE2B-3888-4B9A-93BA-25AE7E21F280}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD08DE2B-3888-4B9A-93BA-25AE7E21F280}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA37B177-6068-42FC-9A7A-29834EC549BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA37B177-6068-42FC-9A7A-29834EC549BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA37B177-6068-42FC-9A7A-29834EC549BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA37B177-6068-42FC-9A7A-29834EC549BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E0F57E8-CB85-400C-8D61-A2F48CB8DB1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E0F57E8-CB85-400C-8D61-A2F48CB8DB1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E0F57E8-CB85-400C-8D61-A2F48CB8DB1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E0F57E8-CB85-400C-8D61-A2F48CB8DB1A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
