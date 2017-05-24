@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InputFile", "InputFile", "{B712BAFE-6507-497F-A1B9-892D0C0AAA91}"
 	ProjectSection(SolutionItems) = preProject
@@ -34,6 +34,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profesor79.Merge.WebApiMock", "Profesol79.Merge.WebApiMock\Profesor79.Merge.WebApiMock.csproj", "{BA37B177-6068-42FC-9A7A-29834EC549BB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profesor79.Merge.Domain", "Profesol79.Merge.Domian\Profesor79.Merge.Domain.csproj", "{5E0F57E8-CB85-400C-8D61-A2F48CB8DB1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profesor79.Merge.Web", "Profesor79.Merge.Web\Profesor79.Merge.Web.csproj", "{31AC76F4-EA82-415E-943A-193B9257DB69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{5E0F57E8-CB85-400C-8D61-A2F48CB8DB1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E0F57E8-CB85-400C-8D61-A2F48CB8DB1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E0F57E8-CB85-400C-8D61-A2F48CB8DB1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31AC76F4-EA82-415E-943A-193B9257DB69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31AC76F4-EA82-415E-943A-193B9257DB69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31AC76F4-EA82-415E-943A-193B9257DB69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31AC76F4-EA82-415E-943A-193B9257DB69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
