@@ -1,0 +1,49 @@
+# The `FROM` instruction specifies the base image. You are
+# extending the `microsoft/aspnet` image.
+
+FROM microsoft/aspnet
+
+
+SHELL ["powershell"]
+
+#RUN Install-WindowsFeature NET-Framework-45-ASPNET ; \  
+#    Install-WindowsFeature Web-Asp-Net45
+
+COPY *.* %SystemDrive%\webWorker\
+webWorker
+RUN Remove-WebSite -Name 'Default Web Site'  
+RUN New-Website -Name 'webWorker' -Port 80 \  
+    -PhysicalPath '%SystemDrive%\webWorker' -ApplicationPool '.NET v4.5'
+	
+	
+#RUN	NET USER testing "Password01!" /ADD
+#RUN	NET LOCALGROUP "Administrators" "testing" /add
+
+
+
+#RUN icacls "c:\webWorker\*" /grant everyone:(OI)(CI)F /T
+
+#RUN powershell Install-WindowsFeature Web-Mgmt-Service
+#RUN powershell Install-WindowsFeature Web-Windows-Auth
+#RUN powershell Install-WindowsFeature NET-Framework-45-ASPNET
+#RUN powershell Install-WindowsFeature Web-Asp-Net45
+#RUN powershell Install-WindowsFeature NET-WCF-HTTP-Activation45
+
+
+#RUN net start wmsvc
+#RUN sc config WMSVC start= auto
+
+
+#RUN powershell -NoProfile -Command \
+#Set-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\WebManagement\Server -Name EnableRemoteManagement -Value 1
+
+	
+EXPOSE 80
+EXPOSE 8172
+EXPOSE 443
+
+
+
+
+# The final instruction copies the site you published earlier into the container.
+#COPY ./bin/Release/PublishOutput/ /wwwroot/inetpub

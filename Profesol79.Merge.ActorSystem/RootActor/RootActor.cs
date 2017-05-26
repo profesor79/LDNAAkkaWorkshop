@@ -1,5 +1,5 @@
 ﻿//  --------------------------------------------------------------------------------------------------------------------
-// <copyright company="WPE" file="RootActor.cs">
+// <copyright company="profesor79.pl" file="RootActor.cs">
 // Copyright (c) 2017 All Right Reserved
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
@@ -8,7 +8,7 @@
 // </copyright>
 // <summary>
 // Created: 2017-05-15, 2:37 PM
-// Last changed by: A happy WPE candidate, 2017-05-16, 10:47 AM 
+// Last changed by: profesor79, 2017-05-26, 8:20 AM 
 // </summary>
 //   --------------------------------------------------------------------------------------------------------------------
 
@@ -36,6 +36,8 @@ namespace Profesor79.Merge.ActorSystem.RootActor
         /// <summary>The _system configuration.</summary>
         private readonly ISystemConfiguration _systemConfiguration;
 
+        private DateTime _started;
+
         /// <summary>Initializes a new instance of the <see cref="RootActor"/> class.</summary>
         /// <param name="systemConfiguration">The system Configuration.</param>
         public RootActor(ISystemConfiguration systemConfiguration)
@@ -44,6 +46,7 @@ namespace Profesor79.Merge.ActorSystem.RootActor
             Receive<RootActorMessages.StartSystem>(
                 m =>
                     {
+                        _started = DateTime.Now;
                         CreateActors();
                         SendActorBook();
                         _actorDictionary["ValidatorActor"].Tell(new ValidatorMessages.Validate(m.InputFilePath, m.OutputFilePath, _actorDictionary));
@@ -60,6 +63,10 @@ namespace Profesor79.Merge.ActorSystem.RootActor
                 a =>
                     {
                         _log.Info("Halting system");
+                        var duration = (DateTime.Now - _started).TotalSeconds;
+                        _log.Info("**************************************");
+                        _log.Info($"Time consumed: {duration} seconds");
+                        _log.Info("**************************************");
                         Context.System.Terminate();
                         Thread.Sleep(3000); // allow to flush log buffer
                     });

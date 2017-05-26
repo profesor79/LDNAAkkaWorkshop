@@ -1,5 +1,5 @@
 ﻿//  --------------------------------------------------------------------------------------------------------------------
-// <copyright company="WPE" file="Program.cs">
+// <copyright company="profesor79.pl" file="Program.cs">
 // Copyright (c) 2017 All Right Reserved
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
@@ -8,13 +8,12 @@
 // </copyright>
 // <summary>
 // Created: 2017-05-15, 2:37 PM
-// Last changed by: A happy WPE candidate, 2017-05-16, 10:48 AM 
+// Last changed by: profesor79, 2017-05-26, 8:20 AM 
 // </summary>
 //   --------------------------------------------------------------------------------------------------------------------
 
 namespace Profesor79.Merge.Consoler
 {
-    using System;
     using System.Reflection;
 
     using NLog;
@@ -56,9 +55,9 @@ namespace Profesor79.Merge.Consoler
 
 #if DEBUG
 
-            // when in debug we use vs commad line parameters
-            // so every execution output file is overwritten
-            // this allow to keep track of history
+// when in debug we use vs commad line parameters
+// so every execution output file is overwritten
+// this allow to keep track of history
             outputFile = $"{DateTime.Now.ToString("O").Replace(":", "_")}_{outputFile}";
 #endif
 

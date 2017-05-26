@@ -1,5 +1,5 @@
 ﻿//  --------------------------------------------------------------------------------------------------------------------
-// <copyright company="WPE" file="WebCrawlerActor.cs">
+// <copyright company="profesor79.pl" file="WebCrawlerActor.cs">
 // Copyright (c) 2017 All Right Reserved
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
@@ -8,7 +8,7 @@
 // </copyright>
 // <summary>
 // Created: 2017-05-15, 2:37 PM
-// Last changed by: A happy WPE candidate, 2017-05-16, 10:47 AM 
+// Last changed by: profesor79, 2017-05-26, 8:20 AM 
 // </summary>
 //   --------------------------------------------------------------------------------------------------------------------
 
@@ -149,6 +149,13 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
                                             {
                                                 if (request.Exception == null)
                                                 {
+                                                    // heavy job
+                                                    for (var i = 0; i < 25000; i++)
+                                                    {
+                                                        var ae = DateTime.Now.AddHours(1);
+                                                        var ee = ae.Date.AddHours(254).Ticks;
+                                                    }
+
                                                     return new CrawlerMessages.PipedRequest(request.Result, mergeObject);
                                                 }
 
@@ -181,6 +188,13 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
         /// <param name="o">The o.</param>
         private void ProcessPipedRequest(CrawlerMessages.PipedRequest o)
         {
+            // heavy job
+            for (var i = 0; i < 45000; i++)
+            {
+                var ae = DateTime.Now.AddHours(1);
+                var ee = ae.Date.AddHours(254).Ticks;
+            }
+
             var response = o.RequestResult;
             var mergeObject = o.MergeObject;
             if (response.IsError)
@@ -279,7 +293,7 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
         {
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            _client.Timeout = TimeSpan.FromSeconds(120);
+            _client.Timeout = TimeSpan.FromSeconds(300);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿//  --------------------------------------------------------------------------------------------------------------------
-// <copyright company="WPE" file="FileValidatorActorClassTests.cs">
+// <copyright company="profesor79.pl" file="FileValidatorActorClassTests.cs">
 // Copyright (c) 2017 All Right Reserved
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
@@ -8,7 +8,7 @@
 // </copyright>
 // <summary>
 // Created: 2017-05-15, 2:37 PM
-// Last changed by: A happy WPE candidate, 2017-05-16, 10:48 AM 
+// Last changed by: profesor79, 2017-05-26, 8:21 AM 
 // </summary>
 //   --------------------------------------------------------------------------------------------------------------------
 
