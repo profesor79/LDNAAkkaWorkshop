@@ -43,6 +43,12 @@ namespace Profesor79.Merge.ActorSystem.RootActor
         public RootActor(ISystemConfiguration systemConfiguration)
         {
             _systemConfiguration = systemConfiguration;
+
+            Receive<RootActorMessages.AddressBookRequest>(
+                a =>
+                    {
+                        Sender.Tell(new RootActorMessages.AddressBook(_actorDictionary));
+                    });
             Receive<RootActorMessages.StartSystem>(
                 m =>
                     {
@@ -117,10 +123,6 @@ namespace Profesor79.Merge.ActorSystem.RootActor
         /// <summary>The send actor book.</summary>
         private void SendActorBook()
         {
-            for (var i = 0; i < _systemConfiguration.CrawlerActorsCount; i++)
-            {
-                _actorDictionary["WebCrawlerActor"].Tell(new RootActorMessages.AddressBook(_actorDictionary));
-            }
 
             for (var i = 0; i < _systemConfiguration.DataDistributorActorCount; i++)
             {

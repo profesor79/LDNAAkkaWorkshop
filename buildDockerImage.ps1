@@ -10,7 +10,7 @@ $ErrorActionPreference="Stop"
 $ProgressPreference="SilentlyContinue"
 
 # Docker image name for the application
-$ImageName="profesor79_pl_acotor_scaling_example"
+$ImageName="profesor79_pl_actor_scaling_example"
 
 function Invoke-MSBuild ([string]$MSBuildPath, [string]$MSBuildParameters) {
     Invoke-Expression "$MSBuildPath $MSBuildParameters"

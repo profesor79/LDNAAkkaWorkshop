@@ -113,6 +113,8 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
                     _cancelTimer);
             }
 
+            Context.Parent.Tell(new RootActorMessages.AddressBookRequest());
+
             base.PreStart();
         }
 
@@ -149,12 +151,12 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
                                             {
                                                 if (request.Exception == null)
                                                 {
-                                                    // heavy job
-                                                    for (var i = 0; i < 25000; i++)
-                                                    {
-                                                        var ae = DateTime.Now.AddHours(1);
-                                                        var ee = ae.Date.AddHours(254).Ticks;
-                                                    }
+                                                    //// heavy job
+                                                    //for (var i = 0; i < 25000; i++)
+                                                    //{
+                                                    //    var ae = DateTime.Now.AddHours(1);
+                                                    //    var ee = ae.Date.AddHours(254).Ticks;
+                                                    //}
 
                                                     return new CrawlerMessages.PipedRequest(request.Result, mergeObject);
                                                 }
@@ -189,11 +191,12 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
         private void ProcessPipedRequest(CrawlerMessages.PipedRequest o)
         {
             // heavy job
-            for (var i = 0; i < 45000; i++)
-            {
-                var ae = DateTime.Now.AddHours(1);
-                var ee = ae.Date.AddHours(254).Ticks;
-            }
+            //for (var i = 0; i < 5000; i++)
+            //{
+            //    var ae = DateTime.Now.AddHours(1);
+            //    var ee = ae.Date.AddHours(254).Ticks;
+            //}
+
 
             var response = o.RequestResult;
             var mergeObject = o.MergeObject;
@@ -221,6 +224,7 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
                 _actorDictionary["FlowControlActor"].Tell(new FlowControlMessages.GetNewLinesForCrawler());
             }
         }
+
 
         /// <summary>The process web error message.</summary>
         /// <param name="a">The a.</param>

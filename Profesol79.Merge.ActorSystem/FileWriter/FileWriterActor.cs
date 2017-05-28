@@ -111,7 +111,7 @@ namespace Profesor79.Merge.ActorSystem.FileWriter
                     {
                         if (_lines.Any())
                         {
-                            _log.Info($"Saving {_lines.Count} lines");
+                            //   _log.Info($"Saving {_lines.Count} lines");
                             SaveLinesToFile();
                         }
                     });

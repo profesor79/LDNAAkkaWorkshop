@@ -44,6 +44,8 @@ namespace Profesor79.Merge.ActorSystem.ValidatorActor
         /// <summary>The _root.</summary>
         private IActorRef _root;
 
+        private bool _working;
+
         /// <summary>Initializes a new instance of the <see cref="ValidatorActor"/> class.</summary>
         /// <param name="systemConfiguration">The system configuration.</param>
         public ValidatorActor(ISystemConfiguration systemConfiguration)
@@ -74,10 +76,11 @@ namespace Profesor79.Merge.ActorSystem.ValidatorActor
         /// <summary>The can we go ahead.</summary>
         private void CanWeGoAhead()
         {
+            _log.Debug(
+                    $"CanWeGoAhead: _inputValidated:{_inputValidated} _fileCreated:{_fileCreated} _headerCreated:{_headerCreated}, apiState:{_apiState}");
             if (_inputValidated && _fileCreated && _headerCreated && _apiState)
             {
-                _log.Info(
-                    $"CanWeGoAhead: _inputValidated:{_inputValidated} _fileCreated:{_fileCreated} _headerCreated:{_headerCreated}, apiState:{_apiState}");
+                _working = true;
                 _actorDictionary["FlowControlActor"].Tell(new FlowControlMessages.StartProcessing(_actorDictionary));
                 _actorDictionary["WebCheckerActor"].Tell(new CrawlerMessages.StartChecking());
             }
@@ -128,7 +131,12 @@ namespace Profesor79.Merge.ActorSystem.ValidatorActor
                             _root.Tell(new RootActorMessages.FatalError(message));
                         }
 
-                        CanWeGoAhead();
+                        if (!_working)
+                        {
+                            CanWeGoAhead();
+                        }
+
+
                     });
         }
     }

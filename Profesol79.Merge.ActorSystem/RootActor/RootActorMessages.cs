@@ -82,5 +82,9 @@ namespace Profesor79.Merge.ActorSystem.RootActor
             /// <summary>Gets the output file path.</summary>
             public string OutputFilePath { get; }
         }
+
+        public class AddressBookRequest
+        {
+        }
     }
 }

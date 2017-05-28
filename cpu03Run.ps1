@@ -6,8 +6,8 @@ $env:Path="C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\MSBu
 $ImageName="profesor79_pl_actor_scaling_example"
 
 function Invoke-Docker-Run ([string]$DockerImage, [string]$Question) {
-	echo "starting data colector with parameters: $Question"
-	Invoke-Expression "docker run --rm $ImageName $Question"
+	echo "starting with files: $Question, cpus=3.0"
+	Invoke-Expression "docker run  --cpus=`"3.0`" --rm $ImageName $Question"
 }
 
-Invoke-Docker-Run  $QuestionArgs -DockerImage $ImageName
+Invoke-Docker-Run  $QuestionArgs  -DockerImage $ImageName
