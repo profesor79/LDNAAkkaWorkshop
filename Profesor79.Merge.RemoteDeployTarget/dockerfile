@@ -1,0 +1,4 @@
+FROM microsoft/windowsservercore
+ADD publishRemoteDeployTarget/ /
+ENTRYPOINT Profesor79.Merge.RemoteDeployTarget.exe
+

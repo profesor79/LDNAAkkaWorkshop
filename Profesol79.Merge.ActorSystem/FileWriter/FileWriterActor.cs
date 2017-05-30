@@ -93,6 +93,11 @@ namespace Profesor79.Merge.ActorSystem.FileWriter
 
             base.PreStart();
         }
+        protected override void PostStop()
+        {
+            _cancelTimer?.Cancel();
+        }
+
 
         /// <summary>The add line to list.</summary>
         /// <param name="data">The data.</param>

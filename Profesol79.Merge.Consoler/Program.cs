@@ -14,6 +14,7 @@
 
 namespace Profesor79.Merge.Consoler
 {
+    using System;
     using System.Reflection;
 
     using NLog;
@@ -39,8 +40,8 @@ namespace Profesor79.Merge.Consoler
             // input and output file
             if (args.Length != 2)
             {
-                logger.Error("Usage: wpe_merge <input_file> <output_file>");
-                logger.Error("Example: wpe_merge \"name with spaces\" noSpacesHere");
+                logger.Error("Usage: Profesor79.Merge.Consoler <input_file> <output_file>");
+                logger.Error("Example: Profesor79.Merge.Consoler \"name with spaces\" noSpacesHere");
                 logger.Info("Stopping LDNA DEMO.");
                 logger.Info("Stopped LDNA DEMO.");
                 return -1;
@@ -55,9 +56,9 @@ namespace Profesor79.Merge.Consoler
 
 #if DEBUG
 
-// when in debug we use vs commad line parameters
-// so every execution output file is overwritten
-// this allow to keep track of history
+            // when in debug we use vs commad line parameters
+            // so every execution output file is overwritten
+            // this allow to keep track of history
             outputFile = $"{DateTime.Now.ToString("O").Replace(":", "_")}_{outputFile}";
 #endif
 

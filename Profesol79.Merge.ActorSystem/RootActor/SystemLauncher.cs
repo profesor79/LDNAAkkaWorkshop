@@ -55,7 +55,7 @@ namespace Profesor79.Merge.ActorSystem.RootActor
             var propsResolver = new NinjectDependencyResolver(container, MergeActorSystem);
 
             // first actor 
-            _root = MergeActorSystem.ActorOf(MergeActorSystem.DI().Props<RootActor>(), $"root{Guid.NewGuid().ToString().Substring(0, 6)}");
+            _root = MergeActorSystem.ActorOf(MergeActorSystem.DI().Props<RootActor>(), "root");
 
             _root.Tell(new RootActorMessages.StartSystem(inputFilePath, outputFilePath));
             MergeActorSystem.WhenTerminated.Wait();

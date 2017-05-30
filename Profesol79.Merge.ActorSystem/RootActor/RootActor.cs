@@ -16,6 +16,7 @@ namespace Profesor79.Merge.ActorSystem.RootActor
 {
     using System;
     using System.Linq;
+    using System.Net.Http;
     using System.Threading;
 
     using Akka.Actor;
@@ -29,6 +30,7 @@ namespace Profesor79.Merge.ActorSystem.RootActor
     using Profesor79.Merge.ActorSystem.ValidatorActor;
     using Profesor79.Merge.ActorSystem.WebCrawler;
     using Profesor79.Merge.Contracts;
+    using Profesor79.Merge.Domain;
 
     /// <summary>The root actor.</summary>
     public partial class RootActor : BaseActorClass
@@ -110,14 +112,31 @@ namespace Profesor79.Merge.ActorSystem.RootActor
                         .WithDispatcher("my-dispatcher"),
                     $"DataDistributorActor{actorSuffix}"));
 
-            _actorDictionary.Add(
-                "WebCrawlerActor",
+
+            CreateRemoteCrawler();
+        }
+
+        private void CreateRemoteCrawler()
+        {
+            var hostname = System.Net.Dns.GetHostName();
+            var remoteAddress = Address.Parse($"akka.tcp://DeployTarget@{hostname}:8090");
+
+
+            //  system.ActorOf();
+            //deploy remotely via code
+            var remoteScope = new RemoteScope(remoteAddress);
+            var remoteEcho2 =
                 Context.ActorOf(
-                    Context.DI()
-                        .Props<WebCrawlerActor>()
-                        .WithRouter(new RoundRobinPool((int)_systemConfiguration.CrawlerActorsCount))
-                        .WithDispatcher("my-dispatcher"),
-                    $"WebCrawlerActor{actorSuffix}"));
+            Props.Create(() => new WebCrawlerActor(new AppSettingsConfiguration(), Self))
+                                  .WithRouter(new RoundRobinPool(4)) // new DefaultResizer(1, 2, messagesPerResize: 500)
+                             .WithDispatcher("my-dispatcher")
+                        .WithDeploy(Deploy.None.WithScope(remoteScope)),
+                    "WebCrawlerActor2");
+
+            _actorDictionary.Add("WebCrawlerActor", remoteEcho2);
+
+
+
         }
 
         /// <summary>The send actor book.</summary>

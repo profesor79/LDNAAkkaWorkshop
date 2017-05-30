@@ -1,0 +1,9 @@
+version: '2.1'
+
+services:
+  aspnetcorevs2017docker:
+    image: aspnetcorevs2017docker
+    hostname: webapi
+    build:
+      context: ./src/AspNetCoreVS2017Docker
+      dockerfile: Dockerfile

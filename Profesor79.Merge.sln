@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profesor79.Merge.Domain", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profesor79.Merge.Web", "Profesor79.Merge.Web\Profesor79.Merge.Web.csproj", "{31AC76F4-EA82-415E-943A-193B9257DB69}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profesor79.Merge.RemoteDeployTarget", "Profesor79.Merge.RemoteDeployTarget\Profesor79.Merge.RemoteDeployTarget.csproj", "{D1260293-F2F7-42C9-AA3F-DD3382EE44CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{31AC76F4-EA82-415E-943A-193B9257DB69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31AC76F4-EA82-415E-943A-193B9257DB69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31AC76F4-EA82-415E-943A-193B9257DB69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1260293-F2F7-42C9-AA3F-DD3382EE44CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1260293-F2F7-42C9-AA3F-DD3382EE44CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1260293-F2F7-42C9-AA3F-DD3382EE44CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1260293-F2F7-42C9-AA3F-DD3382EE44CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

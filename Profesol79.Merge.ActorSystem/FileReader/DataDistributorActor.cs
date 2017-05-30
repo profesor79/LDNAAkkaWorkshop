@@ -134,7 +134,7 @@ namespace Profesor79.Merge.ActorSystem.FileReader
 
                 _linesReadByRegex++;
                 _log.Debug($"Sending to crawler: {mergeObject.DataId}");
-                _crawler.Tell(new CrawlerMessages.GetData(mergeObject));
+                _crawler.Tell(new CrawlerMessages.GetData(mergeObject, _systemConfiguration.ApiEndPoint));
                 _flowControl.Tell(new FlowControlMessages.ValidLine());
                 return true;
             }
@@ -159,7 +159,7 @@ namespace Profesor79.Merge.ActorSystem.FileReader
                 var mergeObject = new MergeObjectDto { DataId = int.Parse(quotesMatch[0]) };
 
                 _log.Debug($"Sending to crawler: {mergeObject.DataId}");
-                _crawler.Tell(new CrawlerMessages.GetData(mergeObject));
+                _crawler.Tell(new CrawlerMessages.GetData(mergeObject, _systemConfiguration.ApiEndPoint));
                 _flowControl.Tell(new FlowControlMessages.ValidLine());
                 return true;
             }

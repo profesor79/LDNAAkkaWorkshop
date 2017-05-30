@@ -46,6 +46,8 @@ namespace Profesor79.Merge.ActorSystem.ValidatorActor
 
         private bool _working;
 
+        private uint _connectionErrorCount;
+
         /// <summary>Initializes a new instance of the <see cref="ValidatorActor"/> class.</summary>
         /// <param name="systemConfiguration">The system configuration.</param>
         public ValidatorActor(ISystemConfiguration systemConfiguration)
@@ -123,7 +125,25 @@ namespace Profesor79.Merge.ActorSystem.ValidatorActor
             Receive<ValidatorMessages.ApiState>(
                 a =>
                     {
-                        _apiState = a.IsOnline;
+                        if (a.IsOnline)
+                        {
+                            _apiState = a.IsOnline;
+                            _connectionErrorCount = 0;
+                        }
+                        else
+                        {
+                            _connectionErrorCount++;
+
+                            _log.Error($"Api is down: retry:{_connectionErrorCount}");
+
+                            if (_connectionErrorCount > 5)
+                            {
+                                _apiState = false;
+                            }
+
+                        }
+
+
                         if (!_apiState)
                         {
                             var message = "Api is down";

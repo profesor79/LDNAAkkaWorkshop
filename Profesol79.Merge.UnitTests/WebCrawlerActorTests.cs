@@ -43,7 +43,7 @@ namespace Profesor79.Merge.UnitTests
             var mergeDto = new MergeObjectDto { DataId = 1 };
 
             // act
-            _sut.Tell(new CrawlerMessages.GetData(mergeDto));
+            _sut.Tell(new CrawlerMessages.GetData(mergeDto, ""));
 
             // assert
             _testProbe.ExpectMsg<FlowControlMessages.WebApiGotValidResponse>(TimeSpan.FromSeconds(1));
@@ -60,7 +60,7 @@ namespace Profesor79.Merge.UnitTests
             var mergeDto = new MergeObjectDto { DataId = 1 };
 
             // act
-            _sut.Tell(new CrawlerMessages.GetData(mergeDto));
+            _sut.Tell(new CrawlerMessages.GetData(mergeDto, ""));
 
             // assert
             _testProbe.ExpectMsg<FileWriterMessages.SaveWebResponse>(TimeSpan.FromSeconds(1));
@@ -76,11 +76,11 @@ namespace Profesor79.Merge.UnitTests
             SetupValidResponse();
             var mergeDto = new MergeObjectDto { DataId = 1 };
             var message = new CrawlerMessages.WebApiErrorResponse
-                              {
-                                  MergeObjectDto = mergeDto,
-                                  url = $"{_systemConfiguration.ApiEndPoint}/1",
-                                  attempt = 1,
-                              };
+            {
+                MergeObjectDto = mergeDto,
+                url = $"{_systemConfiguration.ApiEndPoint}/1",
+                attempt = 1,
+            };
 
             // act
             _sut.Tell(message);
@@ -98,11 +98,11 @@ namespace Profesor79.Merge.UnitTests
             SetupInvaldResponse();
             var mergeDto = new MergeObjectDto { DataId = 1 };
             var message = new CrawlerMessages.WebApiErrorResponse
-                              {
-                                  MergeObjectDto = mergeDto,
-                                  url = $"{_systemConfiguration.ApiEndPoint}/1",
-                                  attempt = 1,
-                              };
+            {
+                MergeObjectDto = mergeDto,
+                url = $"{_systemConfiguration.ApiEndPoint}/1",
+                attempt = 1,
+            };
 
             // act
             _sut.Tell(message);
@@ -122,7 +122,7 @@ namespace Profesor79.Merge.UnitTests
             var client = mockHttp.ToHttpClient();
 
             _systemConfiguration.ApiEndPoint = "http://localhost/api";
-            _sut = Sys.ActorOf(Props.Create(() => new WebCrawlerActor(_systemConfiguration, client)));
+            _sut = Sys.ActorOf(Props.Create(() => new WebCrawlerActor(_systemConfiguration, _testProbe)));
             _sut.Tell(new RootActorMessages.AddressBook(_actorDict));
         }
 
@@ -140,7 +140,7 @@ namespace Profesor79.Merge.UnitTests
             var client = mockHttp.ToHttpClient();
 
             _systemConfiguration.ApiEndPoint = "http://localhost/api";
-            _sut = Sys.ActorOf(Props.Create(() => new WebCrawlerActor(_systemConfiguration, client)));
+            _sut = Sys.ActorOf(Props.Create(() => new WebCrawlerActor(_systemConfiguration, _testProbe)));
             _sut.Tell(new RootActorMessages.AddressBook(_actorDict));
         }
     }

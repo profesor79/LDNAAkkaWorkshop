@@ -29,10 +29,16 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
         {
             /// <summary>Initializes a new instance of the <see cref="GetData"/> class.</summary>
             /// <param name="mergeObject">The merge object.</param>
-            public GetData(MergeObjectDto mergeObject) { MergeObject = mergeObject; }
+            public GetData(MergeObjectDto mergeObject, string apiEndPoint)
+            {
+                MergeObject = mergeObject;
+                ApiEndPoint = apiEndPoint;
+            }
 
             /// <summary>Gets the merge object.</summary>
             public MergeObjectDto MergeObject { get; }
+
+            public string ApiEndPoint { get; }
         }
 
         /// <summary>The piped request.</summary>
