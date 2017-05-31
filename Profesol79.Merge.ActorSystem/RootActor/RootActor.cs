@@ -12,6 +12,8 @@
 // </summary>
 //   --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections.Generic;
+
 namespace Profesor79.Merge.ActorSystem.RootActor
 {
     using System;
@@ -114,12 +116,12 @@ namespace Profesor79.Merge.ActorSystem.RootActor
 
 
 
-            CreateRemoteCrawler();
+            CreateRemoteCrawlerGroup();
         }
 
         private void CreateRemoteCrawler()
         {
-            var hostname = "d7d7f4660fef";
+            var hostname = "e435106956aa";
             var remoteAddress = Address.Parse($"akka.tcp://DeployTarget@{hostname}:8090");
 
             //  system.ActorOf();
@@ -141,28 +143,29 @@ namespace Profesor79.Merge.ActorSystem.RootActor
 
         private void CreateRemoteCrawlerGroup()
         {
-            var hostname = "api-lt-022";
-            var hostname2 = "api-lt-022";
+            var hostname = "374110044f24";
+            var hostname2 = "25b360699a27";
 
             var remoteAddress2 = Address.Parse($"akka.tcp://DeployTarget@{hostname2}:8090");
             var remoteScope2 = new RemoteScope(remoteAddress2);
             var remoteCrawler1 =
                 Context.ActorOf(
             Props.Create(() => new WebCrawlerActor(new AppSettingsConfiguration(), Self))
+            .WithRouter(new RoundRobinPool(2)) // new DefaultResizer(1, 2, messagesPerResize: 500)
                              .WithDispatcher("my-dispatcher")
-                        .WithDeploy(Deploy.None.WithScope(remoteScope2)),
-                    "remoteCrawler02");
+            .WithDeploy(Deploy.None.WithScope(remoteScope2)), "a");
 
             var remoteAddress = Address.Parse($"akka.tcp://DeployTarget@{hostname}:8090");
+
             var remoteScope = new RemoteScope(remoteAddress);
             var remoteCrawler2 =
                 Context.ActorOf(
             Props.Create(() => new WebCrawlerActor(new AppSettingsConfiguration(), Self))
+            .WithRouter(new RoundRobinPool(2)) // new DefaultResizer(1, 2, messagesPerResize: 500)
                              .WithDispatcher("my-dispatcher")
-                        .WithDeploy(Deploy.None.WithScope(remoteScope)),
-                    "remoteCrawler01");
+            .WithDeploy(Deploy.None.WithScope(remoteScope)), "remoteCrawler01");
 
-            var workers = new[] { remoteCrawler1.Path.ToString(), remoteCrawler2.Path.ToString() };
+            var workers = new List<string> { remoteCrawler1.Path.ToString(), remoteCrawler2.Path.ToString() };
             var router = Context.ActorOf(Props.Empty.WithRouter(new RoundRobinGroup(workers)), "some-group");
             _actorDictionary.Add("WebCrawlerActor", router);
         }

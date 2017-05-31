@@ -59,13 +59,13 @@ namespace Profesor79.Merge.Consoler
             var inputFile = args[0];
             var outputFile = args[1];
 
-#if DEBUG
+
 
             // when in debug we use vs commad line parameters
             // so every execution output file is overwritten
             // this allow to keep track of history
-            outputFile = $"{DateTime.Now.ToString("O").Replace(":", "_")}_{outputFile}";
-#endif
+            outputFile = $"C:\\dockerExchange\\{DateTime.Now.ToString("O").Replace(":", "_")}_{outputFile}";
+
 
             system.Start(inputFile, outputFile);
 
