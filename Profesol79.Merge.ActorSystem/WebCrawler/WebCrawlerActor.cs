@@ -56,6 +56,8 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
         /// <summary>The _last activity.</summary>
         private DateTime _lastActivity;
 
+        private ulong _processed;
+
         /// <summary>Initializes a new instance of the <see cref="WebCrawlerActor"/> class.</summary>
         /// <param name="systemConfiguration">The system configuration.</param>
         /// <param name="client"></param>
@@ -166,6 +168,7 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
                                             {
                                                 if (request.Exception == null)
                                                 {
+                                                    _log.Info($" read api for:{getDataMessage.MergeObject.DataId} status:{webResponse.StatusCode.ToString()}");
                                                     return new CrawlerMessages.PipedRequest(request.Result, mergeObject);
                                                 }
 
@@ -199,7 +202,7 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
         private static void HeavyJob(int i1)
         {
             // heavy job
-            for (var i = 0; i < i1 * 2500; i++)
+            for (var i = 0; i < i1 * 1000; i++)
             {
                 var ae = DateTime.Now.AddHours(1);
                 var ee = ae.Date.AddHours(254).Ticks;
@@ -222,6 +225,12 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
             }
 
             _actorDictionary["FileWriterActor"].Tell(new FileWriterMessages.SaveWebResponse(mergeObject));
+            _processed++;
+
+            if (_processed % 100 == 0)
+            {
+                Console.WriteLine($"Processed requests: {_processed}, actor:{Self.Path.Name}");
+            }
 
             _lastActivity = DateTime.Now;
         }

@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Akka.Logger.Serilog</name>
+    </assembly>
+    <members>
+        <member name="T:Akka.Logger.Serilog.MessageTemplateCache">
+            <summary>
+            Taken directly from Serilog as the cache was internal.
+            https://github.com/serilog/serilog/blob/master/src/Serilog/Core/Pipeline/MessageTemplateCache.cs
+            </summary>
+        </member>
+        <member name="P:Akka.Logger.Serilog.SerilogLoggingAdapter.IsDebugEnabled">
+            <summary>
+            Check to determine whether the <see cref="F:Akka.Event.LogLevel.DebugLevel" /> is enabled.
+            </summary>
+        </member>
+        <member name="P:Akka.Logger.Serilog.SerilogLoggingAdapter.IsInfoEnabled">
+            <summary>
+            Check to determine whether the <see cref="F:Akka.Event.LogLevel.InfoLevel" /> is enabled.
+            </summary>
+        </member>
+        <member name="P:Akka.Logger.Serilog.SerilogLoggingAdapter.IsWarningEnabled">
+            <summary>
+            Check to determine whether the <see cref="F:Akka.Event.LogLevel.WarningLevel" /> is enabled.
+            </summary>
+        </member>
+        <member name="P:Akka.Logger.Serilog.SerilogLoggingAdapter.IsErrorEnabled">
+            <summary>
+            Check to determine whether the <see cref="F:Akka.Event.LogLevel.ErrorLevel" /> is enabled.
+            </summary>
+        </member>
+        <member name="M:Akka.Logger.Serilog.SerilogLoggingAdapter.IsEnabled(Akka.Event.LogLevel)">
+            <summary>Determines whether a specific log level is enabled.</summary>
+            <param name="logLevel">The log level that is being checked.</param>
+            <returns><c>true</c> if the specified level is enabled; otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Akka.Logger.Serilog.SerilogLoggingAdapter.Debug(System.String,System.Object[])">
+            <summary>
+            Logs a <see cref="F:Akka.Event.LogLevel.DebugLevel" /> message.
+            </summary>
+            <param name="format">The message that is being logged.</param>
+            <param name="args">An optional list of items used to format the message.</param>
+        </member>
+        <member name="M:Akka.Logger.Serilog.SerilogLoggingAdapter.Info(System.String,System.Object[])">
+            <summary>
+            Logs a <see cref="F:Akka.Event.LogLevel.InfoLevel" /> message.
+            </summary>
+            <param name="format">The message that is being logged.</param>
+            <param name="args">An optional list of items used to format the message.</param>
+        </member>
+        <member name="M:Akka.Logger.Serilog.SerilogLoggingAdapter.Warn(System.String,System.Object[])">
+            <summary>
+            Obsolete. Use <see cref="M:Akka.Event.ILoggingAdapter.Warning(System.String,System.Object[])" /> instead!
+            </summary>
+            <param name="format">N/A</param>
+            <param name="args">N/A</param>
+        </member>
+        <member name="M:Akka.Logger.Serilog.SerilogLoggingAdapter.Warning(System.String,System.Object[])">
+            <summary>
+            Logs a <see cref="F:Akka.Event.LogLevel.WarningLevel" /> message.
+            </summary>
+            <param name="format">The message that is being logged.</param>
+            <param name="args">An optional list of items used to format the message.</param>
+        </member>
+        <member name="M:Akka.Logger.Serilog.SerilogLoggingAdapter.Error(System.String,System.Object[])">
+            <summary>
+            Logs a <see cref="F:Akka.Event.LogLevel.ErrorLevel" /> message.
+            </summary>
+            <param name="format">The message that is being logged.</param>
+            <param name="args">An optional list of items used to format the message.</param>
+        </member>
+        <member name="M:Akka.Logger.Serilog.SerilogLoggingAdapter.Error(System.Exception,System.String,System.Object[])">
+            <summary>
+            Logs a <see cref="F:Akka.Event.LogLevel.ErrorLevel" /> message and associated exception.
+            </summary>
+            <param name="cause">The exception associated with this message.</param>
+            <param name="format">The message that is being logged.</param>
+            <param name="args">An optional list of items used to format the message.</param>
+        </member>
+        <member name="M:Akka.Logger.Serilog.SerilogLoggingAdapter.Log(Akka.Event.LogLevel,System.String,System.Object[])">
+            <summary>Logs a message with a specified level.</summary>
+            <param name="logLevel">The level used to log the message.</param>
+            <param name="format">The message that is being logged.</param>
+            <param name="args">An optional list of items used to format the message.</param>
+        </member>
+        <member name="M:Akka.Logger.Serilog.SerilogLoggingAdapterExtensions.ForContext(Akka.Event.ILoggingAdapter,System.String,System.Object,System.Boolean)">
+            <summary>
+            Create a logger that enriches log events with the specified property.
+            </summary>
+            <param name="adapter">ILoggingAdapter instance</param>
+            <param name="propertyName">The name of the property. Must be non-empty.</param>
+            <param name="value">The property value.</param>
+            <param name="destructureObjects">If true, the value will be serialized as a structured object if possible; if false, the object will be recorded as a scalar or simple array.</param>
+        </member>
+        <member name="M:Akka.Logger.Serilog.SerilogLoggingAdapterExtensions.GetLogger``1(Akka.Actor.IActorContext)">
+            <summary>
+            Creates a new logging adapter using the specified context's event stream.
+            </summary>
+            <param name="context">The context used to configure the logging adapter.</param>
+            <returns>The newly created logging adapter.</returns>
+        </member>
+        <member name="T:Akka.Logger.Serilog.SerilogLogMessageFormatter">
+            <summary>
+            This class contains methods used to convert Serilog templated messages
+            into normal text messages.
+            </summary>
+        </member>
+        <member name="M:Akka.Logger.Serilog.SerilogLogMessageFormatter.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Akka.Logger.Serilog.SerilogLogMessageFormatter"/> class.
+            </summary>
+        </member>
+        <member name="M:Akka.Logger.Serilog.SerilogLogMessageFormatter.Format(System.String,System.Object[])">
+            <summary>
+            Converts the specified template string to a text string using the specified
+            token array to match replacements.
+            </summary>
+            <param name="format">The template string used in the conversion.</param>
+            <param name="args">The array that contains values to replace in the template.</param>
+            <returns>
+            A text string where the template placeholders have been replaced with
+            their corresponding values.
+            </returns>
+        </member>
+        <member name="T:Akka.Logger.Serilog.SerilogLogger">
+            <summary>
+            This class is used to receive log events and sends them to
+            the configured Serilog logger. The following log events are
+            recognized: <see cref="T:Akka.Event.Debug"/>, <see cref="T:Akka.Event.Info"/>,
+            <see cref="T:Akka.Event.Warning"/> and <see cref="T:Akka.Event.Error"/>.
+            </summary>
+        </member>
+        <member name="M:Akka.Logger.Serilog.SerilogLogger.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Akka.Logger.Serilog.SerilogLogger"/> class.
+            </summary>
+        </member>
+    </members>
+</doc>

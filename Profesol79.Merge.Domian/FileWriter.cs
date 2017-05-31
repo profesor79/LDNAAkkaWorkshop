@@ -12,13 +12,15 @@
 // </summary>
 //   --------------------------------------------------------------------------------------------------------------------
 
+using Serilog.Core;
+
 namespace Profesor79.Merge.Domain
 {
     using System.Collections.Generic;
     using System.IO;
     using System.Text;
 
-    using NLog;
+
 
     using Profesor79.Merge.Contracts;
 
@@ -26,7 +28,7 @@ namespace Profesor79.Merge.Domain
     public class FileWriter : IFileWriter
     {
         /// <summary>The logger.</summary>
-        protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
 
         /// <summary>The _file stream.</summary>
         private FileStream _fileStream;

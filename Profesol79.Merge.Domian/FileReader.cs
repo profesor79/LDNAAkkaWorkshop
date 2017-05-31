@@ -12,6 +12,9 @@
 // </summary>
 //   --------------------------------------------------------------------------------------------------------------------
 
+using Serilog;
+using Serilog.Core;
+
 namespace Profesor79.Merge.Domain
 {
     using System;
@@ -19,15 +22,14 @@ namespace Profesor79.Merge.Domain
     using System.IO;
     using System.Text;
 
-    using NLog;
+
 
     using Profesor79.Merge.Contracts;
 
     /// <summary>The file reader.</summary>
     public class FileReader : IFileReader
     {
-        /// <summary>The logger.</summary>
-        protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
 
         /// <summary>The _stream reader.</summary>
         private StreamReader _streamReader;
@@ -37,6 +39,10 @@ namespace Profesor79.Merge.Domain
         /// <returns>The <see cref="bool"/>.</returns>
         public bool CanWeReadFile(string fileName)
         {
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.LiterateConsole()
+    .CreateLogger();
+
             var checkResult = false;
             try
             {
@@ -49,7 +55,7 @@ namespace Profesor79.Merge.Domain
             catch (Exception e)
             {
                 checkResult = false;
-                Logger.Fatal(e);
+
             }
 
             return checkResult;
@@ -77,7 +83,7 @@ namespace Profesor79.Merge.Domain
             }
             catch (Exception e)
             {
-                Logger.Fatal(e);
+                Log.Fatal(e.Message);
                 return string.Empty;
             }
         }

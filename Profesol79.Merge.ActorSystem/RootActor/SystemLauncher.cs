@@ -12,6 +12,8 @@
 // </summary>
 //   --------------------------------------------------------------------------------------------------------------------
 
+using Serilog.Core;
+
 namespace Profesor79.Merge.ActorSystem.RootActor
 {
     using System;
@@ -23,7 +25,7 @@ namespace Profesor79.Merge.ActorSystem.RootActor
 
     using Ninject;
 
-    using NLog;
+
 
     using Profesor79.Merge.Contracts;
     using Profesor79.Merge.Domain;
@@ -31,8 +33,7 @@ namespace Profesor79.Merge.ActorSystem.RootActor
     /// <summary>The system start.</summary>
     public class SystemLauncher
     {
-        /// <summary>The logger.</summary>
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
 
         /// <summary>The _root.</summary>
         private IActorRef _root;
@@ -76,8 +77,8 @@ namespace Profesor79.Merge.ActorSystem.RootActor
             }
             catch (Exception e)
             {
-                Logger.Error("Something goes wrong: KERNEL .....");
-                Logger.Error(e);
+                //Logger.Error("Something goes wrong: KERNEL .....");
+                //Logger.Error(e);
                 kernel.Dispose();
                 throw;
             }

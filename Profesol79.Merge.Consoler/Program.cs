@@ -12,12 +12,14 @@
 // </summary>
 //   --------------------------------------------------------------------------------------------------------------------
 
+using Serilog;
+
 namespace Profesor79.Merge.Consoler
 {
     using System;
     using System.Reflection;
 
-    using NLog;
+
 
     using Profesor79.Merge.ActorSystem.RootActor;
 
@@ -29,21 +31,24 @@ namespace Profesor79.Merge.Consoler
         /// <returns>The <see cref="int"/>.</returns>
         private static int Main(string[] args)
         {
-            var logger = LogManager.GetCurrentClassLogger();
+            Log.Logger = new LoggerConfiguration()
+    .WriteTo.LiterateConsole()
+.CreateLogger();
+
 
             var assembly = Assembly.GetExecutingAssembly();
             var version = AssemblyName.GetAssemblyName(assembly.Location).Version.ToSt‌​ring();
-            logger.Info($"Current version: {version}");
-            logger.Info("Starting LDNA DEMO.");
+            Log.Logger.Information($"Current version: {version}");
+            Log.Logger.Information("Starting LDNA DEMO.");
 
             // we need to have 2 elements in array as a parameters
             // input and output file
             if (args.Length != 2)
             {
-                logger.Error("Usage: Profesor79.Merge.Consoler <input_file> <output_file>");
-                logger.Error("Example: Profesor79.Merge.Consoler \"name with spaces\" noSpacesHere");
-                logger.Info("Stopping LDNA DEMO.");
-                logger.Info("Stopped LDNA DEMO.");
+                Log.Logger.Information("Usage: Profesor79.Merge.Consoler <input_file> <output_file>");
+                Log.Logger.Information("Example: Profesor79.Merge.Consoler \"name with spaces\" noSpacesHere");
+                Log.Logger.Information("Stopping LDNA DEMO.");
+                Log.Logger.Information("Stopped LDNA DEMO.");
                 return -1;
             }
 
@@ -69,8 +74,8 @@ namespace Profesor79.Merge.Consoler
             Console.WriteLine("Press enter to close");
             Console.ReadLine();
 #endif
-            logger.Info("Stopping LDNA DEMO....");
-            logger.Info("Stopped LDNA DEMO.");
+            Log.Logger.Information("Stopping LDNA DEMO....");
+            Log.Logger.Information("Stopped LDNA DEMO.");
             return 0;
         }
     }
