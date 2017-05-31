@@ -33,6 +33,9 @@
     <Reference Include="Akka, Version=1.2.0.33, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Akka.1.2.0\lib\net45\Akka.dll</HintPath>
     </Reference>
+    <Reference Include="Akka.Cluster, Version=1.2.0.33, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Akka.Cluster.1.2.0\lib\net45\Akka.Cluster.dll</HintPath>
+    </Reference>
     <Reference Include="Akka.DI.Core, Version=1.2.0.33, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Akka.DI.Core.1.2.0\lib\net45\Akka.DI.Core.dll</HintPath>
     </Reference>

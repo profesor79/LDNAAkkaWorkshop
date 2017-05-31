@@ -13,6 +13,7 @@
 //   --------------------------------------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
+using Akka.Cluster.Routing;
 
 namespace Profesor79.Merge.ActorSystem.RootActor
 {
@@ -115,24 +116,35 @@ namespace Profesor79.Merge.ActorSystem.RootActor
                     $"DataDistributorActor{actorSuffix}"));
 
 
-
-            CreateRemoteCrawlerGroup();
+            //CreateCrawler();
+            CreateRemoteCrawler();
         }
 
         private void CreateRemoteCrawler()
         {
-            var hostname = "e435106956aa";
-            var remoteAddress = Address.Parse($"akka.tcp://DeployTarget@{hostname}:8090");
 
-            //  system.ActorOf();
-            //deploy remotely via code
-            var remoteScope = new RemoteScope(remoteAddress);
+            var remoteEcho2 =
+                Context.ActorOf(
+                    Props.Create(() => new WebCrawlerActor(new AppSettingsConfiguration(), Self))
+                        .WithRouter(new ClusterRouterPool(new RoundRobinPool(5), new ClusterRouterPoolSettings(5, 1, true, "crawler"))), "WebCrawlerActor2a");
+
+            _actorDictionary.Add("WebCrawlerActor", remoteEcho2);
+
+
+
+        }
+
+
+
+        private void CreateCrawler()
+        {
+
             var remoteEcho2 =
                 Context.ActorOf(
             Props.Create(() => new WebCrawlerActor(new AppSettingsConfiguration(), Self))
                                   .WithRouter(new RoundRobinPool(2)) // new DefaultResizer(1, 2, messagesPerResize: 500)
-                             .WithDispatcher("my-dispatcher")
-                        .WithDeploy(Deploy.None.WithScope(remoteScope)),
+                             .WithDispatcher("my-dispatcher"),
+
                     "WebCrawlerActor2");
 
             _actorDictionary.Add("WebCrawlerActor", remoteEcho2);

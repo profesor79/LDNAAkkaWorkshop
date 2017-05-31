@@ -39,7 +39,7 @@ namespace Profesor79.Merge.ActorSystem.RootActor
         private IActorRef _root;
 
         /// <summary>Initializes a new instance of the <see cref="SystemLauncher"/> class.</summary>
-        public SystemLauncher() { MergeActorSystem = ActorSystem.Create("MergeActorSystem"); }
+        public SystemLauncher() { MergeActorSystem = ActorSystem.Create("ClusterSystem"); }
 
         /// <summary>Gets the dialer actor system.</summary>
         public ActorSystem MergeActorSystem { get; }

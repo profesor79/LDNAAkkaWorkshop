@@ -22,14 +22,29 @@ namespace Profesor79.Merge.RemoteDeployTarget
             Log.Information("Ah, there you are!");
             var hostname = System.Net.Dns.GetHostName();
             Console.WriteLine($"hostname: {hostname}");
-            using (var system = ActorSystem.Create("DeployTarget", ConfigurationFactory.ParseString(@"
+            using (var system = ActorSystem.Create("ClusterSystem", ConfigurationFactory.ParseString(@"
             akka {  
         stdout-loglevel = DEBUG
 		loglevel = DEBUG
 		akka.actor.serialize-messages = on
 		 loggers=[""Akka.Logger.Serilog.SerilogLogger, Akka.Logger.Serilog""]
 
-        actor.provider = ""Akka.Remote.RemoteActorRefProvider, Akka.Remote""
+        actor.provider = ""Akka.Cluster.ClusterActorRefProvider, Akka.Cluster""
+
+  deployment {
+        /api/myClusterPoolRouter {
+          router = round-robin-pool # routing strategy
+          nr-of-instances = 10 # max number of total routees
+          cluster {
+             enabled = on
+             allow-local-routees = on
+             use-role = crawler
+             max-nr-of-instances-per-node = 1
+
+          }
+        }
+      }
+
     DEBUG {
 			log-config-on-start = on
 				receive = off
@@ -47,7 +62,12 @@ remote {
                         hostname = " + hostname + @"
                     }
                 }
-            }
+
+  cluster {
+        seed-nodes = [""akka.tcp://ClusterSystem@" + args[0] + @":8091""]
+        roles = [crawler]
+    }
+    }
 my-dispatcher {
 	type = TaskDispatcher
 		throughput = 1

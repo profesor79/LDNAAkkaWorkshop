@@ -174,7 +174,7 @@ namespace Profesor79.Merge.ActorSystem.FlowControl
         {
             // as we can get messages in same time from differet sources
             // we will serve only to first actor
-            if (_processedLines > 0 && Sender.Path.Name == "$a")
+            if (_processedLines > 0 && !_endOfInputFile)
             {
                 _log.Info($"FlowControlMessages.GetNextChunk: sent, requester:{Sender.Path.Name}");
                 _actorDictionary["DataDispatcherActor"].Tell(new FileMessages.GetNextChunk());
