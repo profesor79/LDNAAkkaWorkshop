@@ -96,6 +96,7 @@ namespace Profesor79.Merge.ActorSystem.FileWriter
         protected override void PostStop()
         {
             _cancelTimer?.Cancel();
+            base.PostStop();
         }
 
 

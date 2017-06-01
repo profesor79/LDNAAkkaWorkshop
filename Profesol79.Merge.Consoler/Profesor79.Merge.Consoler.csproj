@@ -188,6 +188,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\cluster.config">
+      <Link>cluster.config</Link>
+    </None>
     <None Include="..\InputFile\input.csv">
       <Link>input.csv</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -208,4 +211,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy /Y "$(SolutionDir)cluster.config"  "C:\dockerExchange\cluster.config"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

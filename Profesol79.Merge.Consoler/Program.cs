@@ -12,6 +12,9 @@
 // </summary>
 //   --------------------------------------------------------------------------------------------------------------------
 
+using System.IO;
+using System.Text;
+using System.Threading;
 using Serilog;
 
 namespace Profesor79.Merge.Consoler
@@ -31,9 +34,12 @@ namespace Profesor79.Merge.Consoler
         /// <returns>The <see cref="int"/>.</returns>
         private static int Main(string[] args)
         {
+
+
+
             Log.Logger = new LoggerConfiguration()
-    .WriteTo.LiterateConsole()
-.CreateLogger();
+                                .WriteTo.LiterateConsole()
+                                .CreateLogger();
 
 
             var assembly = Assembly.GetExecutingAssembly();
@@ -66,7 +72,7 @@ namespace Profesor79.Merge.Consoler
             // this allow to keep track of history
             outputFile = $"C:\\dockerExchange\\{DateTime.Now.ToString("O").Replace(":", "_")}_{outputFile}";
 
-
+            CreateHostNameFile();
             system.Start(inputFile, outputFile);
 
 #if DEBUG
@@ -76,7 +82,19 @@ namespace Profesor79.Merge.Consoler
 #endif
             Log.Logger.Information("Stopping LDNA DEMO....");
             Log.Logger.Information("Stopped LDNA DEMO.");
+            File.Delete(@"C:\dockerExchange\clusterMaster.txt");
+
             return 0;
         }
+
+        private static void CreateHostNameFile()
+        {
+            var hostname = System.Net.Dns.GetHostName();
+            System.IO.File.WriteAllText(@"C:\dockerExchange\clusterMaster.txt", hostname, Encoding.UTF8);
+            Log.Logger.Information("Waiting for nodes.");
+            Thread.Sleep(5 * 1000); // wait for workers
+        }
+
+
     }
 }

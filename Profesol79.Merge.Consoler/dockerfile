@@ -3,3 +3,4 @@ ADD publish/ /
 ENTRYPOINT Profesor79.Merge.Consoler.exe
 	
 EXPOSE 8090
+EXPOSE 8091

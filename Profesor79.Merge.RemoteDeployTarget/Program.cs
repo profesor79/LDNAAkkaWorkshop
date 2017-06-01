@@ -15,6 +15,9 @@ namespace Profesor79.Merge.RemoteDeployTarget
     {
         static void Main(string[] args)
         {
+
+            var remoteHost = GetClusterHost();
+
             Log.Logger = new LoggerConfiguration()
     .WriteTo.LiterateConsole()
     .CreateLogger();
@@ -58,13 +61,13 @@ namespace Profesor79.Merge.RemoteDeployTarget
         
 remote {
                     helios.tcp {
-                        port = 8090
+                        port = 0 #let os pick random port
                         hostname = " + hostname + @"
                     }
                 }
 
   cluster {
-        seed-nodes = [""akka.tcp://ClusterSystem@" + args[0] + @":8091""]
+        seed-nodes = [""akka.tcp://ClusterSystem@" + remoteHost + @":8091""]
         roles = [crawler]
     }
     }
@@ -81,6 +84,31 @@ my-dispatcher {
                     Console.WriteLine($" hostname: {hostname} is alive {DateTime.Now.ToString("o")}!");
                 }
             }
+        }
+
+        private static string GetClusterHost()
+        {
+            var needToRead = true;
+            string text = string.Empty;
+            while (needToRead)
+            {
+                try
+                {
+                    text = System.IO.File.ReadAllText(@"C:\dockerExchange\clusterMaster.txt");
+
+                    // check readings
+                    needToRead = string.IsNullOrWhiteSpace(text);
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine($"waiting for host file:{DateTime.Now.ToString("O")}");
+                    Thread.Sleep(250);
+                }
+
+
+            }
+
+            return text;
         }
     }
 }

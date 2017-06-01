@@ -118,6 +118,7 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
         protected override void PostStop()
         {
             _cancelTimer?.Cancel();
+            base.PostStop();
         }
 
         /// <summary>The pre start.</summary>
@@ -128,7 +129,7 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
 
             Context.System.Scheduler.ScheduleTellRepeatedly(
                 TimeSpan.FromSeconds(2),
-                TimeSpan.FromSeconds(2),
+                TimeSpan.FromSeconds(0.5),
                 Self,
                 new CrawlerMessages.Timer(),
                 Self,
@@ -149,7 +150,7 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
             {
                 HeavyJob(5);
 
-                _log.Info($"get data received for: {getDataMessage.MergeObject.DataId}");
+                _log.Debug($"get data received for: {getDataMessage.MergeObject.DataId}");
                 var mergeObject = getDataMessage.MergeObject;
                 var url = $"{getDataMessage.ApiEndPoint}/{mergeObject.DataId}";
                 var self = Context.Self;
@@ -201,7 +202,7 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
         private static void HeavyJob(int i1)
         {
             // heavy job
-            for (var i = 0; i < i1 * 10000; i++)
+            for (var i = 0; i < i1 * 100; i++)
             {
                 var ae = DateTime.Now.AddHours(1);
                 var ee = ae.Date.AddHours(254).Ticks;

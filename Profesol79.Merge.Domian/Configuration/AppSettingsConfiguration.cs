@@ -12,6 +12,9 @@
 // </summary>
 //   --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Threading;
+
 namespace Profesor79.Merge.Domain
 {
     using Akka.Configuration;
@@ -21,10 +24,40 @@ namespace Profesor79.Merge.Domain
     /// <summary>The app setting configuration.</summary>
     public class AppSettingsConfiguration : ISystemConfiguration
     {
+
+        private string GetConfiguration()
+        {
+            var needToRead = true;
+            string text = string.Empty;
+            while (needToRead)
+            {
+                try
+                {
+                    text = System.IO.File.ReadAllText(@"C:\dockerExchange\cluster.config");
+
+                    // check readings
+                    needToRead = string.IsNullOrWhiteSpace(text);
+
+                    if (!needToRead)
+                    {
+                        text = text.Replace("__hostname__", System.Net.Dns.GetHostName());
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("config file is absent");
+                    Thread.Sleep(250);
+                }
+
+
+            }
+
+            return text;
+        }
         /// <summary>Initializes a new instance of the <see cref="AppSettingsConfiguration"/> class.</summary>
         public AppSettingsConfiguration()
         {
-            var config = ConfigurationFactory.Load();
+            var config = ConfigurationFactory.ParseString(GetConfiguration());
 
             var env = config.GetString("application.environment");
             var configBase = $"application.{env}.";

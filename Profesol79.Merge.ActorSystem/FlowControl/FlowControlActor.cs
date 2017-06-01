@@ -91,6 +91,13 @@ namespace Profesor79.Merge.ActorSystem.FlowControl
                     });
         }
 
+
+        protected override void PostStop()
+        {
+            _cancelTimer.Cancel();
+            base.PostStop();
+        }
+
         /// <summary>The pre start.</summary>
         protected override void PreStart()
         {

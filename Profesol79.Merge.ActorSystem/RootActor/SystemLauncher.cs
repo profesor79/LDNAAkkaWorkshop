@@ -12,6 +12,7 @@
 // </summary>
 //   --------------------------------------------------------------------------------------------------------------------
 
+using System.Threading;
 using Serilog.Core;
 
 namespace Profesor79.Merge.ActorSystem.RootActor
@@ -39,16 +40,49 @@ namespace Profesor79.Merge.ActorSystem.RootActor
         private IActorRef _root;
 
         /// <summary>Initializes a new instance of the <see cref="SystemLauncher"/> class.</summary>
-        public SystemLauncher() { MergeActorSystem = ActorSystem.Create("ClusterSystem"); }
 
         /// <summary>Gets the dialer actor system.</summary>
-        public ActorSystem MergeActorSystem { get; }
+        public ActorSystem MergeActorSystem { get; set; }
 
+
+        private static string GetConfiguration()
+        {
+            var needToRead = true;
+            string text = string.Empty;
+            while (needToRead)
+            {
+                try
+                {
+                    text = System.IO.File.ReadAllText(@"C:\dockerExchange\cluster.config");
+
+                    // check readings
+                    needToRead = string.IsNullOrWhiteSpace(text);
+
+                    if (!needToRead)
+                    {
+                        text = text.Replace("__hostname__", System.Net.Dns.GetHostName());
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("config file is absent");
+                    Thread.Sleep(250);
+                }
+
+
+            }
+
+            return text;
+        }
         /// <summary>The start.</summary>
         /// <param name="inputFilePath">The input file path.</param>
         /// <param name="outputFilePath">The output file path.</param>
         public void Start(string inputFilePath, string outputFilePath)
         {
+            var config = GetConfiguration();
+
+            MergeActorSystem = ActorSystem.Create("ClusterSystem", ConfigurationFactory.ParseString(config));
+
             var container = CreateKernel();
 
             // propsResolver instance takes care about injection
@@ -88,7 +122,7 @@ namespace Profesor79.Merge.ActorSystem.RootActor
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            var config = ConfigurationFactory.Load();
+            var config = ConfigurationFactory.ParseString(GetConfiguration());
             var dev = config.GetString("application.environment");
             var configBase = $"application.{dev}.";
             var useFixedConfigFile = config.GetBoolean($"{configBase}useFixedConfigFile");
