@@ -89,5 +89,13 @@ namespace Profesor79.Merge.UnitTests.Mocks
 
         /// <summary>Gets or sets the write wait cycle in miniseconds.</summary>
         public uint WriteWaitCycleInMiniseconds { get; set; }
+
+        public int LoadFactor { get; set; }
+
+        public HowToScaleEnum HowToScale { get; set; }
+
+        public string RemoteHost1 { get; set; }
+
+        public string RemoteHost2 { get; set; }
     }
 }

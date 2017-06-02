@@ -118,6 +118,7 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
         protected override void PostStop()
         {
             _cancelTimer?.Cancel();
+            Context.System.Terminate();
             base.PostStop();
         }
 
@@ -148,7 +149,7 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
         {
             try
             {
-                HeavyJob(5);
+                HeavyJob();
 
                 _log.Debug($"get data received for: {getDataMessage.MergeObject.DataId}");
                 var mergeObject = getDataMessage.MergeObject;
@@ -168,7 +169,8 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
                                             {
                                                 if (request.Exception == null)
                                                 {
-                                                    _log.Info($" read api for:{getDataMessage.MergeObject.DataId} status:{webResponse.StatusCode.ToString()}");
+                                                    _log.Debug($" read api for:{getDataMessage.MergeObject.DataId} status:{webResponse.StatusCode.ToString()}");
+
                                                     return new CrawlerMessages.PipedRequest(request.Result, mergeObject);
                                                 }
 
@@ -199,10 +201,10 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
             }
         }
 
-        private static void HeavyJob(int i1)
+        private void HeavyJob()
         {
-            // heavy job
-            for (var i = 0; i < i1 * 100; i++)
+            // heavy job config set to 15k
+            for (var i = 0; i < _systemConfiguration.LoadFactor; i++)
             {
                 var ae = DateTime.Now.AddHours(1);
                 var ee = ae.Date.AddHours(254).Ticks;
@@ -215,6 +217,7 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
         {
             var response = pipedRequest.RequestResult;
             var mergeObject = pipedRequest.MergeObject;
+            mergeObject.ActorName = Self.Path.ToString();
             if (response.IsError)
             {
                 _actorDictionary["FlowControlActor"].Tell(new FlowControlMessages.WebApiGotBadResponse());
@@ -229,7 +232,7 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
 
             if (_processed % 100 == 0)
             {
-                Console.WriteLine($"Processed requests: {_processed}, actor:{Self.Path.Name}");
+                _log.Info($"Processed requests: {_processed}, actor:{Self.Path.Name}");
             }
 
             _lastActivity = DateTime.Now;
@@ -240,7 +243,7 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
         {
 
             var delta = (DateTime.Now - _lastActivity).TotalMilliseconds;
-            _log.Info($"ProcessTimer current delta:{delta}");
+            // _log.Info($"ProcessTimer current delta:{delta}");
             if (delta > _systemConfiguration.WorkerIdleTime)
             {
                 _log.Debug("GetNewLinesForCrawler: pull");

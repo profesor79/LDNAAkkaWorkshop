@@ -81,6 +81,7 @@ namespace Profesor79.Merge.Domain
 
             // ****  web crawler ****
             ApiEndPoint = config.GetString($"{configBase}ApiEndPoint");
+            RemoteHost1 = config.GetString($"{configBase}RemoteHost1");
 
             // CrawlerActorsCount parameter set amout of workers getting data from web api
             // this setting is a throttle to the whole system
@@ -102,7 +103,13 @@ namespace Profesor79.Merge.Domain
 
             // this is main interval when buffered  lines are saved
             // on slow disk it is better to save in bigger gaps
+
             WriteWaitCycleInMiniseconds = (uint)config.GetInt($"{configBase}WriteWaitCycleInMiniseconds");
+
+            HowToScale = (HowToScaleEnum)config.GetInt($"{configBase}HowToScale");
+
+
+            LoadFactor = config.GetInt($"{configBase}LoadFactor");
         }
 
         /// <summary>Gets or sets the api end point.</summary>
@@ -158,5 +165,13 @@ namespace Profesor79.Merge.Domain
 
         /// <summary>Gets or sets the write wait cycle in miniseconds.</summary>
         public uint WriteWaitCycleInMiniseconds { get; set; }
+
+        public int LoadFactor { get; set; }
+
+        public HowToScaleEnum HowToScale { get; set; }
+
+        public string RemoteHost1 { get; set; }
+
+        public string RemoteHost2 { get; set; }
     }
 }

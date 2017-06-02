@@ -24,5 +24,7 @@ namespace Profesor79.Merge.Models
         public int DataId { get; set; }
 
         public int SaleValue { get; set; }
+
+        public string ActorName { get; set; }
     }
 }

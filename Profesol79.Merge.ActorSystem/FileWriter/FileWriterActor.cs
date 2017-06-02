@@ -104,9 +104,7 @@ namespace Profesor79.Merge.ActorSystem.FileWriter
         /// <param name="data">The data.</param>
         private void AddLineToList(MergeObjectDto data)
         {
-            // order that we need to save fields
-            // Account ID, First Name, Created On, Status, Status Set On
-            _lines.Add($"{data.DataId}," + $"{data.SaleValue},");
+            _lines.Add($"{data.DataId},{data.SaleValue},{data.ActorName}");
         }
 
         /// <summary>The buffering data.</summary>

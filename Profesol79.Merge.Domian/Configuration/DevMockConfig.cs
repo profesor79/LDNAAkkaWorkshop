@@ -42,6 +42,7 @@ namespace Profesor79.Merge.Domain.Configuration
             ReadLinesBatchSize = 1000;
             InternalChunkSize = 50;
             DataDistributorActorCount = 4;
+            LoadFactor = 1000;
         }
 
         /// <summary>Gets or sets the api end point.</summary>
@@ -91,5 +92,13 @@ namespace Profesor79.Merge.Domain.Configuration
 
         /// <summary>Gets or sets the write wait cycle in miniseconds.</summary>
         public uint WriteWaitCycleInMiniseconds { get; set; }
+
+        public int LoadFactor { get; set; }
+
+        public HowToScaleEnum HowToScale { get; set; }
+
+        public string RemoteHost1 { get; set; }
+
+        public string RemoteHost2 { get; set; }
     }
 }

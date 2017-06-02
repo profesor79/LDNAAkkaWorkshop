@@ -116,56 +116,79 @@ namespace Profesor79.Merge.ActorSystem.RootActor
                     $"DataDistributorActor{actorSuffix}"));
 
 
-            //CreateCrawler();
-            CreateRemoteCrawler();
+            CreateCrawlerByConfig();
+            
         }
 
-        private void CreateRemoteCrawler()
+        private void CreateCrawlerByConfig()
         {
+            switch (_systemConfiguration.HowToScale)
+            {
+                case HowToScaleEnum.Asis:
+                    AddByAsis();
+                    break;
 
-            var remoteEcho2 =
+                case HowToScaleEnum.ManyWorkers:
+                    AddByManyLocalWorkers();
+                    break;
+
+                case HowToScaleEnum.RemoteDeploy:
+                    CreateRemoteCrawlerGroup();
+                    break;
+
+                case HowToScaleEnum.LocalDynamic:
+                    AddByLocalDynamicPoll();
+
+                    break;
+                case HowToScaleEnum.Cluster:
+                    CreateCluster();
+                    break;
+            }
+        }
+
+        private void CreateCluster()
+        {
+            var remoteEcho222 =
                 Context.ActorOf(
                     Props.Create(() => new WebCrawlerActor(new AppSettingsConfiguration(), Self))
-                        .WithRouter(new ClusterRouterPool(new RoundRobinPool(5), new ClusterRouterPoolSettings(5, 1, true, "crawler"))), "WebCrawlerActor2a");
+                        .WithRouter(new ClusterRouterPool(new RoundRobinPool(5), new ClusterRouterPoolSettings(5, 1, true, "crawler"))),
+                    "WebCrawlerActor2a");
 
-            _actorDictionary.Add("WebCrawlerActor", remoteEcho2);
-
-
-
+            _actorDictionary.Add("WebCrawlerActor", remoteEcho222);
         }
 
-
-
-        private void CreateCrawler()
+        private void AddByLocalDynamicPoll()
         {
-
-            var remoteEcho2 =
+            var remoteEcho42 =
                 Context.ActorOf(
-            Props.Create(() => new WebCrawlerActor(new AppSettingsConfiguration(), Self))
-                                  .WithRouter(new RoundRobinPool(2)) // new DefaultResizer(1, 2, messagesPerResize: 500)
-                             .WithDispatcher("my-dispatcher"),
+                    Props.Create(() => new WebCrawlerActor(new AppSettingsConfiguration(), Self))
+                        .WithRouter(new RoundRobinPool((int)_systemConfiguration.CrawlerActorsCount, new DefaultResizer(1, 2, messagesPerResize: 500))));
 
+            _actorDictionary.Add("WebCrawlerActor", remoteEcho42);
+        }
+
+        private void AddByManyLocalWorkers()
+        {
+            var remoteEcho3 =
+                Context.ActorOf(
+                    Props.Create(() => new WebCrawlerActor(new AppSettingsConfiguration(), Self))
+                        .WithRouter(new RoundRobinPool((int)_systemConfiguration.CrawlerActorsCount)) // new DefaultResizer(1, 2, messagesPerResize: 500)
+                        .WithDispatcher("my-dispatcher"),
                     "WebCrawlerActor2");
+            _actorDictionary.Add("WebCrawlerActor", remoteEcho3);
+        }
 
+        private void AddByAsis()
+        {
+            var remoteEcho2 = Context.ActorOf(
+                Props.Create(() => new WebCrawlerActor(new AppSettingsConfiguration(), Self)).WithDispatcher("my-dispatcher"),
+                "WebCrawlerActor");
             _actorDictionary.Add("WebCrawlerActor", remoteEcho2);
-
-
-
         }
 
         private void CreateRemoteCrawlerGroup()
         {
-            var hostname = "374110044f24";
-            var hostname2 = "25b360699a27";
-
-            var remoteAddress2 = Address.Parse($"akka.tcp://DeployTarget@{hostname2}:8090");
-            var remoteScope2 = new RemoteScope(remoteAddress2);
-            var remoteCrawler1 =
-                Context.ActorOf(
-            Props.Create(() => new WebCrawlerActor(new AppSettingsConfiguration(), Self))
-            .WithRouter(new RoundRobinPool(2)) // new DefaultResizer(1, 2, messagesPerResize: 500)
-                             .WithDispatcher("my-dispatcher")
-            .WithDeploy(Deploy.None.WithScope(remoteScope2)), "a");
+            var hostname = _systemConfiguration.RemoteHost1;
 
             var remoteAddress = Address.Parse($"akka.tcp://DeployTarget@{hostname}:8090");
 
@@ -173,18 +196,17 @@ namespace Profesor79.Merge.ActorSystem.RootActor
             var remoteCrawler2 =
                 Context.ActorOf(
             Props.Create(() => new WebCrawlerActor(new AppSettingsConfiguration(), Self))
-            .WithRouter(new RoundRobinPool(2)) // new DefaultResizer(1, 2, messagesPerResize: 500)
+            .WithRouter(new RoundRobinPool(2))
                              .WithDispatcher("my-dispatcher")
             .WithDeploy(Deploy.None.WithScope(remoteScope)), "remoteCrawler01");
 
-            var workers = new List<string> { remoteCrawler1.Path.ToString(), remoteCrawler2.Path.ToString() };
-            var router = Context.ActorOf(Props.Empty.WithRouter(new RoundRobinGroup(workers)), "some-group");
-            _actorDictionary.Add("WebCrawlerActor", router);
+            _actorDictionary.Add("WebCrawlerActor", remoteCrawler2);
         }
 
         /// <summary>The send actor book.</summary>
         private void SendActorBook()
         {
+
 
             for (var i = 0; i < _systemConfiguration.DataDistributorActorCount; i++)
             {
@@ -206,4 +228,6 @@ namespace Profesor79.Merge.ActorSystem.RootActor
             Self.Tell(new RootActorMessages.HaltSystem());
         }
     }
+
+
 }

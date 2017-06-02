@@ -64,5 +64,22 @@ namespace Profesor79.Merge.Contracts
 
         /// <summary>Gets or sets the write wait cycle in miniseconds.</summary>
         uint WriteWaitCycleInMiniseconds { get; set; }
+
+        int LoadFactor { get; set; }
+
+        HowToScaleEnum HowToScale { get; set; }
+
+        string RemoteHost1 { get; set; }
+        string RemoteHost2 { get; set; }
+    }
+
+    public enum HowToScaleEnum
+    {
+        Asis = 1,
+        ManyWorkers = 2,
+        RemoteDeploy = 3,
+        Cluster = 4,
+
+        LocalDynamic = 5
     }
 }
