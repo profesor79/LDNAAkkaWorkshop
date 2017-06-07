@@ -100,7 +100,8 @@ namespace Profesor79.Merge.ActorSystem.FileReader
                 var currentRow = fieldParser.ReadFields();
                 if (currentRow != null && currentRow.Length == 4)
                 {
-                    var succeed = int.TryParse(currentRow[0], out int id);
+                    int id;
+                    var succeed = int.TryParse(currentRow[0], out id);
                     if (succeed)
                     {
                         // now parse last field
@@ -133,13 +134,18 @@ namespace Profesor79.Merge.ActorSystem.FileReader
                 var mergeObject = new MergeObjectDto { DataId = int.Parse(match.Groups[1].Value) };
 
                 _linesReadByRegex++;
-                _log.Debug($"Sending to crawler: {mergeObject.DataId}");
-                _crawler.Tell(new CrawlerMessages.GetData(mergeObject, _systemConfiguration.ApiEndPoint));
-                _flowControl.Tell(new FlowControlMessages.ValidLine());
+                SendMessage(mergeObject);
                 return true;
             }
 
             return false;
+        }
+
+        private void SendMessage(MergeObjectDto mergeObject)
+        {
+            _log.Debug($"Sending to crawler: {mergeObject.DataId}");
+            _crawler.Tell(new CrawlerMessages.GetData(mergeObject, _systemConfiguration.ApiEndPoint, DateTime.UtcNow));
+            _flowControl.Tell(new FlowControlMessages.ValidLine());
         }
 
         /// <summary>The parse by text parser.</summary>
@@ -158,9 +164,7 @@ namespace Profesor79.Merge.ActorSystem.FileReader
             {
                 var mergeObject = new MergeObjectDto { DataId = int.Parse(quotesMatch[0]) };
 
-                _log.Debug($"Sending to crawler: {mergeObject.DataId}");
-                _crawler.Tell(new CrawlerMessages.GetData(mergeObject, _systemConfiguration.ApiEndPoint));
-                _flowControl.Tell(new FlowControlMessages.ValidLine());
+                SendMessage(mergeObject);
                 return true;
             }
 

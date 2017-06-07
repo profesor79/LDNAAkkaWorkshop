@@ -45,6 +45,9 @@
     <Reference Include="Akka.Logger.Serilog, Version=1.2.0.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Akka.Logger.Serilog.1.2.0\lib\net45\Akka.Logger.Serilog.dll</HintPath>
     </Reference>
+    <Reference Include="Akka.Persistence, Version=1.2.0.36, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Akka.Persistence.1.2.0.36-beta\lib\net45\Akka.Persistence.dll</HintPath>
+    </Reference>
     <Reference Include="Akka.Remote, Version=1.2.0.33, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Akka.Remote.1.2.0\lib\net45\Akka.Remote.dll</HintPath>
     </Reference>
@@ -177,6 +180,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AtLeastOnceDelivery\AtLeastOneDeliveryTest.cs" />
     <Compile Include="BaseObjects\BaseActorClass.cs" />
     <Compile Include="FileReader\DataDispatcherActor.cs" />
     <Compile Include="FileReader\DataDistributorActor.cs" />

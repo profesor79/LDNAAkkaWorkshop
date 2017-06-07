@@ -63,6 +63,7 @@
     <Compile Include="Configuration\AppSettingsConfiguration.cs" />
     <Compile Include="FileReader.cs" />
     <Compile Include="FileWriter.cs" />
+    <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Helpers\QuotesHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -43,7 +43,7 @@ namespace Profesor79.Merge.UnitTests
             var mergeDto = new MergeObjectDto { DataId = 1 };
 
             // act
-            _sut.Tell(new CrawlerMessages.GetData(mergeDto, ""));
+            _sut.Tell(new CrawlerMessages.GetData(mergeDto, "", DateTime.UtcNow));
 
             // assert
             _testProbe.ExpectMsg<FlowControlMessages.WebApiGotValidResponse>(TimeSpan.FromSeconds(1));
@@ -60,7 +60,7 @@ namespace Profesor79.Merge.UnitTests
             var mergeDto = new MergeObjectDto { DataId = 1 };
 
             // act
-            _sut.Tell(new CrawlerMessages.GetData(mergeDto, ""));
+            _sut.Tell(new CrawlerMessages.GetData(mergeDto, "", DateTime.UtcNow));
 
             // assert
             _testProbe.ExpectMsg<FileWriterMessages.SaveWebResponse>(TimeSpan.FromSeconds(1));

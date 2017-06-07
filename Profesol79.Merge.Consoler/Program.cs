@@ -34,13 +34,9 @@ namespace Profesor79.Merge.Consoler
         /// <returns>The <see cref="int"/>.</returns>
         private static int Main(string[] args)
         {
-
-
-
             Log.Logger = new LoggerConfiguration()
                                 .WriteTo.LiterateConsole()
                                 .CreateLogger();
-
 
             var assembly = Assembly.GetExecutingAssembly();
             var version = AssemblyName.GetAssemblyName(assembly.Location).Version.ToSt‌​ring();
@@ -64,7 +60,6 @@ namespace Profesor79.Merge.Consoler
             var system = new SystemLauncher();
             var inputFile = args[0];
             var outputFile = args[1];
-
 
 
             // when in debug we use vs commad line parameters

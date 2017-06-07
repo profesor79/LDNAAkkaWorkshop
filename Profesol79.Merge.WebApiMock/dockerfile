@@ -1,7 +1,11 @@
-# The `FROM` instruction specifies the base image. You are
-# extending the `microsoft/aspnet` image.
+FROM microsoft/iis
 
-FROM microsoft/aspnet
+RUN mkdir C:\site
 
-# The final instruction copies the site you published earlier into the container.
-COPY ./bin/Release/PublishOutput/ /inetpub/wwwroot
+RUN powershell -NoProfile -Command \
+    Import-module IISAdministration; \
+    New-IISSite -Name "Site" -PhysicalPath C:\site -BindingInformation "*:8000:"
+
+EXPOSE 8000
+
+ADD content/ /site

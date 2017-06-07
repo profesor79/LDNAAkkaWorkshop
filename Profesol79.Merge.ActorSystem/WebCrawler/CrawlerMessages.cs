@@ -14,6 +14,8 @@
 
 namespace Profesor79.Merge.ActorSystem.WebCrawler
 {
+    using System;
+
     using Profesor79.Merge.Models;
 
     /// <summary>The crawler messages.</summary>
@@ -29,16 +31,21 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
         {
             /// <summary>Initializes a new instance of the <see cref="GetData"/> class.</summary>
             /// <param name="mergeObject">The merge object.</param>
-            public GetData(MergeObjectDto mergeObject, string apiEndPoint)
+            /// <param name = "apiEndPoint" ></param>
+            /// <param name = "utcNow" ></param>
+            public GetData(MergeObjectDto mergeObject, string apiEndPoint, DateTime utcNow)
             {
                 MergeObject = mergeObject;
                 ApiEndPoint = apiEndPoint;
+                UtcNow = utcNow;
             }
 
             /// <summary>Gets the merge object.</summary>
             public MergeObjectDto MergeObject { get; }
 
             public string ApiEndPoint { get; }
+
+            public DateTime UtcNow { get; }
         }
 
         /// <summary>The piped request.</summary>
