@@ -20,13 +20,22 @@ namespace Profesor79.Merge.ActorSystem.RootActor
 
     using Akka.Actor;
     using Akka.Configuration;
+    using Akka.DI.AutoFac;
     using Akka.DI.Core;
-    using Akka.DI.Ninject;
+    
 
-    using Ninject;
+    using Autofac;
 
+    
 
+    using Petabridge.Cmd.Cluster;
+    using Petabridge.Cmd.Host;
 
+    using Profesor79.Merge.ActorSystem.FileReader;
+    using Profesor79.Merge.ActorSystem.FileWriter;
+    using Profesor79.Merge.ActorSystem.FlowControl;
+    using Profesor79.Merge.ActorSystem.ValidatorActor;
+    using Profesor79.Merge.ActorSystem.WebCrawler;
     using Profesor79.Merge.Contracts;
     using Profesor79.Merge.Domain;
     using Profesor79.Merge.Domain.Helpers;
@@ -50,13 +59,15 @@ namespace Profesor79.Merge.ActorSystem.RootActor
             var config = ConfigurationHelper.GetClusterConfiguration();
 
             MergeActorSystem = ActorSystem.Create("ClusterSystem", ConfigurationFactory.ParseString(config));
+            var cmd = PetabridgeCmd.Get(MergeActorSystem);
+            cmd.RegisterCommandPalette(ClusterCommands.Instance);
+            cmd.Start();
+           
 
-            var container = CreateKernel();
-
-            // propsResolver instance takes care about injection
-            // nothing more to do with it :-)
-            var propsResolver = new NinjectDependencyResolver(container, MergeActorSystem);
-
+            // Create and build your container
+            var builder = ContainerBuilder();
+            var container = builder.Build();
+            var propsResolver = new AutoFacDependencyResolver(container, MergeActorSystem);
             // first actor 
             _root = MergeActorSystem.ActorOf(MergeActorSystem.DI().Props<RootActor>(), "root");
 
@@ -64,32 +75,10 @@ namespace Profesor79.Merge.ActorSystem.RootActor
             MergeActorSystem.WhenTerminated.Wait();
         }
 
-        /// <summary>The stop.</summary>
-        public void Stop() { MergeActorSystem.Terminate(); }
-
-        /// <summary>The create kernel.</summary>
-        /// <returns>The <see cref="IKernel"/>.</returns>
-        private static IKernel CreateKernel()
+        private static ContainerBuilder ContainerBuilder()
         {
-            var kernel = new StandardKernel();
-            try
-            {
-                RegisterServices(kernel);
-                return kernel;
-            }
-            catch (Exception e)
-            {
-                //Logger.Error("Something goes wrong: KERNEL .....");
-                //Logger.Error(e);
-                kernel.Dispose();
-                throw;
-            }
-        }
+            var builder = new Autofac.ContainerBuilder();
 
-        /// <summary>Load your modules or register your services here!</summary>
-        /// <param name="kernel">The kernel.</param>
-        private static void RegisterServices(IKernel kernel)
-        {
             var config = ConfigurationFactory.ParseString(ConfigurationHelper.GetClusterConfiguration());
             var dev = config.GetString("application.environment");
             var configBase = $"application.{dev}.";
@@ -101,17 +90,44 @@ namespace Profesor79.Merge.ActorSystem.RootActor
                 // Type typeYouWant = Type.GetType("NamespaceOfType.TypeName, AssemblyName");
                 // http://stackoverflow.com/a/25913864/5919473
                 var type = Type.GetType($"Profesor79.Merge.Domain.Configuration.{fixedConfigClassName}, Profesor79.Merge.Domain");
-                kernel.Bind<ISystemConfiguration>().To(type);
+                builder.RegisterType(type).As<ISystemConfiguration>();
+
             }
             else
             {
-                kernel.Bind<ISystemConfiguration>().To<AppSettingsConfiguration>().InSingletonScope();
+                builder.RegisterType<AppSettingsConfiguration>().As<ISystemConfiguration>().SingleInstance();
             }
 
-            kernel.Bind<IFileWriter>().To<FileWriter>();
-            kernel.Bind<IFileReader>().To<FileReader>();
 
-            // kernel.Bind<IHttpWrapper>().To<HttpWrapper>();
+            builder.RegisterType<FileWriter>().As<IFileWriter>();
+            builder.RegisterType<FileReader>().As<IFileReader>();
+            builder.RegisterType<RootActor>().AsSelf();
+
+            builder.RegisterType<FileValidatorActor>().AsSelf();
+            builder.RegisterType<FileReaderActor>().AsSelf();
+            builder.RegisterType<FileWriterActor>().AsSelf();
+            builder.RegisterType<WebCheckerActor>().AsSelf();
+            builder.RegisterType<FlowControlActor>().AsSelf();
+            builder.RegisterType<DataDispatcherActor>().AsSelf();
+            builder.RegisterType<ValidatorActor>().AsSelf();
+            builder.RegisterType<DataDistributorActor>().AsSelf();
+            builder.RegisterType<WebCrawlerActor>().AsSelf();
+            //builder.RegisterType<>().AsSelf();
+            //builder.RegisterType<>().AsSelf();
+            //builder.RegisterType<>().AsSelf();
+            //builder.RegisterType<>().AsSelf();
+            //builder.RegisterType<>().AsSelf();
+            //builder.RegisterType<>().AsSelf();
+            //builder.RegisterType<>().AsSelf();
+
+
+
+            return builder;
         }
+
+        /// <summary>The stop.</summary>
+        public void Stop() { MergeActorSystem.Terminate(); }
+
+
     }
 }

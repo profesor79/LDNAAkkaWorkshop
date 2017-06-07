@@ -15,6 +15,7 @@
 namespace Profesor79.Merge.Domain.Helpers
 {
     using System;
+    using System.IO;
     using System.Threading;
 
     public static class ConfigurationHelper
@@ -48,5 +49,30 @@ namespace Profesor79.Merge.Domain.Helpers
 
             return text;
         }
+
+
+        public static string GetClusterHost()
+        {
+            var needToRead = true;
+            var text = string.Empty;
+            while (needToRead)
+            {
+                try
+                {
+                    text = File.ReadAllText(@"C:\dockerExchange\clusterMaster.txt");
+
+                    // check readings
+                    needToRead = string.IsNullOrWhiteSpace(text);
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine($"waiting for host file:{DateTime.Now.ToString("O")}");
+                    Thread.Sleep(250);
+                }
+            }
+
+            return text;
+        }
+
     }
 }

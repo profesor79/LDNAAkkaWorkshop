@@ -23,44 +23,30 @@ namespace Profesor79.Merge.RemoteDeployTarget
     using Akka.Actor;
     using Akka.Configuration;
 
+    using Petabridge.Cmd.Cluster;
+    using Petabridge.Cmd.Host;
+
+    using Profesor79.Merge.Domain.Helpers;
+
     using Serilog;
 
     internal class Program
     {
-        private static string GetClusterHost()
-        {
-            var needToRead = true;
-            var text = string.Empty;
-            while (needToRead)
-            {
-                try
-                {
-                    text = File.ReadAllText(@"C:\dockerExchange\clusterMaster.txt");
-
-                    // check readings
-                    needToRead = string.IsNullOrWhiteSpace(text);
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine($"waiting for host file:{DateTime.Now.ToString("O")}");
-                    Thread.Sleep(250);
-                }
-            }
-
-            return text;
-        }
-
         private static void Main(string[] args)
         {
-            
+
 
             Log.Logger = new LoggerConfiguration().WriteTo.LiterateConsole().CreateLogger();
 
             Log.Information("Ah, there you are!");
-            
+
             using (var system = ActorSystem.Create("ClusterSystem", ConfigurationFactory.ParseString(GetConfig())))
 
             {
+
+                var cmd = PetabridgeCmd.Get(system);
+                cmd.RegisterCommandPalette(ClusterCommands.Instance);
+                cmd.Start();
                 var task = new Task(
                     () =>
                         {
@@ -71,7 +57,7 @@ namespace Profesor79.Merge.RemoteDeployTarget
                                 Console.WriteLine($" hostname: {hostname2} is alive {DateTime.Now.ToString("o")}!");
                             }
                         });
-                
+
                 system.WhenTerminated.Wait();
 
             }
@@ -80,7 +66,18 @@ namespace Profesor79.Merge.RemoteDeployTarget
         private static string GetConfig()
         {
             var config = @"
-            akka {  
+petabridge.cmd{
+	# default IP address used to listen for incoming petabridge.cmd client connections
+	# should be a safe default as it listens on ""all network interfaces"".
+	host = ""0.0.0.0""
+
+	# default port number used to listen for incoming petabridge.cmd client connections
+	port = 9111
+
+	# when true, logs all loaded palettes on startup
+	log-palettes-on-startup = on
+}
+        akka {  
         stdout-loglevel = DEBUG
 		loglevel = DEBUG
 		akka.actor.serialize-messages = on
@@ -131,7 +128,7 @@ my-dispatcher {
 		throughput-deadline-time = 0ms
 }
 ";
-            var remoteHost = GetClusterHost();
+            var remoteHost = ConfigurationHelper.GetClusterHost();
             var hostname = Dns.GetHostName();
             Console.WriteLine($"hostname: {hostname}");
             return config.Replace("__hostname__", hostname).Replace("__remoteHost__", remoteHost);

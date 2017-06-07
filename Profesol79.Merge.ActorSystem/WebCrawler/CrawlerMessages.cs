@@ -88,8 +88,7 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
         /// <summary>The timer.</summary>
         internal class Timer
         {
-            /// <summary>Initializes a new instance of the <see cref="Timer"/> class.</summary>
-            public Timer() { }
+
         }
     }
 }
