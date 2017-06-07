@@ -19,7 +19,7 @@ namespace Profesor79.Merge.Domain.Helpers
 
     public static class ConfigurationHelper
     {
-        public static string GetConfiguration()
+        public static string GetClusterConfiguration()
         {
             var needToRead = true;
             string text = string.Empty;
@@ -29,7 +29,7 @@ namespace Profesor79.Merge.Domain.Helpers
                 {
                     text = System.IO.File.ReadAllText(@"C:\dockerExchange\cluster.config");
 
-                    // check readings
+                    // check reading
                     needToRead = string.IsNullOrWhiteSpace(text);
 
                     if (!needToRead)

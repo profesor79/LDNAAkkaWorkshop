@@ -47,7 +47,7 @@ namespace Profesor79.Merge.ActorSystem.RootActor
         /// <param name="outputFilePath">The output file path.</param>
         public void Start(string inputFilePath, string outputFilePath)
         {
-            var config = ConfigurationHelper.GetConfiguration();
+            var config = ConfigurationHelper.GetClusterConfiguration();
 
             MergeActorSystem = ActorSystem.Create("ClusterSystem", ConfigurationFactory.ParseString(config));
 
@@ -90,7 +90,7 @@ namespace Profesor79.Merge.ActorSystem.RootActor
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            var config = ConfigurationFactory.ParseString(ConfigurationHelper.GetConfiguration());
+            var config = ConfigurationFactory.ParseString(ConfigurationHelper.GetClusterConfiguration());
             var dev = config.GetString("application.environment");
             var configBase = $"application.{dev}.";
             var useFixedConfigFile = config.GetBoolean($"{configBase}useFixedConfigFile");

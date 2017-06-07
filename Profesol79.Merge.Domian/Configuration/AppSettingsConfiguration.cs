@@ -30,7 +30,7 @@ namespace Profesor79.Merge.Domain
         /// <summary>Initializes a new instance of the <see cref="AppSettingsConfiguration"/> class.</summary>
         public AppSettingsConfiguration()
         {
-            var config = ConfigurationFactory.ParseString(ConfigurationHelper.GetConfiguration());
+            var config = ConfigurationFactory.ParseString(ConfigurationHelper.GetClusterConfiguration());
 
             var env = config.GetString("application.environment");
             var configBase = $"application.{env}.";
