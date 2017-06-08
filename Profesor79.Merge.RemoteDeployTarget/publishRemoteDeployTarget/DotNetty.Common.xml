@@ -1464,6 +1464,11 @@
                 Extension methods used for slicing byte arrays
             </summary>
         </member>
+        <member name="M:DotNetty.Common.Utilities.ArrayExtensions.CombineBytes(System.Byte[][])">
+            <summary>
+                Merge the byte arrays into one byte array.
+            </summary>
+        </member>
         <member name="T:DotNetty.Common.Utilities.AtomicReference`1">
             <summary>
                 Implementation of the java.concurrent.util AtomicReference type.
@@ -1624,6 +1629,56 @@
                 as low as possible.
             </summary>
         </member>
+        <member name="M:DotNetty.Common.Utilities.HashedWheelTimer.#ctor(System.TimeSpan,System.Int32,System.Int64)">
+            <summary>
+            Creates a new timer.
+            </summary>
+            <param name="tickInterval">the interval between two consecutive ticks</param>
+            <param name="ticksPerWheel">the size of the wheel</param>
+            <param name="maxPendingTimeouts">The maximum number of pending timeouts after which call to
+            <c>newTimeout</c> will result in <see cref="T:DotNetty.Common.Concurrency.RejectedExecutionException"/> being thrown.
+            No maximum pending timeouts limit is assumed if this value is 0 or negative.</param>
+            <exception cref="T:System.ArgumentException">if either of <c>tickInterval</c> and <c>ticksPerWheel</c> is &lt;= 0</exception>
+        </member>
+        <member name="M:DotNetty.Common.Utilities.HashedWheelTimer.Start">
+            <summary>
+            Starts the background thread explicitly. The background thread will
+            start automatically on demand even if you did not call this method.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">if this timer has been
+            stopped already.</exception>
+        </member>
+        <member name="M:DotNetty.Common.Utilities.HashedWheelTimer.Worker.WaitForNextTick">
+            <summary>
+            calculate timer firing time from startTime and current tick number,
+            then wait until that goal has been reached.
+            </summary>
+            <returns>long.MinValue if received a shutdown request,
+            current time otherwise (with long.MinValue changed by +1)
+            </returns>
+        </member>
+        <member name="T:DotNetty.Common.Utilities.HashedWheelTimer.HashedWheelBucket">
+            <summary>
+            Bucket that stores HashedWheelTimeouts. These are stored in a linked-list like datastructure to allow easy
+            removal of HashedWheelTimeouts in the middle. Also the HashedWheelTimeout act as nodes themself and so no
+            extra object creation is needed.
+            </summary>
+        </member>
+        <member name="M:DotNetty.Common.Utilities.HashedWheelTimer.HashedWheelBucket.AddTimeout(DotNetty.Common.Utilities.HashedWheelTimer.HashedWheelTimeout)">
+            <summary>
+            Add {@link HashedWheelTimeout} to this bucket.
+            </summary>
+        </member>
+        <member name="M:DotNetty.Common.Utilities.HashedWheelTimer.HashedWheelBucket.ExpireTimeouts(System.TimeSpan)">
+            <summary>
+            Expire all <see cref="T:DotNetty.Common.Utilities.HashedWheelTimer.HashedWheelTimeout"/>s for the given <c>deadline</c>.
+            </summary>
+        </member>
+        <member name="M:DotNetty.Common.Utilities.HashedWheelTimer.HashedWheelBucket.ClearTimeouts(System.Collections.Generic.ISet{DotNetty.Common.Utilities.ITimeout})">
+            <summary>
+            Clear this bucket and return all not expired / cancelled <see cref="T:DotNetty.Common.Utilities.ITimeout"/>s.
+            </summary>
+        </member>
         <member name="T:DotNetty.Common.Utilities.IAttribute`1">
             <summary>An attribute which allows to store a value reference. It may be updated atomically and so is thread-safe.</summary>
             <typeparam name="T">the type of the value it holds.</typeparam>
@@ -1704,6 +1759,79 @@
         </member>
         <member name="P:DotNetty.Common.Utilities.IConstant.Name">
             <summary>Returns the name of this <see cref="T:DotNetty.Common.Utilities.IConstant" />.</summary>
+        </member>
+        <member name="T:DotNetty.Common.Utilities.ITimeout">
+            <summary>
+            A handle associated with a <see cref="T:DotNetty.Common.Utilities.ITimerTask"/> that is returned by a
+            <see cref="T:DotNetty.Common.Utilities.ITimer"/>.
+            </summary>
+        </member>
+        <member name="P:DotNetty.Common.Utilities.ITimeout.Timer">
+            <summary>
+            Returns the <see cref="T:DotNetty.Common.Utilities.ITimer"/> that created this handle.
+            </summary>
+        </member>
+        <member name="P:DotNetty.Common.Utilities.ITimeout.Task">
+            <summary>
+            Returns the <see cref="T:DotNetty.Common.Utilities.ITimerTask"/> which is associated with this handle.
+            </summary>
+        </member>
+        <member name="P:DotNetty.Common.Utilities.ITimeout.Expired">
+            <summary>
+            Returns {@code true} if and only if the <see cref="T:DotNetty.Common.Utilities.ITimerTask"/> associated
+            with this handle has been expired.
+            </summary>
+        </member>
+        <member name="P:DotNetty.Common.Utilities.ITimeout.Canceled">
+            <summary>
+            Returns <c>true</c> if and only if the <see cref="T:DotNetty.Common.Utilities.ITimerTask"/> associated
+            with this handle has been canceled.
+            </summary>
+        </member>
+        <member name="M:DotNetty.Common.Utilities.ITimeout.Cancel">
+             <summary>
+             Attempts to cancel the <see cref="T:DotNetty.Common.Utilities.ITimerTask"/> associated with this handle.
+             If the task has been executed or canceled already, it will return with
+             no side effect.
+            
+             @return True if the cancellation completed successfully, otherwise false
+             </summary>
+        </member>
+        <member name="T:DotNetty.Common.Utilities.ITimer">
+            <summary>
+            Schedules <see cref="T:DotNetty.Common.Utilities.ITimerTask"/>s for one-time future execution in a background
+            thread.
+            </summary>
+        </member>
+        <member name="M:DotNetty.Common.Utilities.ITimer.NewTimeout(DotNetty.Common.Utilities.ITimerTask,System.TimeSpan)">
+            <summary>
+            Schedules the specified <see cref="T:DotNetty.Common.Utilities.ITimerTask"/> for one-time execution after the specified delay.
+            </summary>
+            <returns>a handle which is associated with the specified task</returns>
+            <exception cref="T:System.InvalidOperationException">if this timer has been stopped already</exception>
+            <exception cref="T:DotNetty.Common.Concurrency.RejectedExecutionException">if the pending timeouts are too many and creating new timeout
+            can cause instability in the system.</exception>
+        </member>
+        <member name="M:DotNetty.Common.Utilities.ITimer.StopAsync">
+            <summary>
+            Releases all resources acquired by this {@link Timer} and cancels all
+            tasks which were scheduled but not executed yet.
+            </summary>
+            <returns>the handles associated with the tasks which were canceled by
+            this method</returns>
+        </member>
+        <member name="T:DotNetty.Common.Utilities.ITimerTask">
+            <summary>
+            A task which is executed after the delay specified with
+            <see cref="M:DotNetty.Common.Utilities.ITimer.NewTimeout(DotNetty.Common.Utilities.ITimerTask,System.TimeSpan)"/>.
+            </summary>
+        </member>
+        <member name="M:DotNetty.Common.Utilities.ITimerTask.Run(DotNetty.Common.Utilities.ITimeout)">
+            <summary>
+            Executed after the delay specified with
+            <see cref="M:DotNetty.Common.Utilities.ITimer.NewTimeout(DotNetty.Common.Utilities.ITimerTask,System.TimeSpan)"/>.
+            </summary>
+            <param name="timeout">a handle which is associated with this task</param>
         </member>
         <member name="M:DotNetty.Common.Utilities.ReferenceCountUtil.Retain``1(``0)">
             <summary>

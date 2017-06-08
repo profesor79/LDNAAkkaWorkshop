@@ -992,351 +992,6 @@
             Advances to the next element.
             </summary>
         </member>
-        <member name="T:System.Collections.Immutable.SortedInt32KeyNode`1">
-            <summary>
-            A node in the AVL tree storing key/value pairs with Int32 keys.
-            </summary>
-            <remarks>
-            This is a trimmed down version of <see cref="T:System.Collections.Immutable.ImmutableSortedDictionary`2.Node"/>
-            with <c>TKey</c> fixed to be <see cref="T:System.Int32"/>.  This avoids multiple interface-based dispatches while examining
-            each node in the tree during a lookup: an interface call to the comparer's <see cref="M:System.Collections.Generic.IComparer`1.Compare(`0,`0)"/> method,
-            and then an interface call to <see cref="T:System.Int32"/>'s <see cref="M:System.IComparable`1.CompareTo(`0)"/> method as part of
-            the <see cref="T:System.Collections.Generic.GenericComparer`1"/>'s <see cref="M:System.Collections.Generic.IComparer`1.Compare(`0,`0)"/> implementation.
-            </remarks>
-        </member>
-        <member name="F:System.Collections.Immutable.SortedInt32KeyNode`1.EmptyNode">
-            <summary>
-            The default empty node.
-            </summary>
-        </member>
-        <member name="F:System.Collections.Immutable.SortedInt32KeyNode`1._key">
-            <summary>
-            The Int32 key associated with this node.
-            </summary>
-        </member>
-        <member name="F:System.Collections.Immutable.SortedInt32KeyNode`1._value">
-            <summary>
-            The value associated with this node.
-            </summary>
-            <remarks>
-            Sadly, this field could be readonly but doing so breaks serialization due to bug: 
-            http://connect.microsoft.com/VisualStudio/feedback/details/312970/weird-argumentexception-when-deserializing-field-in-typedreferences-cannot-be-static-or-init-only
-            </remarks>
-        </member>
-        <member name="F:System.Collections.Immutable.SortedInt32KeyNode`1._frozen">
-            <summary>
-            A value indicating whether this node has been frozen (made immutable).
-            </summary>
-            <remarks>
-            Nodes must be frozen before ever being observed by a wrapping collection type
-            to protect collections from further mutations.
-            </remarks>
-        </member>
-        <member name="F:System.Collections.Immutable.SortedInt32KeyNode`1._height">
-            <summary>
-            The depth of the tree beneath this node.
-            </summary>
-        </member>
-        <member name="F:System.Collections.Immutable.SortedInt32KeyNode`1._left">
-            <summary>
-            The left tree.
-            </summary>
-        </member>
-        <member name="F:System.Collections.Immutable.SortedInt32KeyNode`1._right">
-            <summary>
-            The right tree.
-            </summary>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:System.Collections.Immutable.SortedInt32KeyNode`1"/> class that is pre-frozen.
-            </summary>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.#ctor(System.Int32,`0,System.Collections.Immutable.SortedInt32KeyNode{`0},System.Collections.Immutable.SortedInt32KeyNode{`0},System.Boolean)">
-            <summary>
-            Initializes a new instance of the <see cref="T:System.Collections.Immutable.SortedInt32KeyNode`1"/> class that is not yet frozen.
-            </summary>
-            <param name="key">The key.</param>
-            <param name="value">The value.</param>
-            <param name="left">The left.</param>
-            <param name="right">The right.</param>
-            <param name="frozen">Whether this node is prefrozen.</param>
-        </member>
-        <member name="P:System.Collections.Immutable.SortedInt32KeyNode`1.IsEmpty">
-            <summary>
-            Gets a value indicating whether this instance is empty.
-            </summary>
-            <value>
-            <c>true</c> if this instance is empty; otherwise, <c>false</c>.
-            </value>
-        </member>
-        <member name="P:System.Collections.Immutable.SortedInt32KeyNode`1.Height">
-            <summary>
-            Gets the height of the tree beneath this node.
-            </summary>
-        </member>
-        <member name="P:System.Collections.Immutable.SortedInt32KeyNode`1.Left">
-            <summary>
-            Gets the left branch of this node.
-            </summary>
-        </member>
-        <member name="P:System.Collections.Immutable.SortedInt32KeyNode`1.Right">
-            <summary>
-            Gets the right branch of this node.
-            </summary>
-        </member>
-        <member name="P:System.Collections.Immutable.SortedInt32KeyNode`1.System#Collections#Immutable#IBinaryTree#Left">
-            <summary>
-            Gets the left branch of this node.
-            </summary>
-        </member>
-        <member name="P:System.Collections.Immutable.SortedInt32KeyNode`1.System#Collections#Immutable#IBinaryTree#Right">
-            <summary>
-            Gets the right branch of this node.
-            </summary>
-        </member>
-        <member name="P:System.Collections.Immutable.SortedInt32KeyNode`1.System#Collections#Immutable#IBinaryTree#Count">
-            <summary>
-            Gets the number of elements contained by this node and below.
-            </summary>
-        </member>
-        <member name="P:System.Collections.Immutable.SortedInt32KeyNode`1.Value">
-            <summary>
-            Gets the value represented by the current node.
-            </summary>
-        </member>
-        <member name="P:System.Collections.Immutable.SortedInt32KeyNode`1.Values">
-            <summary>
-            Gets the values.
-            </summary>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.GetEnumerator">
-            <summary>
-            Returns an enumerator that iterates through the collection.
-            </summary>
-            <returns>
-            A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
-            </returns>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.SetItem(System.Int32,`0,System.Collections.Generic.IEqualityComparer{`0},System.Boolean@,System.Boolean@)">
-            <summary>
-            Adds the specified key.
-            </summary>
-            <param name="key">The key.</param>
-            <param name="value">The value.</param>
-            <param name="valueComparer">The value comparer.</param>
-            <param name="replacedExistingValue">Receives a value indicating whether an existing value was replaced.</param>
-            <param name="mutated">Receives a value indicating whether this node tree has mutated because of this operation.</param>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.Remove(System.Int32,System.Boolean@)">
-            <summary>
-            Removes the specified key.
-            </summary>
-            <param name="key">The key.</param>
-            <param name="mutated">Receives a value indicating whether this node tree has mutated because of this operation.</param>
-            <returns>The new AVL tree.</returns>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.GetValueOrDefault(System.Int32)">
-            <summary>
-            Gets the value or default.
-            </summary>
-            <param name="key">The key.</param>
-            <returns>The value.</returns>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.TryGetValue(System.Int32,`0@)">
-            <summary>
-            Tries to get the value.
-            </summary>
-            <param name="key">The key.</param>
-            <param name="value">The value.</param>
-            <returns>True if the key was found.</returns>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.Freeze(System.Action{System.Collections.Generic.KeyValuePair{System.Int32,`0}})">
-            <summary>
-            Freezes this node and all descendant nodes so that any mutations require a new instance of the nodes.
-            </summary>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.RotateLeft(System.Collections.Immutable.SortedInt32KeyNode{`0})">
-            <summary>
-            AVL rotate left operation.
-            </summary>
-            <param name="tree">The tree.</param>
-            <returns>The rotated tree.</returns>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.RotateRight(System.Collections.Immutable.SortedInt32KeyNode{`0})">
-            <summary>
-            AVL rotate right operation.
-            </summary>
-            <param name="tree">The tree.</param>
-            <returns>The rotated tree.</returns>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.DoubleLeft(System.Collections.Immutable.SortedInt32KeyNode{`0})">
-            <summary>
-            AVL rotate double-left operation.
-            </summary>
-            <param name="tree">The tree.</param>
-            <returns>The rotated tree.</returns>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.DoubleRight(System.Collections.Immutable.SortedInt32KeyNode{`0})">
-            <summary>
-            AVL rotate double-right operation.
-            </summary>
-            <param name="tree">The tree.</param>
-            <returns>The rotated tree.</returns>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.Balance(System.Collections.Immutable.SortedInt32KeyNode{`0})">
-            <summary>
-            Returns a value indicating whether the tree is in balance.
-            </summary>
-            <param name="tree">The tree.</param>
-            <returns>0 if the tree is in balance, a positive integer if the right side is heavy, or a negative integer if the left side is heavy.</returns>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.IsRightHeavy(System.Collections.Immutable.SortedInt32KeyNode{`0})">
-            <summary>
-            Determines whether the specified tree is right heavy.
-            </summary>
-            <param name="tree">The tree.</param>
-            <returns>
-            <c>true</c> if [is right heavy] [the specified tree]; otherwise, <c>false</c>.
-            </returns>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.IsLeftHeavy(System.Collections.Immutable.SortedInt32KeyNode{`0})">
-            <summary>
-            Determines whether the specified tree is left heavy.
-            </summary>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.MakeBalanced(System.Collections.Immutable.SortedInt32KeyNode{`0})">
-            <summary>
-            Balances the specified tree.
-            </summary>
-            <param name="tree">The tree.</param>
-            <returns>A balanced tree.</returns>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.SetOrAdd(System.Int32,`0,System.Collections.Generic.IEqualityComparer{`0},System.Boolean,System.Boolean@,System.Boolean@)">
-            <summary>
-            Adds the specified key. Callers are expected to have validated arguments.
-            </summary>
-            <param name="key">The key.</param>
-            <param name="value">The value.</param>
-            <param name="valueComparer">The value comparer.</param>
-            <param name="overwriteExistingValue">if <c>true</c>, an existing key=value pair will be overwritten with the new one.</param>
-            <param name="replacedExistingValue">Receives a value indicating whether an existing value was replaced.</param>
-            <param name="mutated">Receives a value indicating whether this node tree has mutated because of this operation.</param>
-            <returns>The new AVL tree.</returns>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.RemoveRecursive(System.Int32,System.Boolean@)">
-            <summary>
-            Removes the specified key. Callers are expected to validate arguments.
-            </summary>
-            <param name="key">The key.</param>
-            <param name="mutated">Receives a value indicating whether this node tree has mutated because of this operation.</param>
-            <returns>The new AVL tree.</returns>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.Mutate(System.Collections.Immutable.SortedInt32KeyNode{`0},System.Collections.Immutable.SortedInt32KeyNode{`0})">
-            <summary>
-            Creates a node mutation, either by mutating this node (if not yet frozen) or by creating a clone of this node
-            with the described changes.
-            </summary>
-            <param name="left">The left branch of the mutated node.</param>
-            <param name="right">The right branch of the mutated node.</param>
-            <returns>The mutated (or created) node.</returns>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.Search(System.Int32)">
-            <summary>
-            Searches the specified key. Callers are expected to validate arguments.
-            </summary>
-            <param name="key">The key.</param>
-        </member>
-        <member name="T:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator">
-            <summary>
-            Enumerates the contents of a binary tree.
-            </summary>
-            <remarks>
-            This struct can and should be kept in exact sync with the other binary tree enumerators: 
-            <see cref="T:System.Collections.Immutable.ImmutableList`1.Enumerator"/>, <see cref="T:System.Collections.Immutable.ImmutableSortedDictionary`2.Enumerator"/>, and <see cref="T:System.Collections.Immutable.ImmutableSortedSet`1.Enumerator"/>.
-            
-            CAUTION: when this enumerator is actually used as a valuetype (not boxed) do NOT copy it by assigning to a second variable 
-            or by passing it to another method.  When this enumerator is disposed of it returns a mutable reference type stack to a resource pool,
-            and if the value type enumerator is copied (which can easily happen unintentionally if you pass the value around) there is a risk
-            that a stack that has already been returned to the resource pool may still be in use by one of the enumerator copies, leading to data
-            corruption and/or exceptions.
-            </remarks>
-        </member>
-        <member name="F:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator.s_enumeratingStacks">
-            <summary>
-            The resource pool of reusable mutable stacks for purposes of enumeration.
-            </summary>
-            <remarks>
-            We utilize this resource pool to make "allocation free" enumeration achievable.
-            </remarks>
-        </member>
-        <member name="F:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator._poolUserId">
-            <summary>
-            A unique ID for this instance of this enumerator.
-            Used to protect pooled objects from use after they are recycled.
-            </summary>
-        </member>
-        <member name="F:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator._root">
-            <summary>
-            The set being enumerated.
-            </summary>
-        </member>
-        <member name="F:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator._stack">
-            <summary>
-            The stack to use for enumerating the binary tree.
-            </summary>
-        </member>
-        <member name="F:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator._current">
-            <summary>
-            The node currently selected.
-            </summary>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator.#ctor(System.Collections.Immutable.SortedInt32KeyNode{`0})">
-            <summary>
-            Initializes an <see cref="T:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator"/> structure.
-            </summary>
-            <param name="root">The root of the set to be enumerated.</param>
-        </member>
-        <member name="P:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator.Current">
-            <summary>
-            The current element.
-            </summary>
-        </member>
-        <member name="P:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator.System#Collections#Immutable#ISecurePooledObjectUser#PoolUserId">
-            <inheritdoc/>
-        </member>
-        <member name="P:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator.System#Collections#IEnumerator#Current">
-            <summary>
-            The current element.
-            </summary>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator.Dispose">
-            <summary>
-            Disposes of this enumerator and returns the stack reference to the resource pool.
-            </summary>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator.MoveNext">
-            <summary>
-            Advances enumeration to the next element.
-            </summary>
-            <returns>A value indicating whether there is another element in the enumeration.</returns>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator.Reset">
-            <summary>
-            Restarts enumeration.
-            </summary>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator.ThrowIfDisposed">
-            <summary>
-            Throws an <see cref="T:System.ObjectDisposedException"/> if this enumerator has been disposed.
-            </summary>
-        </member>
-        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator.PushLeft(System.Collections.Immutable.SortedInt32KeyNode{`0})">
-            <summary>
-            Pushes this node and all its Left descendants onto the stack.
-            </summary>
-            <param name="node">The starting node to push onto the stack.</param>
-        </member>
         <member name="T:System.Collections.Immutable.IOrderedCollection`1">
             <summary>
             Describes an ordered collection of elements.
@@ -1418,7 +1073,7 @@
         </member>
         <member name="M:System.Collections.Immutable.ImmutableArray.Create``1(``0[])">
             <summary>
-            Creates an empty <see cref="T:System.Collections.Immutable.ImmutableArray`1"/>.
+            Creates an <see cref="T:System.Collections.Immutable.ImmutableArray`1"/> with the specified elements.
             </summary>
             <typeparam name="T">The type of element stored in the array.</typeparam>
             <param name="items">The elements to store in the array.</param>
@@ -2095,65 +1750,6 @@
             Creates an enumerator for the specified array.
             </summary>
         </member>
-        <member name="F:System.Collections.Immutable.ImmutableArray`1.Empty">
-            <summary>
-            An empty (initialized) instance of <see cref="T:System.Collections.Immutable.ImmutableArray`1"/>.
-            </summary>
-        </member>
-        <member name="F:System.Collections.Immutable.ImmutableArray`1.array">
-            <summary>
-            The backing field for this instance. References to this value should never be shared with outside code.
-            </summary>
-            <remarks>
-            This would be private, but we make it internal so that our own extension methods can access it.
-            </remarks>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableArray`1.#ctor(`0[])">
-            <summary>
-            Initializes a new instance of the <see cref="T:System.Collections.Immutable.ImmutableArray`1"/> struct
-            *without making a defensive copy*.
-            </summary>
-            <param name="items">The array to use. May be null for "default" arrays.</param>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableArray`1.op_Equality(System.Collections.Immutable.ImmutableArray{`0},System.Collections.Immutable.ImmutableArray{`0})">
-            <summary>
-            Checks equality between two instances.
-            </summary>
-            <param name="left">The instance to the left of the operator.</param>
-            <param name="right">The instance to the right of the operator.</param>
-            <returns><c>true</c> if the values' underlying arrays are reference equal; <c>false</c> otherwise.</returns>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableArray`1.op_Inequality(System.Collections.Immutable.ImmutableArray{`0},System.Collections.Immutable.ImmutableArray{`0})">
-            <summary>
-            Checks inequality between two instances.
-            </summary>
-            <param name="left">The instance to the left of the operator.</param>
-            <param name="right">The instance to the right of the operator.</param>
-            <returns><c>true</c> if the values' underlying arrays are reference not equal; <c>false</c> otherwise.</returns>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableArray`1.op_Equality(System.Nullable{System.Collections.Immutable.ImmutableArray{`0}},System.Nullable{System.Collections.Immutable.ImmutableArray{`0}})">
-            <summary>
-            Checks equality between two instances.
-            </summary>
-            <param name="left">The instance to the left of the operator.</param>
-            <param name="right">The instance to the right of the operator.</param>
-            <returns><c>true</c> if the values' underlying arrays are reference equal; <c>false</c> otherwise.</returns>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableArray`1.op_Inequality(System.Nullable{System.Collections.Immutable.ImmutableArray{`0}},System.Nullable{System.Collections.Immutable.ImmutableArray{`0}})">
-            <summary>
-            Checks inequality between two instances.
-            </summary>
-            <param name="left">The instance to the left of the operator.</param>
-            <param name="right">The instance to the right of the operator.</param>
-            <returns><c>true</c> if the values' underlying arrays are reference not equal; <c>false</c> otherwise.</returns>
-        </member>
-        <member name="P:System.Collections.Immutable.ImmutableArray`1.Item(System.Int32)">
-            <summary>
-            Gets the element at the specified index in the read-only list.
-            </summary>
-            <param name="index">The zero-based index of the element to get.</param>
-            <returns>The element at the specified index in the read-only list.</returns>
-        </member>
         <member name="P:System.Collections.Immutable.ImmutableArray`1.System#Collections#Generic#IList{T}#Item(System.Int32)">
             <summary>
             Gets or sets the element at the specified index in the read-only list.
@@ -2170,16 +1766,6 @@
             <value>
             <c>true</c> if this instance is read only; otherwise, <c>false</c>.
             </value>
-        </member>
-        <member name="P:System.Collections.Immutable.ImmutableArray`1.IsEmpty">
-            <summary>
-            Gets a value indicating whether this collection is empty.
-            </summary>
-        </member>
-        <member name="P:System.Collections.Immutable.ImmutableArray`1.Length">
-            <summary>
-            Gets the number of array in the collection.
-            </summary>
         </member>
         <member name="P:System.Collections.Immutable.ImmutableArray`1.System#Collections#Generic#ICollection{T}#Count">
             <summary>
@@ -2202,26 +1788,6 @@
             The element.
             </returns>
             <exception cref="T:System.InvalidOperationException">Thrown if the <see cref="P:System.Collections.Immutable.ImmutableArray`1.IsDefault"/> property returns true.</exception>
-        </member>
-        <member name="P:System.Collections.Immutable.ImmutableArray`1.IsDefault">
-            <summary>
-            Gets a value indicating whether this struct was initialized without an actual array instance.
-            </summary>
-        </member>
-        <member name="P:System.Collections.Immutable.ImmutableArray`1.IsDefaultOrEmpty">
-            <summary>
-            Gets a value indicating whether this struct is empty or uninitialized.
-            </summary>
-        </member>
-        <member name="P:System.Collections.Immutable.ImmutableArray`1.System#Collections#Immutable#IImmutableArray#Array">
-            <summary>
-            Gets an untyped reference to the array.
-            </summary>
-        </member>
-        <member name="P:System.Collections.Immutable.ImmutableArray`1.DebuggerDisplay">
-            <summary>
-            Gets the string to display in the debugger watches window for this instance.
-            </summary>
         </member>
         <member name="M:System.Collections.Immutable.ImmutableArray`1.IndexOf(`0)">
             <summary>
@@ -2309,28 +1875,6 @@
             </summary>
             <param name="item">The item to search for.</param>
             <returns><c>true</c> if an equal value was found in the array; <c>false</c> otherwise.</returns>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableArray`1.CopyTo(`0[])">
-            <summary>
-            Copies the contents of this array to the specified array.
-            </summary>
-            <param name="destination">The array to copy to.</param>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableArray`1.CopyTo(`0[],System.Int32)">
-            <summary>
-            Copies the contents of this array to the specified array.
-            </summary>
-            <param name="destination">The array to copy to.</param>
-            <param name="destinationIndex">The index into the destination array to which the first copied element is written.</param>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableArray`1.CopyTo(System.Int32,`0[],System.Int32,System.Int32)">
-            <summary>
-            Copies the contents of this array to the specified array.
-            </summary>
-            <param name="sourceIndex">The index into this collection of the first element to copy.</param>
-            <param name="destination">The array to copy to.</param>
-            <param name="destinationIndex">The index into the destination array to which the first copied element is written.</param>
-            <param name="length">The number of elements to copy.</param>
         </member>
         <member name="M:System.Collections.Immutable.ImmutableArray`1.Insert(System.Int32,`0)">
             <summary>
@@ -2533,79 +2077,6 @@
             <param name="count">The number of elements to include in the sort.</param>
             <param name="comparer">The comparer to use in sorting. If <c>null</c>, the default comparer is used.</param>
         </member>
-        <member name="M:System.Collections.Immutable.ImmutableArray`1.ToBuilder">
-            <summary>
-            Returns a builder that is populated with the same contents as this array.
-            </summary>
-            <returns>The new builder.</returns>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableArray`1.GetEnumerator">
-            <summary>
-            Returns an enumerator for the contents of the array.
-            </summary>
-            <returns>An enumerator.</returns>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableArray`1.GetHashCode">
-            <summary>
-            Returns a hash code for this instance.
-            </summary>
-            <returns>
-            A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
-            </returns>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableArray`1.Equals(System.Object)">
-            <summary>
-            Determines whether the specified <see cref="T:System.Object"/> is equal to this instance.
-            </summary>
-            <param name="obj">The <see cref="T:System.Object"/> to compare with this instance.</param>
-            <returns>
-              <c>true</c> if the specified <see cref="T:System.Object"/> is equal to this instance; otherwise, <c>false</c>.
-            </returns>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableArray`1.Equals(System.Collections.Immutable.ImmutableArray{`0})">
-            <summary>
-            Indicates whether the current object is equal to another object of the same type.
-            </summary>
-            <param name="other">An object to compare with this object.</param>
-            <returns>
-            true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
-            </returns>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableArray`1.CastUp``1(System.Collections.Immutable.ImmutableArray{``0})">
-            <summary>
-            Initializes a new instance of the <see cref="T:System.Collections.Immutable.ImmutableArray`1"/> struct based on the contents
-            of an existing instance, allowing a covariant static cast to efficiently reuse the existing array.
-            </summary>
-            <param name="items">The array to initialize the array with. No copy is made.</param>
-            <remarks>
-            Covariant upcasts from this method may be reversed by calling the
-            <see cref="M:System.Collections.Immutable.ImmutableArray`1.As``1"/>  or <see cref="M:System.Collections.Immutable.ImmutableArray`1.CastArray``1"/>method.
-            </remarks>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableArray`1.CastArray``1">
-            <summary>
-            Initializes a new instance of the <see cref="T:System.Collections.Immutable.ImmutableArray`1"/> struct by casting the underlying
-            array to an array of type <typeparam name="TOther"/>.
-            </summary>
-            <exception cref="T:System.InvalidCastException">Thrown if the cast is illegal.</exception>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableArray`1.As``1">
-            <summary>
-            Creates an immutable array for this array, cast to a different element type.
-            </summary>
-            <typeparam name="TOther">The type of array element to return.</typeparam>
-            <returns>
-            A struct typed for the base element type. If the cast fails, an instance
-            is returned whose <see cref="P:System.Collections.Immutable.ImmutableArray`1.IsDefault"/> property returns <c>true</c>.
-            </returns>
-            <remarks>
-            Arrays of derived elements types can be cast to arrays of base element types
-            without reallocating the array.
-            These upcasts can be reversed via this same method, casting an array of base
-            element types to their derived types. However, downcasting is only successful
-            when it reverses a prior upcasting operation.
-            </remarks>
-        </member>
         <member name="M:System.Collections.Immutable.ImmutableArray`1.OfType``1">
             <summary>
             Filters the elements of this array to those assignable to the specified type.
@@ -2615,20 +2086,6 @@
             An <see cref="T:System.Collections.Generic.IEnumerable`1"/> that contains elements from
             the input sequence of type <typeparamref name="TResult"/>.
             </returns>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableArray`1.System#Collections#Generic#IEnumerable{T}#GetEnumerator">
-            <summary>
-            Returns an enumerator for the contents of the array.
-            </summary>
-            <returns>An enumerator.</returns>
-            <exception cref="T:System.InvalidOperationException">Thrown if the <see cref="P:System.Collections.Immutable.ImmutableArray`1.IsDefault"/> property returns true.</exception>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableArray`1.System#Collections#IEnumerable#GetEnumerator">
-            <summary>
-            Returns an enumerator for the contents of the array.
-            </summary>
-            <returns>An enumerator.</returns>
-            <exception cref="T:System.InvalidOperationException">Thrown if the <see cref="P:System.Collections.Immutable.ImmutableArray`1.IsDefault"/> property returns true.</exception>
         </member>
         <member name="M:System.Collections.Immutable.ImmutableArray`1.System#Collections#Immutable#IImmutableList{T}#Clear">
             <summary>
@@ -2827,6 +2284,211 @@
             to other.
             </returns>
         </member>
+        <member name="M:System.Collections.Immutable.ImmutableArray`1.RemoveAtRange(System.Collections.Generic.ICollection{System.Int32})">
+            <summary>
+            Returns an array with items at the specified indices removed.
+            </summary>
+            <param name="indicesToRemove">A **sorted set** of indices to elements that should be omitted from the returned array.</param>
+            <returns>The new array.</returns>
+        </member>
+        <member name="F:System.Collections.Immutable.ImmutableArray`1.Empty">
+            <summary>
+            An empty (initialized) instance of <see cref="T:System.Collections.Immutable.ImmutableArray`1"/>.
+            </summary>
+        </member>
+        <member name="F:System.Collections.Immutable.ImmutableArray`1.array">
+            <summary>
+            The backing field for this instance. References to this value should never be shared with outside code.
+            </summary>
+            <remarks>
+            This would be private, but we make it internal so that our own extension methods can access it.
+            </remarks>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableArray`1.#ctor(`0[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Collections.Immutable.ImmutableArray`1"/> struct
+            *without making a defensive copy*.
+            </summary>
+            <param name="items">The array to use. May be null for "default" arrays.</param>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableArray`1.op_Equality(System.Collections.Immutable.ImmutableArray{`0},System.Collections.Immutable.ImmutableArray{`0})">
+            <summary>
+            Checks equality between two instances.
+            </summary>
+            <param name="left">The instance to the left of the operator.</param>
+            <param name="right">The instance to the right of the operator.</param>
+            <returns><c>true</c> if the values' underlying arrays are reference equal; <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableArray`1.op_Inequality(System.Collections.Immutable.ImmutableArray{`0},System.Collections.Immutable.ImmutableArray{`0})">
+            <summary>
+            Checks inequality between two instances.
+            </summary>
+            <param name="left">The instance to the left of the operator.</param>
+            <param name="right">The instance to the right of the operator.</param>
+            <returns><c>true</c> if the values' underlying arrays are reference not equal; <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableArray`1.op_Equality(System.Nullable{System.Collections.Immutable.ImmutableArray{`0}},System.Nullable{System.Collections.Immutable.ImmutableArray{`0}})">
+            <summary>
+            Checks equality between two instances.
+            </summary>
+            <param name="left">The instance to the left of the operator.</param>
+            <param name="right">The instance to the right of the operator.</param>
+            <returns><c>true</c> if the values' underlying arrays are reference equal; <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableArray`1.op_Inequality(System.Nullable{System.Collections.Immutable.ImmutableArray{`0}},System.Nullable{System.Collections.Immutable.ImmutableArray{`0}})">
+            <summary>
+            Checks inequality between two instances.
+            </summary>
+            <param name="left">The instance to the left of the operator.</param>
+            <param name="right">The instance to the right of the operator.</param>
+            <returns><c>true</c> if the values' underlying arrays are reference not equal; <c>false</c> otherwise.</returns>
+        </member>
+        <member name="P:System.Collections.Immutable.ImmutableArray`1.Item(System.Int32)">
+            <summary>
+            Gets the element at the specified index in the read-only list.
+            </summary>
+            <param name="index">The zero-based index of the element to get.</param>
+            <returns>The element at the specified index in the read-only list.</returns>
+        </member>
+        <member name="P:System.Collections.Immutable.ImmutableArray`1.IsEmpty">
+            <summary>
+            Gets a value indicating whether this collection is empty.
+            </summary>
+        </member>
+        <member name="P:System.Collections.Immutable.ImmutableArray`1.Length">
+            <summary>
+            Gets the number of elements in the array.
+            </summary>
+        </member>
+        <member name="P:System.Collections.Immutable.ImmutableArray`1.IsDefault">
+            <summary>
+            Gets a value indicating whether this struct was initialized without an actual array instance.
+            </summary>
+        </member>
+        <member name="P:System.Collections.Immutable.ImmutableArray`1.IsDefaultOrEmpty">
+            <summary>
+            Gets a value indicating whether this struct is empty or uninitialized.
+            </summary>
+        </member>
+        <member name="P:System.Collections.Immutable.ImmutableArray`1.System#Collections#Immutable#IImmutableArray#Array">
+            <summary>
+            Gets an untyped reference to the array.
+            </summary>
+        </member>
+        <member name="P:System.Collections.Immutable.ImmutableArray`1.DebuggerDisplay">
+            <summary>
+            Gets the string to display in the debugger watches window for this instance.
+            </summary>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableArray`1.CopyTo(`0[])">
+            <summary>
+            Copies the contents of this array to the specified array.
+            </summary>
+            <param name="destination">The array to copy to.</param>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableArray`1.CopyTo(`0[],System.Int32)">
+            <summary>
+            Copies the contents of this array to the specified array.
+            </summary>
+            <param name="destination">The array to copy to.</param>
+            <param name="destinationIndex">The index into the destination array to which the first copied element is written.</param>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableArray`1.CopyTo(System.Int32,`0[],System.Int32,System.Int32)">
+            <summary>
+            Copies the contents of this array to the specified array.
+            </summary>
+            <param name="sourceIndex">The index into this collection of the first element to copy.</param>
+            <param name="destination">The array to copy to.</param>
+            <param name="destinationIndex">The index into the destination array to which the first copied element is written.</param>
+            <param name="length">The number of elements to copy.</param>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableArray`1.ToBuilder">
+            <summary>
+            Returns a builder that is populated with the same contents as this array.
+            </summary>
+            <returns>The new builder.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableArray`1.GetEnumerator">
+            <summary>
+            Returns an enumerator for the contents of the array.
+            </summary>
+            <returns>An enumerator.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableArray`1.GetHashCode">
+            <summary>
+            Returns a hash code for this instance.
+            </summary>
+            <returns>
+            A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
+            </returns>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableArray`1.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is equal to this instance.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"/> to compare with this instance.</param>
+            <returns>
+              <c>true</c> if the specified <see cref="T:System.Object"/> is equal to this instance; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableArray`1.Equals(System.Collections.Immutable.ImmutableArray{`0})">
+            <summary>
+            Indicates whether the current object is equal to another object of the same type.
+            </summary>
+            <param name="other">An object to compare with this object.</param>
+            <returns>
+            true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
+            </returns>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableArray`1.CastUp``1(System.Collections.Immutable.ImmutableArray{``0})">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Collections.Immutable.ImmutableArray`1"/> struct based on the contents
+            of an existing instance, allowing a covariant static cast to efficiently reuse the existing array.
+            </summary>
+            <param name="items">The array to initialize the array with. No copy is made.</param>
+            <remarks>
+            Covariant upcasts from this method may be reversed by calling the
+            <see cref="M:System.Collections.Immutable.ImmutableArray`1.As``1"/>  or <see cref="M:System.Collections.Immutable.ImmutableArray`1.CastArray``1"/>method.
+            </remarks>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableArray`1.CastArray``1">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Collections.Immutable.ImmutableArray`1"/> struct by casting the underlying
+            array to an array of type <typeparam name="TOther"/>.
+            </summary>
+            <exception cref="T:System.InvalidCastException">Thrown if the cast is illegal.</exception>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableArray`1.As``1">
+            <summary>
+            Creates an immutable array for this array, cast to a different element type.
+            </summary>
+            <typeparam name="TOther">The type of array element to return.</typeparam>
+            <returns>
+            A struct typed for the base element type. If the cast fails, an instance
+            is returned whose <see cref="P:System.Collections.Immutable.ImmutableArray`1.IsDefault"/> property returns <c>true</c>.
+            </returns>
+            <remarks>
+            Arrays of derived elements types can be cast to arrays of base element types
+            without reallocating the array.
+            These upcasts can be reversed via this same method, casting an array of base
+            element types to their derived types. However, downcasting is only successful
+            when it reverses a prior upcasting operation.
+            </remarks>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableArray`1.System#Collections#Generic#IEnumerable{T}#GetEnumerator">
+            <summary>
+            Returns an enumerator for the contents of the array.
+            </summary>
+            <returns>An enumerator.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown if the <see cref="P:System.Collections.Immutable.ImmutableArray`1.IsDefault"/> property returns true.</exception>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableArray`1.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator for the contents of the array.
+            </summary>
+            <returns>An enumerator.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown if the <see cref="P:System.Collections.Immutable.ImmutableArray`1.IsDefault"/> property returns true.</exception>
+        </member>
         <member name="M:System.Collections.Immutable.ImmutableArray`1.ThrowNullRefIfNotInitialized">
             <summary>
             Throws a null reference exception if the array field is null.
@@ -2841,18 +2503,6 @@
             
              This is intended for explicitly implemented interface method and property implementations.
              </summary>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableArray`1.RemoveAtRange(System.Collections.Generic.ICollection{System.Int32})">
-            <summary>
-            Returns an array with items at the specified indexes removed.
-            </summary>
-            <param name="indexesToRemove">A **sorted set** of indexes to elements that should be omitted from the returned array.</param>
-            <returns>The new array.</returns>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableArray`1.ThrowNullRefIfNotInitialized(System.Collections.Immutable.ImmutableArray{`0})">
-            <summary>
-            Throws a <see cref="T:System.NullReferenceException"/> if the specified array is uninitialized.
-            </summary>
         </member>
         <member name="T:System.Collections.Immutable.ImmutableArrayBuilderDebuggerProxy`1">
             <summary>
@@ -4529,76 +4179,52 @@
         </member>
         <member name="T:System.Collections.Immutable.ImmutableDictionaryDebuggerProxy`2">
             <summary>
-            A simple view of the immutable collection that the debugger can show to the developer.
+            Displays immutable dictionaries in the debugger.
             </summary>
+            <typeparam name="TKey">The type of the dictionary's keys.</typeparam>
+            <typeparam name="TValue">The type of the dictionary's values.</typeparam>
         </member>
-        <member name="F:System.Collections.Immutable.ImmutableDictionaryDebuggerProxy`2._map">
+        <member name="M:System.Collections.Immutable.ImmutableDictionaryDebuggerProxy`2.#ctor(System.Collections.Immutable.IImmutableDictionary{`0,`1})">
             <summary>
-            The collection to be enumerated.
-            </summary>
-        </member>
-        <member name="F:System.Collections.Immutable.ImmutableDictionaryDebuggerProxy`2._contents">
-            <summary>
-            The simple view of the collection.
-            </summary>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableDictionaryDebuggerProxy`2.#ctor(System.Collections.Immutable.ImmutableDictionary{`0,`1})">
-            <summary>   
             Initializes a new instance of the <see cref="T:System.Collections.Immutable.ImmutableDictionaryDebuggerProxy`2"/> class.
             </summary>
-            <param name="map">The collection to display in the debugger</param>
+            <param name="dictionary">The enumerable to show in the debugger.</param>
         </member>
-        <member name="P:System.Collections.Immutable.ImmutableDictionaryDebuggerProxy`2.Contents">
+        <member name="T:System.Collections.Immutable.ImmutableEnumerableDebuggerProxy`1">
             <summary>
-            Gets a simple debugger-viewable collection.
+            Displays immutable enumerables in the debugger.
+            </summary>
+            <typeparam name="T">The element type of the enumerable.</typeparam>
+            <remarks>
+            This class should only be used with immutable enumerables, since it
+            caches the enumerable into an array for display in the debugger.
+            </remarks>
+        </member>
+        <member name="F:System.Collections.Immutable.ImmutableEnumerableDebuggerProxy`1._enumerable">
+            <summary>
+            The enumerable to show to the debugger.
+            </summary>
+        </member>
+        <member name="F:System.Collections.Immutable.ImmutableEnumerableDebuggerProxy`1._cachedContents">
+            <summary>
+            The contents of the enumerable, cached into an array.
+            </summary>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableEnumerableDebuggerProxy`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Collections.Immutable.ImmutableEnumerableDebuggerProxy`1"/> class.
+            </summary>
+            <param name="enumerable">The enumerable to show in the debugger.</param>
+        </member>
+        <member name="P:System.Collections.Immutable.ImmutableEnumerableDebuggerProxy`1.Contents">
+            <summary>
+            Gets the contents of the enumerable for display in the debugger.
             </summary>
         </member>
         <member name="T:System.Collections.Immutable.ImmutableExtensions">
             <summary>
             Extension methods for immutable types.
             </summary>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableExtensions.TryGetCount``1(System.Collections.Generic.IEnumerable{``0},System.Int32@)">
-            <summary>
-            Tries to divine the number of elements in a sequence without actually enumerating each element.
-            </summary>
-            <typeparam name="T">The type of elements in the sequence.</typeparam>
-            <param name="sequence">The enumerable source.</param>
-            <param name="count">Receives the number of elements in the enumeration, if it could be determined.</param>
-            <returns><c>true</c> if the count could be determined; <c>false</c> otherwise.</returns>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableExtensions.TryGetCount``1(System.Collections.IEnumerable,System.Int32@)">
-            <summary>
-            Tries to divine the number of elements in a sequence without actually enumerating each element.
-            </summary>
-            <typeparam name="T">The type of elements in the sequence.</typeparam>
-            <param name="sequence">The enumerable source.</param>
-            <param name="count">Receives the number of elements in the enumeration, if it could be determined.</param>
-            <returns><c>true</c> if the count could be determined; <c>false</c> otherwise.</returns>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableExtensions.GetCount``1(System.Collections.Generic.IEnumerable{``0}@)">
-            <summary>
-            Gets the number of elements in the specified sequence,
-            while guaranteeing that the sequence is only enumerated once
-            in total by this method and the caller.
-            </summary>
-            <typeparam name="T">The type of element in the collection.</typeparam>
-            <param name="sequence">The sequence.</param>
-            <returns>The number of elements in the sequence.</returns>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableExtensions.ToArray``1(System.Collections.Generic.IEnumerable{``0},System.Int32)">
-            <summary>
-            Gets a copy of a sequence as an array.
-            </summary>
-            <typeparam name="T">The type of element.</typeparam>
-            <param name="sequence">The sequence to be copied.</param>
-            <param name="count">The number of elements in the sequence.</param>
-            <returns>The array.</returns>
-            <remarks>
-            This is more efficient than the <see cref="M:System.Linq.Enumerable.ToArray``1(System.Collections.Generic.IEnumerable{``0})"/> extension method
-            because that only tries to cast the sequence to <see cref="T:System.Collections.Generic.ICollection`1"/> to determine
-            the count before it falls back to reallocating arrays as it enumerates.
-            </remarks>
         </member>
         <member name="M:System.Collections.Immutable.ImmutableExtensions.AsOrderedCollection``1(System.Collections.Generic.IEnumerable{``0})">
             <summary>
@@ -4719,6 +4345,68 @@
             <returns>
             An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
             </returns>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableExtensions.TryGetCount``1(System.Collections.Generic.IEnumerable{``0},System.Int32@)">
+            <summary>
+            Tries to divine the number of elements in a sequence without actually enumerating each element.
+            </summary>
+            <typeparam name="T">The type of elements in the sequence.</typeparam>
+            <param name="sequence">The enumerable source.</param>
+            <param name="count">Receives the number of elements in the enumeration, if it could be determined.</param>
+            <returns><c>true</c> if the count could be determined; <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableExtensions.TryGetCount``1(System.Collections.IEnumerable,System.Int32@)">
+            <summary>
+            Tries to divine the number of elements in a sequence without actually enumerating each element.
+            </summary>
+            <typeparam name="T">The type of elements in the sequence.</typeparam>
+            <param name="sequence">The enumerable source.</param>
+            <param name="count">Receives the number of elements in the enumeration, if it could be determined.</param>
+            <returns><c>true</c> if the count could be determined; <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableExtensions.GetCount``1(System.Collections.Generic.IEnumerable{``0}@)">
+            <summary>
+            Gets the number of elements in the specified sequence,
+            while guaranteeing that the sequence is only enumerated once
+            in total by this method and the caller.
+            </summary>
+            <typeparam name="T">The type of element in the collection.</typeparam>
+            <param name="sequence">The sequence.</param>
+            <returns>The number of elements in the sequence.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableExtensions.TryCopyTo``1(System.Collections.Generic.IEnumerable{``0},``0[],System.Int32)">
+            <summary>
+            Tries to copy the elements in the sequence to the specified array,
+            if the sequence is a well-known collection type. Otherwise, does
+            nothing and returns <c>false</c>.
+            </summary>
+            <typeparam name="T">The type of element in the sequence.</typeparam>
+            <param name="sequence">The sequence to copy.</param>
+            <param name="array">The array to copy the elements to.</param>
+            <param name="arrayIndex">The index in the array to start copying.</param>
+            <returns><c>true</c> if the elements were successfully copied; <c>false</c> otherwise.</returns>
+            <remarks>
+            <para>
+            The reason we don't copy anything other than for well-known types is that a malicious interface
+            implementation of <see cref="T:System.Collections.Generic.ICollection`1"/> could hold on to the array when its <see cref="M:System.Collections.Generic.ICollection`1.CopyTo(`0[],System.Int32)"/>
+            method is called. If the array it holds onto underlies an <see cref="T:System.Collections.Immutable.ImmutableArray`1"/>, it could violate
+            immutability by modifying the array.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableExtensions.ToArray``1(System.Collections.Generic.IEnumerable{``0},System.Int32)">
+            <summary>
+            Gets a copy of a sequence as an array.
+            </summary>
+            <typeparam name="T">The type of element.</typeparam>
+            <param name="sequence">The sequence to be copied.</param>
+            <param name="count">The number of elements in the sequence.</param>
+            <returns>The array.</returns>
+            <remarks>
+            This is more efficient than the <see cref="M:System.Linq.Enumerable.ToArray``1(System.Collections.Generic.IEnumerable{``0})"/> extension method
+            because that only tries to cast the sequence to <see cref="T:System.Collections.Generic.ICollection`1"/> to determine
+            the count before it falls back to reallocating arrays as it enumerates.
+            </remarks>
         </member>
         <member name="T:System.Collections.Immutable.ImmutableHashSet">
             <summary>
@@ -5893,32 +5581,6 @@
             </summary>
             <param name="items">The entries to add.</param>
             <param name="avoidWithComparer"><c>true</c> when being called from <see cref="M:System.Collections.Immutable.ImmutableHashSet`1.WithComparer(System.Collections.Generic.IEqualityComparer{`0})"/> to avoid <see cref="T:System.StackOverflowException"/>.</param>
-        </member>
-        <member name="T:System.Collections.Immutable.ImmutableHashSetDebuggerProxy`1">
-            <summary>
-            A simple view of the immutable collection that the debugger can show to the developer.
-            </summary>
-        </member>
-        <member name="F:System.Collections.Immutable.ImmutableHashSetDebuggerProxy`1._set">
-            <summary>
-            The collection to be enumerated.
-            </summary>
-        </member>
-        <member name="F:System.Collections.Immutable.ImmutableHashSetDebuggerProxy`1._contents">
-            <summary>
-            The simple view of the collection.
-            </summary>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableHashSetDebuggerProxy`1.#ctor(System.Collections.Immutable.ImmutableHashSet{`0})">
-            <summary>   
-            Initializes a new instance of the <see cref="T:System.Collections.Immutable.ImmutableHashSetDebuggerProxy`1"/> class.
-            </summary>
-            <param name="set">The collection to display in the debugger</param>
-        </member>
-        <member name="P:System.Collections.Immutable.ImmutableHashSetDebuggerProxy`1.Contents">
-            <summary>
-            Gets a simple debugger-viewable collection.
-            </summary>
         </member>
         <member name="T:System.Collections.Immutable.ImmutableInterlocked">
             <summary>
@@ -8032,7 +7694,7 @@
             <param name="root">The root node to wrap.</param>
             <returns>A wrapping collection type for the new tree.</returns>
         </member>
-        <member name="M:System.Collections.Immutable.ImmutableList`1.FillFromEmpty(System.Collections.Generic.IEnumerable{`0})">
+        <member name="M:System.Collections.Immutable.ImmutableList`1.CreateRange(System.Collections.Generic.IEnumerable{`0})">
             <summary>
             Creates an immutable list with the contents from a sequence of elements.
             </summary>
@@ -8372,17 +8034,17 @@
         </member>
         <member name="M:System.Collections.Immutable.ImmutableList`1.Node.AddRange(System.Collections.Generic.IEnumerable{`0})">
             <summary>
-            Adds the specified keys to the tree.
+            Adds the specified keys to this tree.
             </summary>
             <param name="keys">The keys.</param>
             <returns>The new tree.</returns>
         </member>
         <member name="M:System.Collections.Immutable.ImmutableList`1.Node.InsertRange(System.Int32,System.Collections.Generic.IEnumerable{`0})">
             <summary>
-            Adds a collection of values at a given index to this node.
+            Adds the specified keys at a given index to this tree.
             </summary>
-            <param name="index">The location for the new values.</param>
-            <param name="keys">The values to add.</param>
+            <param name="index">The location for the new keys.</param>
+            <param name="keys">The keys.</param>
             <returns>The new tree.</returns>
         </member>
         <member name="M:System.Collections.Immutable.ImmutableList`1.Node.RemoveAt(System.Int32)">
@@ -8801,71 +8463,91 @@
             Freezes this node and all descendant nodes so that any mutations require a new instance of the nodes.
             </summary>
         </member>
-        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.RotateLeft(System.Collections.Immutable.ImmutableList{`0}.Node)">
+        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.RotateLeft">
             <summary>
             AVL rotate left operation.
             </summary>
-            <param name="tree">The tree.</param>
             <returns>The rotated tree.</returns>
         </member>
-        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.RotateRight(System.Collections.Immutable.ImmutableList{`0}.Node)">
+        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.RotateRight">
             <summary>
             AVL rotate right operation.
             </summary>
-            <param name="tree">The tree.</param>
             <returns>The rotated tree.</returns>
         </member>
-        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.DoubleLeft(System.Collections.Immutable.ImmutableList{`0}.Node)">
+        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.DoubleLeft">
             <summary>
             AVL rotate double-left operation.
             </summary>
-            <param name="tree">The tree.</param>
             <returns>The rotated tree.</returns>
         </member>
-        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.DoubleRight(System.Collections.Immutable.ImmutableList{`0}.Node)">
+        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.DoubleRight">
             <summary>
             AVL rotate double-right operation.
             </summary>
-            <param name="tree">The tree.</param>
             <returns>The rotated tree.</returns>
         </member>
-        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.Balance(System.Collections.Immutable.ImmutableList{`0}.Node)">
+        <member name="P:System.Collections.Immutable.ImmutableList`1.Node.BalanceFactor">
             <summary>
-            Returns a value indicating whether the tree is in balance.
+            Gets a value indicating whether this tree is in balance.
             </summary>
-            <param name="tree">The tree.</param>
-            <returns>0 if the tree is in balance, a positive integer if the right side is heavy, or a negative integer if the left side is heavy.</returns>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.IsRightHeavy(System.Collections.Immutable.ImmutableList{`0}.Node)">
-            <summary>
-            Determines whether the specified tree is right heavy.
-            </summary>
-            <param name="tree">The tree.</param>
             <returns>
-            <c>true</c> if [is right heavy] [the specified tree]; otherwise, <c>false</c>.
+            0 if the heights of both sides are the same, a positive integer if the right side is taller, or a negative integer if the left side is taller.
             </returns>
         </member>
-        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.IsLeftHeavy(System.Collections.Immutable.ImmutableList{`0}.Node)">
+        <member name="P:System.Collections.Immutable.ImmutableList`1.Node.IsRightHeavy">
             <summary>
-            Determines whether the specified tree is left heavy.
+            Determines whether this tree is right heavy.
             </summary>
+            <returns>
+            <c>true</c> if this tree is right heavy; otherwise, <c>false</c>.
+            </returns>
         </member>
-        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.MakeBalanced(System.Collections.Immutable.ImmutableList{`0}.Node)">
+        <member name="P:System.Collections.Immutable.ImmutableList`1.Node.IsLeftHeavy">
             <summary>
-            Balances the specified tree.
+            Determines whether this tree is left heavy.
             </summary>
-            <param name="tree">The tree.</param>
+            <returns>
+            <c>true</c> if this tree is left heavy; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="P:System.Collections.Immutable.ImmutableList`1.Node.IsBalanced">
+            <summary>
+            Determines whether this tree has a balance factor of -1, 0, or 1.
+            </summary>
+            <returns>
+            <c>true</c> if this tree is balanced; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.Balance">
+            <summary>
+            Balances this tree.
+            </summary>
             <returns>A balanced tree.</returns>
         </member>
-        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.BalanceNode(System.Collections.Immutable.ImmutableList{`0}.Node)">
+        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.BalanceLeft">
             <summary>
-            Balance the specified node.  Allows for a large imbalance between left and
+            Balances the left side of this tree by rotating this tree rightwards.
+            </summary>
+            <returns>A balanced tree.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.BalanceRight">
+            <summary>
+            Balances the right side of this tree by rotating this tree leftwards.
+            </summary>
+            <returns>A balanced tree.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.BalanceMany">
+            <summary>
+            Balances this tree.  Allows for a large imbalance between left and
             right nodes, but assumes left and right nodes are individually balanced.
             </summary>
-            <param name="node">The node.</param>
-            <returns>A balanced node</returns>
+            <returns>A balanced tree.</returns>
+            <remarks>
+            If this tree is already balanced, this method does nothing.
+            </remarks>
         </member>
-        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.Mutate(System.Collections.Immutable.ImmutableList{`0}.Node,System.Collections.Immutable.ImmutableList{`0}.Node)">
+        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.MutateBoth(System.Collections.Immutable.ImmutableList{`0}.Node,System.Collections.Immutable.ImmutableList{`0}.Node)">
             <summary>
             Creates a node mutation, either by mutating this node (if not yet frozen) or by creating a clone of this node
             with the described changes.
@@ -8874,13 +8556,59 @@
             <param name="right">The right branch of the mutated node.</param>
             <returns>The mutated (or created) node.</returns>
         </member>
-        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.Mutate(`0)">
+        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.MutateLeft(System.Collections.Immutable.ImmutableList{`0}.Node)">
             <summary>
             Creates a node mutation, either by mutating this node (if not yet frozen) or by creating a clone of this node
             with the described changes.
             </summary>
-            <param name="value">The new value for this node.</param>
+            <param name="left">The left branch of the mutated node.</param>
             <returns>The mutated (or created) node.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.MutateRight(System.Collections.Immutable.ImmutableList{`0}.Node)">
+            <summary>
+            Creates a node mutation, either by mutating this node (if not yet frozen) or by creating a clone of this node
+            with the described changes.
+            </summary>
+            <param name="right">The right branch of the mutated node.</param>
+            <returns>The mutated (or created) node.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.ParentHeight(System.Collections.Immutable.ImmutableList{`0}.Node,System.Collections.Immutable.ImmutableList{`0}.Node)">
+            <summary>
+            Calculates the height of the parent node from its children.
+            </summary>
+            <param name="left">The left child.</param>
+            <param name="right">The right child.</param>
+            <returns>The height of the parent node.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.ParentCount(System.Collections.Immutable.ImmutableList{`0}.Node,System.Collections.Immutable.ImmutableList{`0}.Node)">
+            <summary>
+            Calculates the number of elements in the parent node from its children.
+            </summary>
+            <param name="left">The left child.</param>
+            <param name="right">The right child.</param>
+            <returns>The number of elements in the parent node.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.MutateKey(`0)">
+            <summary>
+            Creates a node mutation, either by mutating this node (if not yet frozen) or by creating a clone of this node
+            with the described changes.
+            </summary>
+            <param name="key">The new key for this node.</param>
+            <returns>The mutated (or created) node.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.CreateRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Creates a node from the specified keys.
+            </summary>
+            <param name="keys">The keys.</param>
+            <returns>The root of the created node tree.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableList`1.Node.CreateLeaf(`0)">
+            <summary>
+            Creates a leaf node.
+            </summary>
+            <param name="key">The leaf node's key.</param>
+            <returns>The leaf node.</returns>
         </member>
         <member name="T:System.Collections.Immutable.ImmutableListBuilderDebuggerProxy`1">
             <summary>
@@ -8956,19 +8684,19 @@
         </member>
         <member name="M:System.Collections.Immutable.ImmutableQueue.CreateRange``1(System.Collections.Generic.IEnumerable{``0})">
             <summary>
-            Creates a new immutable collection prefilled with the specified items.
+            Creates a new immutable queue from the specified items.
             </summary>
-            <typeparam name="T">The type of items stored by the collection.</typeparam>
-            <param name="items">The items to prepopulate.</param>
-            <returns>The new immutable collection.</returns>
+            <typeparam name="T">The type of items to store in the queue.</typeparam>
+            <param name="items">The enumerable to copy items from.</param>
+            <returns>The new immutable queue.</returns>
         </member>
         <member name="M:System.Collections.Immutable.ImmutableQueue.Create``1(``0[])">
             <summary>
-            Creates a new immutable collection prefilled with the specified items.
+            Creates a new immutable queue from the specified items.
             </summary>
-            <typeparam name="T">The type of items stored by the collection.</typeparam>
-            <param name="items">The items to prepopulate.</param>
-            <returns>The new immutable collection.</returns>
+            <typeparam name="T">The type of items to store in the queue.</typeparam>
+            <param name="items">The array to copy items from.</param>
+            <returns>The new immutable queue.</returns>
         </member>
         <member name="M:System.Collections.Immutable.ImmutableQueue.Dequeue``1(System.Collections.Immutable.IImmutableQueue{``0},``0@)">
             <summary>
@@ -9014,8 +8742,8 @@
             <summary>
             Initializes a new instance of the <see cref="T:System.Collections.Immutable.ImmutableQueue`1"/> class.
             </summary>
-            <param name="forward">The forward stack.</param>
-            <param name="backward">The backward stack.</param>
+            <param name="forwards">The forwards stack.</param>
+            <param name="backwards">The backwards stack.</param>
         </member>
         <member name="M:System.Collections.Immutable.ImmutableQueue`1.Clear">
             <summary>
@@ -9215,32 +8943,6 @@
             <summary>
             Throws an <see cref="T:System.ObjectDisposedException"/> if this 
             enumerator has already been disposed.
-            </summary>
-        </member>
-        <member name="T:System.Collections.Immutable.ImmutableQueueDebuggerProxy`1">
-            <summary>
-            A simple view of the immutable collection that the debugger can show to the developer.
-            </summary>
-        </member>
-        <member name="F:System.Collections.Immutable.ImmutableQueueDebuggerProxy`1._queue">
-            <summary>
-            The collection to be enumerated.
-            </summary>
-        </member>
-        <member name="F:System.Collections.Immutable.ImmutableQueueDebuggerProxy`1._contents">
-            <summary>
-            The simple view of the collection.
-            </summary>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableQueueDebuggerProxy`1.#ctor(System.Collections.Immutable.ImmutableQueue{`0})">
-            <summary>   
-            Initializes a new instance of the <see cref="T:System.Collections.Immutable.ImmutableQueueDebuggerProxy`1"/> class.
-            </summary>
-            <param name="queue">The collection to display in the debugger</param>
-        </member>
-        <member name="P:System.Collections.Immutable.ImmutableQueueDebuggerProxy`1.Contents">
-            <summary>
-            Gets a simple debugger-viewable collection.
             </summary>
         </member>
         <member name="T:System.Collections.Immutable.ImmutableSortedDictionary">
@@ -10458,14 +10160,6 @@
             <param name="mutated">Receives a value indicating whether this node tree has mutated because of this operation.</param>
             <returns>The new AVL tree.</returns>
         </member>
-        <member name="M:System.Collections.Immutable.ImmutableSortedDictionary`2.Node.GetValueOrDefault(`0,System.Collections.Generic.IComparer{`0})">
-            <summary>
-            Gets the value or default.
-            </summary>
-            <param name="key">The key.</param>
-            <param name="keyComparer">The key comparer.</param>
-            <returns>The value.</returns>
-        </member>
         <member name="M:System.Collections.Immutable.ImmutableSortedDictionary`2.Node.TryGetValue(`0,System.Collections.Generic.IComparer{`0},`1@)">
             <summary>
             Tries to get the value.
@@ -10526,7 +10220,7 @@
             <c>true</c> if [contains] [the specified pair]; otherwise, <c>false</c>.
             </returns>
         </member>
-        <member name="M:System.Collections.Immutable.ImmutableSortedDictionary`2.Node.Freeze(System.Action{System.Collections.Generic.KeyValuePair{`0,`1}})">
+        <member name="M:System.Collections.Immutable.ImmutableSortedDictionary`2.Node.Freeze">
             <summary>
             Freezes this node and all descendant nodes so that any mutations require a new instance of the nodes.
             </summary>
@@ -10656,32 +10350,6 @@
             <param name="map">The collection to display in the debugger</param>
         </member>
         <member name="P:System.Collections.Immutable.ImmutableSortedDictionaryBuilderDebuggerProxy`2.Contents">
-            <summary>
-            Gets a simple debugger-viewable collection.
-            </summary>
-        </member>
-        <member name="T:System.Collections.Immutable.ImmutableSortedDictionaryDebuggerProxy`2">
-            <summary>
-            A simple view of the immutable collection that the debugger can show to the developer.
-            </summary>
-        </member>
-        <member name="F:System.Collections.Immutable.ImmutableSortedDictionaryDebuggerProxy`2._map">
-            <summary>
-            The collection to be enumerated.
-            </summary>
-        </member>
-        <member name="F:System.Collections.Immutable.ImmutableSortedDictionaryDebuggerProxy`2._contents">
-            <summary>
-            The simple view of the collection.
-            </summary>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableSortedDictionaryDebuggerProxy`2.#ctor(System.Collections.Immutable.ImmutableSortedDictionary{`0,`1})">
-            <summary>   
-            Initializes a new instance of the <see cref="T:System.Collections.Immutable.ImmutableSortedDictionaryDebuggerProxy`2"/> class.
-            </summary>
-            <param name="map">The collection to display in the debugger</param>
-        </member>
-        <member name="P:System.Collections.Immutable.ImmutableSortedDictionaryDebuggerProxy`2.Contents">
             <summary>
             Gets a simple debugger-viewable collection.
             </summary>
@@ -11553,6 +11221,38 @@
             <param name="addedItems">The sequence of elements to add to this set.</param>
             <returns>The immutable sorted set.</returns>
         </member>
+        <member name="T:System.Collections.Immutable.ImmutableSortedSet`1.ReverseEnumerable">
+            <summary>
+            An reverse enumerable of a sorted set.
+            </summary>
+        </member>
+        <member name="F:System.Collections.Immutable.ImmutableSortedSet`1.ReverseEnumerable._root">
+            <summary>
+            The root node to enumerate.
+            </summary>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableSortedSet`1.ReverseEnumerable.#ctor(System.Collections.Immutable.ImmutableSortedSet{`0}.Node)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Collections.Immutable.ImmutableSortedSet`1.ReverseEnumerable"/> class.
+            </summary>
+            <param name="root">The root of the data structure to reverse enumerate.</param>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableSortedSet`1.ReverseEnumerable.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+            A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="M:System.Collections.Immutable.ImmutableSortedSet`1.ReverseEnumerable.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through a collection.
+            </summary>
+            <returns>
+            An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
+            </returns>
+        </member>
         <member name="T:System.Collections.Immutable.ImmutableSortedSet`1.Enumerator">
             <summary>
             Enumerates the contents of a binary tree.
@@ -11673,38 +11373,6 @@
             Pushes this node and all its Left (or Right, if reversed) descendants onto the stack.
             </summary>
             <param name="node">The starting node to push onto the stack.</param>
-        </member>
-        <member name="T:System.Collections.Immutable.ImmutableSortedSet`1.ReverseEnumerable">
-            <summary>
-            An reverse enumerable of a sorted set.
-            </summary>
-        </member>
-        <member name="F:System.Collections.Immutable.ImmutableSortedSet`1.ReverseEnumerable._root">
-            <summary>
-            The root node to enumerate.
-            </summary>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableSortedSet`1.ReverseEnumerable.#ctor(System.Collections.Immutable.ImmutableSortedSet{`0}.Node)">
-            <summary>
-            Initializes a new instance of the <see cref="T:System.Collections.Immutable.ImmutableSortedSet`1.ReverseEnumerable"/> class.
-            </summary>
-            <param name="root">The root of the data structure to reverse enumerate.</param>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableSortedSet`1.ReverseEnumerable.GetEnumerator">
-            <summary>
-            Returns an enumerator that iterates through the collection.
-            </summary>
-            <returns>
-            A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
-            </returns>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableSortedSet`1.ReverseEnumerable.System#Collections#IEnumerable#GetEnumerator">
-            <summary>
-            Returns an enumerator that iterates through a collection.
-            </summary>
-            <returns>
-            An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
-            </returns>
         </member>
         <member name="T:System.Collections.Immutable.ImmutableSortedSet`1.Node">
             <summary>
@@ -12051,32 +11719,6 @@
             Gets a simple debugger-viewable collection.
             </summary>
         </member>
-        <member name="T:System.Collections.Immutable.ImmutableSortedSetDebuggerProxy`1">
-            <summary>
-            A simple view of the immutable collection that the debugger can show to the developer.
-            </summary>
-        </member>
-        <member name="F:System.Collections.Immutable.ImmutableSortedSetDebuggerProxy`1._set">
-            <summary>
-            The collection to be enumerated.
-            </summary>
-        </member>
-        <member name="F:System.Collections.Immutable.ImmutableSortedSetDebuggerProxy`1._contents">
-            <summary>
-            The simple view of the collection.
-            </summary>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableSortedSetDebuggerProxy`1.#ctor(System.Collections.Immutable.ImmutableSortedSet{`0})">
-            <summary>   
-            Initializes a new instance of the <see cref="T:System.Collections.Immutable.ImmutableSortedSetDebuggerProxy`1"/> class.
-            </summary>
-            <param name="set">The collection to display in the debugger</param>
-        </member>
-        <member name="P:System.Collections.Immutable.ImmutableSortedSetDebuggerProxy`1.Contents">
-            <summary>
-            Gets a simple debugger-viewable collection.
-            </summary>
-        </member>
         <member name="T:System.Collections.Immutable.ImmutableStack">
             <summary>
             A set of initialization methods for instances of <see cref="T:System.Collections.Immutable.ImmutableStack`1"/>.
@@ -12351,32 +11993,6 @@
             enumerator has already been disposed.
             </summary>
         </member>
-        <member name="T:System.Collections.Immutable.ImmutableStackDebuggerProxy`1">
-            <summary>
-            A simple view of the immutable collection that the debugger can show to the developer.
-            </summary>
-        </member>
-        <member name="F:System.Collections.Immutable.ImmutableStackDebuggerProxy`1._stack">
-            <summary>
-            The collection to be enumerated.
-            </summary>
-        </member>
-        <member name="F:System.Collections.Immutable.ImmutableStackDebuggerProxy`1._contents">
-            <summary>
-            The simple view of the collection.
-            </summary>
-        </member>
-        <member name="M:System.Collections.Immutable.ImmutableStackDebuggerProxy`1.#ctor(System.Collections.Immutable.ImmutableStack{`0})">
-            <summary>   
-            Initializes a new instance of the <see cref="T:System.Collections.Immutable.ImmutableStackDebuggerProxy`1"/> class.
-            </summary>
-            <param name="stack">The collection to display in the debugger</param>
-        </member>
-        <member name="P:System.Collections.Immutable.ImmutableStackDebuggerProxy`1.Contents">
-            <summary>
-            Gets a simple debugger-viewable collection.
-            </summary>
-        </member>
         <member name="T:System.Collections.Immutable.KeysOrValuesCollectionAccessor`3">
             <summary>
             A thin wrapper around the <see cref="P:System.Collections.Generic.IDictionary`2.Keys"/> or <see cref="P:System.Collections.Generic.IDictionary`2.Values"/> enumerators so they look like a collection.
@@ -12559,6 +12175,351 @@
             <param name="caller">The renter of the object.</param>
             <returns>The rented object.</returns>
             <exception cref="T:System.ObjectDisposedException">Thrown if <paramref name="caller"/> is no longer the renter of the value.</exception>
+        </member>
+        <member name="T:System.Collections.Immutable.SortedInt32KeyNode`1">
+            <summary>
+            A node in the AVL tree storing key/value pairs with Int32 keys.
+            </summary>
+            <remarks>
+            This is a trimmed down version of <see cref="T:System.Collections.Immutable.ImmutableSortedDictionary`2.Node"/>
+            with <c>TKey</c> fixed to be <see cref="T:System.Int32"/>.  This avoids multiple interface-based dispatches while examining
+            each node in the tree during a lookup: an interface call to the comparer's <see cref="M:System.Collections.Generic.IComparer`1.Compare(`0,`0)"/> method,
+            and then an interface call to <see cref="T:System.Int32"/>'s <see cref="M:System.IComparable`1.CompareTo(`0)"/> method as part of
+            the <see cref="T:System.Collections.Generic.GenericComparer`1"/>'s <see cref="M:System.Collections.Generic.IComparer`1.Compare(`0,`0)"/> implementation.
+            </remarks>
+        </member>
+        <member name="F:System.Collections.Immutable.SortedInt32KeyNode`1.EmptyNode">
+            <summary>
+            The default empty node.
+            </summary>
+        </member>
+        <member name="F:System.Collections.Immutable.SortedInt32KeyNode`1._key">
+            <summary>
+            The Int32 key associated with this node.
+            </summary>
+        </member>
+        <member name="F:System.Collections.Immutable.SortedInt32KeyNode`1._value">
+            <summary>
+            The value associated with this node.
+            </summary>
+            <remarks>
+            Sadly, this field could be readonly but doing so breaks serialization due to bug: 
+            http://connect.microsoft.com/VisualStudio/feedback/details/312970/weird-argumentexception-when-deserializing-field-in-typedreferences-cannot-be-static-or-init-only
+            </remarks>
+        </member>
+        <member name="F:System.Collections.Immutable.SortedInt32KeyNode`1._frozen">
+            <summary>
+            A value indicating whether this node has been frozen (made immutable).
+            </summary>
+            <remarks>
+            Nodes must be frozen before ever being observed by a wrapping collection type
+            to protect collections from further mutations.
+            </remarks>
+        </member>
+        <member name="F:System.Collections.Immutable.SortedInt32KeyNode`1._height">
+            <summary>
+            The depth of the tree beneath this node.
+            </summary>
+        </member>
+        <member name="F:System.Collections.Immutable.SortedInt32KeyNode`1._left">
+            <summary>
+            The left tree.
+            </summary>
+        </member>
+        <member name="F:System.Collections.Immutable.SortedInt32KeyNode`1._right">
+            <summary>
+            The right tree.
+            </summary>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Collections.Immutable.SortedInt32KeyNode`1"/> class that is pre-frozen.
+            </summary>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.#ctor(System.Int32,`0,System.Collections.Immutable.SortedInt32KeyNode{`0},System.Collections.Immutable.SortedInt32KeyNode{`0},System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Collections.Immutable.SortedInt32KeyNode`1"/> class that is not yet frozen.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+            <param name="left">The left.</param>
+            <param name="right">The right.</param>
+            <param name="frozen">Whether this node is prefrozen.</param>
+        </member>
+        <member name="P:System.Collections.Immutable.SortedInt32KeyNode`1.IsEmpty">
+            <summary>
+            Gets a value indicating whether this instance is empty.
+            </summary>
+            <value>
+            <c>true</c> if this instance is empty; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:System.Collections.Immutable.SortedInt32KeyNode`1.Height">
+            <summary>
+            Gets the height of the tree beneath this node.
+            </summary>
+        </member>
+        <member name="P:System.Collections.Immutable.SortedInt32KeyNode`1.Left">
+            <summary>
+            Gets the left branch of this node.
+            </summary>
+        </member>
+        <member name="P:System.Collections.Immutable.SortedInt32KeyNode`1.Right">
+            <summary>
+            Gets the right branch of this node.
+            </summary>
+        </member>
+        <member name="P:System.Collections.Immutable.SortedInt32KeyNode`1.System#Collections#Immutable#IBinaryTree#Left">
+            <summary>
+            Gets the left branch of this node.
+            </summary>
+        </member>
+        <member name="P:System.Collections.Immutable.SortedInt32KeyNode`1.System#Collections#Immutable#IBinaryTree#Right">
+            <summary>
+            Gets the right branch of this node.
+            </summary>
+        </member>
+        <member name="P:System.Collections.Immutable.SortedInt32KeyNode`1.System#Collections#Immutable#IBinaryTree#Count">
+            <summary>
+            Gets the number of elements contained by this node and below.
+            </summary>
+        </member>
+        <member name="P:System.Collections.Immutable.SortedInt32KeyNode`1.Value">
+            <summary>
+            Gets the value represented by the current node.
+            </summary>
+        </member>
+        <member name="P:System.Collections.Immutable.SortedInt32KeyNode`1.Values">
+            <summary>
+            Gets the values.
+            </summary>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+            A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.SetItem(System.Int32,`0,System.Collections.Generic.IEqualityComparer{`0},System.Boolean@,System.Boolean@)">
+            <summary>
+            Adds the specified key.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+            <param name="valueComparer">The value comparer.</param>
+            <param name="replacedExistingValue">Receives a value indicating whether an existing value was replaced.</param>
+            <param name="mutated">Receives a value indicating whether this node tree has mutated because of this operation.</param>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.Remove(System.Int32,System.Boolean@)">
+            <summary>
+            Removes the specified key.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="mutated">Receives a value indicating whether this node tree has mutated because of this operation.</param>
+            <returns>The new AVL tree.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.GetValueOrDefault(System.Int32)">
+            <summary>
+            Gets the value or default.
+            </summary>
+            <param name="key">The key.</param>
+            <returns>The value.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.TryGetValue(System.Int32,`0@)">
+            <summary>
+            Tries to get the value.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+            <returns>True if the key was found.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.Freeze(System.Action{System.Collections.Generic.KeyValuePair{System.Int32,`0}})">
+            <summary>
+            Freezes this node and all descendant nodes so that any mutations require a new instance of the nodes.
+            </summary>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.RotateLeft(System.Collections.Immutable.SortedInt32KeyNode{`0})">
+            <summary>
+            AVL rotate left operation.
+            </summary>
+            <param name="tree">The tree.</param>
+            <returns>The rotated tree.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.RotateRight(System.Collections.Immutable.SortedInt32KeyNode{`0})">
+            <summary>
+            AVL rotate right operation.
+            </summary>
+            <param name="tree">The tree.</param>
+            <returns>The rotated tree.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.DoubleLeft(System.Collections.Immutable.SortedInt32KeyNode{`0})">
+            <summary>
+            AVL rotate double-left operation.
+            </summary>
+            <param name="tree">The tree.</param>
+            <returns>The rotated tree.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.DoubleRight(System.Collections.Immutable.SortedInt32KeyNode{`0})">
+            <summary>
+            AVL rotate double-right operation.
+            </summary>
+            <param name="tree">The tree.</param>
+            <returns>The rotated tree.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.Balance(System.Collections.Immutable.SortedInt32KeyNode{`0})">
+            <summary>
+            Returns a value indicating whether the tree is in balance.
+            </summary>
+            <param name="tree">The tree.</param>
+            <returns>0 if the tree is in balance, a positive integer if the right side is heavy, or a negative integer if the left side is heavy.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.IsRightHeavy(System.Collections.Immutable.SortedInt32KeyNode{`0})">
+            <summary>
+            Determines whether the specified tree is right heavy.
+            </summary>
+            <param name="tree">The tree.</param>
+            <returns>
+            <c>true</c> if [is right heavy] [the specified tree]; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.IsLeftHeavy(System.Collections.Immutable.SortedInt32KeyNode{`0})">
+            <summary>
+            Determines whether the specified tree is left heavy.
+            </summary>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.MakeBalanced(System.Collections.Immutable.SortedInt32KeyNode{`0})">
+            <summary>
+            Balances the specified tree.
+            </summary>
+            <param name="tree">The tree.</param>
+            <returns>A balanced tree.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.SetOrAdd(System.Int32,`0,System.Collections.Generic.IEqualityComparer{`0},System.Boolean,System.Boolean@,System.Boolean@)">
+            <summary>
+            Adds the specified key. Callers are expected to have validated arguments.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+            <param name="valueComparer">The value comparer.</param>
+            <param name="overwriteExistingValue">if <c>true</c>, an existing key=value pair will be overwritten with the new one.</param>
+            <param name="replacedExistingValue">Receives a value indicating whether an existing value was replaced.</param>
+            <param name="mutated">Receives a value indicating whether this node tree has mutated because of this operation.</param>
+            <returns>The new AVL tree.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.RemoveRecursive(System.Int32,System.Boolean@)">
+            <summary>
+            Removes the specified key. Callers are expected to validate arguments.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="mutated">Receives a value indicating whether this node tree has mutated because of this operation.</param>
+            <returns>The new AVL tree.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.Mutate(System.Collections.Immutable.SortedInt32KeyNode{`0},System.Collections.Immutable.SortedInt32KeyNode{`0})">
+            <summary>
+            Creates a node mutation, either by mutating this node (if not yet frozen) or by creating a clone of this node
+            with the described changes.
+            </summary>
+            <param name="left">The left branch of the mutated node.</param>
+            <param name="right">The right branch of the mutated node.</param>
+            <returns>The mutated (or created) node.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.Search(System.Int32)">
+            <summary>
+            Searches the specified key. Callers are expected to validate arguments.
+            </summary>
+            <param name="key">The key.</param>
+        </member>
+        <member name="T:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator">
+            <summary>
+            Enumerates the contents of a binary tree.
+            </summary>
+            <remarks>
+            This struct can and should be kept in exact sync with the other binary tree enumerators: 
+            <see cref="T:System.Collections.Immutable.ImmutableList`1.Enumerator"/>, <see cref="T:System.Collections.Immutable.ImmutableSortedDictionary`2.Enumerator"/>, and <see cref="T:System.Collections.Immutable.ImmutableSortedSet`1.Enumerator"/>.
+            
+            CAUTION: when this enumerator is actually used as a valuetype (not boxed) do NOT copy it by assigning to a second variable 
+            or by passing it to another method.  When this enumerator is disposed of it returns a mutable reference type stack to a resource pool,
+            and if the value type enumerator is copied (which can easily happen unintentionally if you pass the value around) there is a risk
+            that a stack that has already been returned to the resource pool may still be in use by one of the enumerator copies, leading to data
+            corruption and/or exceptions.
+            </remarks>
+        </member>
+        <member name="F:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator.s_enumeratingStacks">
+            <summary>
+            The resource pool of reusable mutable stacks for purposes of enumeration.
+            </summary>
+            <remarks>
+            We utilize this resource pool to make "allocation free" enumeration achievable.
+            </remarks>
+        </member>
+        <member name="F:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator._poolUserId">
+            <summary>
+            A unique ID for this instance of this enumerator.
+            Used to protect pooled objects from use after they are recycled.
+            </summary>
+        </member>
+        <member name="F:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator._root">
+            <summary>
+            The set being enumerated.
+            </summary>
+        </member>
+        <member name="F:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator._stack">
+            <summary>
+            The stack to use for enumerating the binary tree.
+            </summary>
+        </member>
+        <member name="F:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator._current">
+            <summary>
+            The node currently selected.
+            </summary>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator.#ctor(System.Collections.Immutable.SortedInt32KeyNode{`0})">
+            <summary>
+            Initializes an <see cref="T:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator"/> structure.
+            </summary>
+            <param name="root">The root of the set to be enumerated.</param>
+        </member>
+        <member name="P:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator.Current">
+            <summary>
+            The current element.
+            </summary>
+        </member>
+        <member name="P:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator.System#Collections#Immutable#ISecurePooledObjectUser#PoolUserId">
+            <inheritdoc/>
+        </member>
+        <member name="P:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator.System#Collections#IEnumerator#Current">
+            <summary>
+            The current element.
+            </summary>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator.Dispose">
+            <summary>
+            Disposes of this enumerator and returns the stack reference to the resource pool.
+            </summary>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator.MoveNext">
+            <summary>
+            Advances enumeration to the next element.
+            </summary>
+            <returns>A value indicating whether there is another element in the enumeration.</returns>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator.Reset">
+            <summary>
+            Restarts enumeration.
+            </summary>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator.ThrowIfDisposed">
+            <summary>
+            Throws an <see cref="T:System.ObjectDisposedException"/> if this enumerator has been disposed.
+            </summary>
+        </member>
+        <member name="M:System.Collections.Immutable.SortedInt32KeyNode`1.Enumerator.PushLeft(System.Collections.Immutable.SortedInt32KeyNode{`0})">
+            <summary>
+            Pushes this node and all its Left descendants onto the stack.
+            </summary>
+            <param name="node">The starting node to push onto the stack.</param>
         </member>
         <member name="T:System.Collections.Immutable.Requires">
             <summary>

@@ -9,6 +9,70 @@
             Summary description for LoggerFactory
             </summary>
         </member>
+        <member name="M:Microsoft.Extensions.Logging.LoggerFactory.UseConfiguration(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Replaces the <see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/> used for filtering.
+            </summary>
+            <param name="configuration">The new configuration to use.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.Logging.LoggerFactory"/> so that additional calls can be chained.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Logging.LoggerFactory.AddFilter(System.String,System.String,System.Func{Microsoft.Extensions.Logging.LogLevel,System.Boolean})">
+            <summary>
+            Adds a filter that applies to <paramref name="providerName"/> and <paramref name="categoryName"/> with the given
+            <paramref name="filter"/>.
+            </summary>
+            <param name="providerName">The name of the provider.</param>
+            <param name="categoryName">The name of the logger category.</param>
+            <param name="filter">The filter that applies to logs for <paramref name="providerName"/> and <paramref name="categoryName"/>.
+            Returning true means allow log through, false means reject log.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.Logging.LoggerFactory"/> so that additional calls can be chained.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Logging.LoggerFactory.AddFilter(System.String,System.Func{System.String,Microsoft.Extensions.Logging.LogLevel,System.Boolean})">
+            <summary>
+            Adds a filter that applies to <paramref name="providerName"/> with the given <paramref name="filter"/>.
+            </summary>
+            <param name="providerName">The name of the provider.</param>
+            <param name="filter">The filter that applies to logs for <paramref name="providerName"/>.
+            The string argument is the category being logged to.
+            Returning true means allow log through, false means reject log.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.Logging.LoggerFactory"/> so that additional calls can be chained.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Logging.LoggerFactory.AddFilter(System.Func{System.String,System.String,Microsoft.Extensions.Logging.LogLevel,System.Boolean})">
+            <summary>
+            Adds a filter that applies to all logs.
+            </summary>
+            <param name="filter">The filter that applies to logs.
+            The first string is the provider name and the second string is the category name being logged to.
+            Returning true means allow log through, false means reject log.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.Logging.LoggerFactory"/> so that additional calls can be chained.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Logging.LoggerFactory.AddFilter(System.Collections.Generic.IDictionary{System.String,Microsoft.Extensions.Logging.LogLevel})">
+            <summary>
+            Adds a filter to all logs.
+            </summary>
+            <param name="filter">The filter that applies to logs.
+            The key is the category and the <see cref="T:Microsoft.Extensions.Logging.LogLevel"/> is the minimum level allowed.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.Logging.LoggerFactory"/> so that additional calls can be chained.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Logging.LoggerFactory.AddFilter(System.String,System.String,Microsoft.Extensions.Logging.LogLevel)">
+            <summary>
+            Adds a filter that applies to <paramref name="providerName"/> and <paramref name="categoryName"/>, allowing logs with the given
+            minimum <see cref="T:Microsoft.Extensions.Logging.LogLevel"/> or higher.
+            </summary>
+            <param name="providerName">The name of the provider.</param>
+            <param name="categoryName">The name of the logger category.</param>
+            <param name="minLevel">The minimum <see cref="T:Microsoft.Extensions.Logging.LogLevel"/> that logs from
+            <paramref name="providerName"/> and <paramref name="categoryName"/> are allowed.</param>
+        </member>
+        <member name="M:Microsoft.Extensions.Logging.LoggerFactory.AddFilter(System.String,System.Func{Microsoft.Extensions.Logging.LogLevel,System.Boolean})">
+            <summary>
+            Adds a filter that applies to <paramref name="providerName"/> with the given
+            <paramref name="filter"/>.
+            </summary>
+            <param name="providerName">The name of the provider.</param>
+            <param name="filter">The filter that applies to logs for <paramref name="providerName"/>.
+            Returning true means allow log through, false means reject log.</param>
+        </member>
         <member name="M:Microsoft.Extensions.Logging.LoggerFactory.CheckDisposed">
             <summary>
             Check if the factory has been disposed.

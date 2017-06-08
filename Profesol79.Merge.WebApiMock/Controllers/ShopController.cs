@@ -43,7 +43,7 @@ namespace Profesor79.Merge.WebApiMock.Controllers
             var random = new Random();
             var response = new WebApiResponseDto { DataId = id, SaleValue = random.Next(30, 50000) };
 
-            var sleepTime = random.Next(30, 50);
+            var sleepTime = random.Next(30, 1500);
             Thread.Sleep(sleepTime);
             return Ok(response);
         }
