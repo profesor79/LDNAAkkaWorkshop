@@ -26,6 +26,8 @@ namespace Profesor79.Merge.ActorSystem.RootActor
     using Akka.DI.Core;
     using Akka.Routing;
 
+    using Petabridge.Cmd.QuickStart;
+
     using Profesor79.Merge.ActorSystem.BaseObjects;
     using Profesor79.Merge.ActorSystem.FileReader;
     using Profesor79.Merge.ActorSystem.FileWriter;
@@ -43,6 +45,8 @@ namespace Profesor79.Merge.ActorSystem.RootActor
 
         private DateTime _started;
 
+        private RootActorMessages.StartSystem _startSystemMessage;
+
         /// <summary>Initializes a new instance of the <see cref="RootActor"/> class.</summary>
         /// <param name="systemConfiguration">The system Configuration.</param>
         public RootActor(ISystemConfiguration systemConfiguration)
@@ -55,12 +59,17 @@ namespace Profesor79.Merge.ActorSystem.RootActor
                         Sender.Tell(new RootActorMessages.AddressBook(_actorDictionary));
                     });
             Receive<RootActorMessages.StartSystem>(
-                m =>
+                me =>
                     {
                         _started = DateTime.Now;
-                        CreateActors();
-                        SendActorBook();
-                        _actorDictionary["ValidatorActor"].Tell(new ValidatorMessages.Validate(m.InputFilePath, m.OutputFilePath, _actorDictionary));
+                        if (systemConfiguration.WaitForClusterStartMessage)
+                        {
+                            _startSystemMessage = me;
+                        }
+                        else
+                        {
+                            StartSystem();
+                        }
                     });
 
             Receive<RootActorMessages.FatalError>(
@@ -83,6 +92,19 @@ namespace Profesor79.Merge.ActorSystem.RootActor
                     });
 
             Receive<RootActorMessages.ProcessFinished>(a => { StopSystem(); });
+            Receive<StartFromCli>(
+                o =>
+                    {
+                      StartSystem();
+                    });
+        }
+
+        private void StartSystem()
+        {
+            CreateActors();
+            SendActorBook();
+            _actorDictionary["ValidatorActor"].Tell(
+                new ValidatorMessages.Validate(_startSystemMessage.InputFilePath, _startSystemMessage.OutputFilePath, _actorDictionary));
         }
 
         /// <summary>The create actors could be implemented as a factory
@@ -117,7 +139,7 @@ namespace Profesor79.Merge.ActorSystem.RootActor
 
 
             CreateCrawlerByConfig();
-            
+
         }
 
         private void CreateCrawlerByConfig()
@@ -162,7 +184,7 @@ namespace Profesor79.Merge.ActorSystem.RootActor
             var remoteEcho42 =
                 Context.ActorOf(
                     Props.Create(() => new WebCrawlerActor(new AppSettingsConfiguration(), Self))
-                        .WithRouter(new RoundRobinPool((int)_systemConfiguration.CrawlerActorsCount, new DefaultResizer(1, 2, messagesPerResize: 500))));
+                        .WithRouter(new RoundRobinPool(1, new DefaultResizer(1, 64, messagesPerResize: 100))));
 
             _actorDictionary.Add("WebCrawlerActor", remoteEcho42);
         }

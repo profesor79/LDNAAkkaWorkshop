@@ -30,6 +30,7 @@ namespace Profesor79.Merge.ActorSystem.RootActor
 
     using Petabridge.Cmd.Cluster;
     using Petabridge.Cmd.Host;
+    using Petabridge.Cmd.QuickStart;
 
     using Profesor79.Merge.ActorSystem.FileReader;
     using Profesor79.Merge.ActorSystem.FileWriter;
@@ -61,6 +62,7 @@ namespace Profesor79.Merge.ActorSystem.RootActor
             MergeActorSystem = ActorSystem.Create("ClusterSystem", ConfigurationFactory.ParseString(config));
             var cmd = PetabridgeCmd.Get(MergeActorSystem);
             cmd.RegisterCommandPalette(ClusterCommands.Instance);
+            cmd.RegisterCommandPalette(new MsgCommandPaletteHandler()); // register custom command palette
             cmd.Start();
            
 
@@ -70,7 +72,7 @@ namespace Profesor79.Merge.ActorSystem.RootActor
             var propsResolver = new AutoFacDependencyResolver(container, MergeActorSystem);
             // first actor 
             _root = MergeActorSystem.ActorOf(MergeActorSystem.DI().Props<RootActor>(), "root");
-
+            RootActorRef.SetReference(_root);
             _root.Tell(new RootActorMessages.StartSystem(inputFilePath, outputFilePath));
             MergeActorSystem.WhenTerminated.Wait();
         }

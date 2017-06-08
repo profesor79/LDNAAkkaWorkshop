@@ -232,6 +232,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\Petabridge.Cmd.QuickStart\Petabridge.Cmd.QuickStart.csproj">
+      <Project>{31FD95DB-EFC4-435A-87F1-40D2AAAB1AE5}</Project>
+      <Name>Petabridge.Cmd.QuickStart</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Profesol79.Merge.Contracts\Profesor79.Merge.Contracts.csproj">
       <Project>{C1689B69-5F82-489C-A611-D7FD0736959B}</Project>
       <Name>Profesor79.Merge.Contracts</Name>

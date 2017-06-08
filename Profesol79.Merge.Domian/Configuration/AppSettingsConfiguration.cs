@@ -83,6 +83,8 @@ namespace Profesor79.Merge.Domain
 
 
             LoadFactor = config.GetInt($"{configBase}LoadFactor");
+
+            WaitForClusterStartMessage = config.GetBoolean($"{configBase}WaitForClusterStartMessage");
         }
 
         /// <summary>Gets or sets the api end point.</summary>
@@ -146,5 +148,7 @@ namespace Profesor79.Merge.Domain
         public string RemoteHost1 { get; set; }
 
         public string RemoteHost2 { get; set; }
+
+        public bool WaitForClusterStartMessage { get; set; }
     }
 }

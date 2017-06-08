@@ -100,5 +100,7 @@ namespace Profesor79.Merge.Domain.Configuration
         public string RemoteHost1 { get; set; }
 
         public string RemoteHost2 { get; set; }
+
+        public bool WaitForClusterStartMessage { get; set; }
     }
 }

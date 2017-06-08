@@ -71,6 +71,8 @@ namespace Profesor79.Merge.Contracts
 
         string RemoteHost1 { get; set; }
         string RemoteHost2 { get; set; }
+
+        bool WaitForClusterStartMessage { get; set; }
     }
 
     public enum HowToScaleEnum
