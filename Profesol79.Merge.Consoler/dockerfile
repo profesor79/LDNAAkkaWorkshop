@@ -1,6 +1,6 @@
-FROM microsoft/windowsservercore
-ADD publish/ /
-ENTRYPOINT Profesor79.Merge.Consoler.exe
+FROM profesor79pl/mono:01
+ADD publish/ /mono/run
+CMD ["mono", "/mono/run/Profesor79.Merge.Consoler.exe"]
 	
 EXPOSE 8090
 EXPOSE 8091

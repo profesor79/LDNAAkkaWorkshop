@@ -94,6 +94,8 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\freeGeek - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\freeGeek - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ldnaDemo - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\ldnaDemo - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">

@@ -62,14 +62,13 @@ namespace Profesor79.Merge.ActorSystem.RootActor
                 me =>
                     {
                         _started = DateTime.Now;
-                        if (systemConfiguration.WaitForClusterStartMessage)
+                        _startSystemMessage = me;
+                        if (!systemConfiguration.WaitForClusterStartMessage)
                         {
-                            _startSystemMessage = me;
-                        }
-                        else
-                        {
+                            _log.Info("Starting system directly");
                             StartSystem();
                         }
+
                     });
 
             Receive<RootActorMessages.FatalError>(
@@ -95,14 +94,17 @@ namespace Profesor79.Merge.ActorSystem.RootActor
             Receive<StartFromCli>(
                 o =>
                     {
-                      StartSystem();
+                        StartSystem();
                     });
         }
 
         private void StartSystem()
         {
+            _log.Info("Starting system: create actors ");
             CreateActors();
+            _log.Info("Starting system: send actor book ");
             SendActorBook();
+            _log.Info("Starting system: activate validator ");
             _actorDictionary["ValidatorActor"].Tell(
                 new ValidatorMessages.Validate(_startSystemMessage.InputFilePath, _startSystemMessage.OutputFilePath, _actorDictionary));
         }
@@ -173,7 +175,7 @@ namespace Profesor79.Merge.ActorSystem.RootActor
             var remoteEcho222 =
                 Context.ActorOf(
                     Props.Create(() => new WebCrawlerActor(new AppSettingsConfiguration(), Self))
-                        .WithRouter(new ClusterRouterPool(new RoundRobinPool(5), new ClusterRouterPoolSettings(5, 1, true, "crawler"))),
+                        .WithRouter(new ClusterRouterPool(new RoundRobinPool(100), new ClusterRouterPoolSettings(100, 2, false, "crawler"))),
                     "WebCrawlerActor2a");
 
             _actorDictionary.Add("WebCrawlerActor", remoteEcho222);
@@ -228,7 +230,6 @@ namespace Profesor79.Merge.ActorSystem.RootActor
         /// <summary>The send actor book.</summary>
         private void SendActorBook()
         {
-
 
             for (var i = 0; i < _systemConfiguration.DataDistributorActorCount; i++)
             {
