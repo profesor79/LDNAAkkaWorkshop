@@ -75,12 +75,8 @@ namespace Profesor79.Merge.UnitTests
             // arrange
             SetupValidResponse();
             var mergeDto = new MergeObjectDto { DataId = 1 };
-            var message = new CrawlerMessages.WebApiErrorResponse
-            {
-                MergeObjectDto = mergeDto,
-                url = $"{_systemConfiguration.ApiEndPoint}/1",
-                attempt = 1,
-            };
+            var message = new CrawlerMessages.WebApiErrorResponse(1, mergeDto, $"{_systemConfiguration.ApiEndPoint}/1", 1);
+
 
             // act
             _sut.Tell(message);
@@ -97,12 +93,7 @@ namespace Profesor79.Merge.UnitTests
             // arrange
             SetupInvaldResponse();
             var mergeDto = new MergeObjectDto { DataId = 1 };
-            var message = new CrawlerMessages.WebApiErrorResponse
-            {
-                MergeObjectDto = mergeDto,
-                url = $"{_systemConfiguration.ApiEndPoint}/1",
-                attempt = 1,
-            };
+            var message = new CrawlerMessages.WebApiErrorResponse(1, mergeDto, $"{_systemConfiguration.ApiEndPoint}/1", 1);
 
             // act
             _sut.Tell(message);

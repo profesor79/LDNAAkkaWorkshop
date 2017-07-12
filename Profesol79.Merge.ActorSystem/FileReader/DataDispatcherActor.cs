@@ -27,8 +27,6 @@ namespace Profesor79.Merge.ActorSystem.FileReader
         /// <summary>The _read lines batch size.</summary>
         private readonly uint _readLinesBatchSize;
 
-        /// <summary>The _crawler.</summary>
-        private IActorRef _crawler;
 
         /// <summary>The _flow control.</summary>
         private IActorRef _flowControl;
@@ -47,7 +45,6 @@ namespace Profesor79.Merge.ActorSystem.FileReader
                 e =>
                     {
                         _actorDictionary = e.ActorDict;
-                        _crawler = _actorDictionary["WebCrawlerActor"];
                         _flowControl = _actorDictionary["FlowControlActor"];
                         RequestNewLines();
                     });

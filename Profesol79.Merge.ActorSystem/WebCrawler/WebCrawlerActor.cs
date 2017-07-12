@@ -22,6 +22,7 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
 
     using Akka.Actor;
 
+    using Profesor79.Merge.ActorSystem.At_LestOneDelivery;
     using Profesor79.Merge.ActorSystem.BaseObjects;
     using Profesor79.Merge.ActorSystem.FileWriter;
     using Profesor79.Merge.ActorSystem.RootActor;
@@ -78,12 +79,12 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
                         Stash.UnstashAll();
                     });
 
-            Receive<CrawlerMessages.GetData>(
+            Receive<AtLeastOnceDeliveryActor.ReliableDeliveryEnvelope<CrawlerMessages.GetData>>(
                 m =>
                     {
                         if (_gotBook)
                         {
-                            ProcessGetMessage(m);
+                            ProcessGetMessage(m.Message,m.MessageId);
                             _lastActivity = DateTime.Now;
                         }
                         else
@@ -142,10 +143,10 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
             base.PreStart();
         }
 
-
         /// <summary>The process get message.</summary>
         /// <param name="getDataMessage">The m.</param>
-        private void ProcessGetMessage(CrawlerMessages.GetData getDataMessage)
+        /// <param name = "objMessageId" ></param>
+        private void ProcessGetMessage(CrawlerMessages.GetData getDataMessage, long messageId)
         {
             try
             {
@@ -171,7 +172,7 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
                                                 {
                                                     _log.Debug($" read api for:{getDataMessage.MergeObject.DataId} status:{webResponse.StatusCode.ToString()}");
 
-                                                    return new CrawlerMessages.PipedRequest(request.Result, mergeObject);
+                                                    return new CrawlerMessages.PipedRequest(request.Result, mergeObject, messageId);
                                                 }
 
                                                 throw request.Exception;
@@ -182,7 +183,7 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
                                 {
                                     // there is a connection but for any reason server response is not OK, so log that and 
                                     _log.Debug($"cannot read api for:{getDataMessage.MergeObject.DataId} status:{webResponse.StatusCode.ToString()}");
-                                    SendBadResponse(mergeObject, $"---Error:{webResponse.StatusCode.ToString()}---");
+                                    self.Tell(new CrawlerMessages.PipedRequest(new WebApiResponseDto { IsError = true }, mergeObject, messageId));
 
                                 }
 
@@ -190,14 +191,14 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
                             catch (Exception e)
                             {
                                 _log.Error("cannot get data from api inner catch ", e);
-                                self.Tell(new CrawlerMessages.WebApiErrorResponse { url = url, MergeObjectDto = mergeObject, attempt = 1 });
+                                self.Tell(new CrawlerMessages.WebApiErrorResponse(1, mergeObject, url, messageId));
                             }
                         });
             }
             catch (Exception e)
             {
                 _log.Error($"cannot read api main catch for:{getDataMessage.MergeObject.DataId} ", e);
-                SendBadResponse(getDataMessage.MergeObject, _errorStatus);
+                Self.Tell(new CrawlerMessages.PipedRequest(new WebApiResponseDto { IsError = true }, getDataMessage.MergeObject, messageId));
             }
         }
 
@@ -228,6 +229,8 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
             }
 
             _actorDictionary["FileWriterActor"].Tell(new FileWriterMessages.SaveWebResponse(mergeObject));
+
+            //confirm delivery
             _processed++;
 
             if (_processed % 100 == 0)
@@ -255,16 +258,17 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
 
 
         /// <summary>The process web error message.</summary>
-        /// <param name="webApuResponse">The a.</param>
-        private void ProcessWebErrorMessage(CrawlerMessages.WebApiErrorResponse webApuResponse)
+        /// <param name="webApiResponse">The a.</param>
+        private void ProcessWebErrorMessage(CrawlerMessages.WebApiErrorResponse webApiResponse)
         {
             try
             {
-                _log.Debug($"retrying for: {webApuResponse.MergeObjectDto.DataId}");
-                var mergeObject = webApuResponse.MergeObjectDto;
+                _log.Debug($"retrying for: {webApiResponse.MergeObjectDto.DataId}");
+                var mergeObject = webApiResponse.MergeObjectDto;
+                var messageId = webApiResponse.MessageId;
                 var self = Context.Self;
-
-                _client.GetAsync(webApuResponse.url).ContinueWith(
+                
+                _client.GetAsync(webApiResponse.Url).ContinueWith(
                     response =>
                         {
                             try
@@ -274,7 +278,7 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
                                 {
                                     webResponse.Content.ReadAsAsync<WebApiResponseDto>()
                                         .ContinueWith(
-                                            request => { return new CrawlerMessages.PipedRequest(request.Result, mergeObject); },
+                                            request => new CrawlerMessages.PipedRequest(request.Result, mergeObject, messageId),
                                             TaskContinuationOptions.AttachedToParent & TaskContinuationOptions.ExecuteSynchronously)
                                         .PipeTo(self);
                                 }
@@ -282,7 +286,9 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
                                 {
                                     // there is a connection but for any reason server response is not OK, so log that and 
                                     // do not retry that message
-                                    SendBadResponse(mergeObject, $"---Error:{webResponse.StatusCode.ToString()}---");
+                                    self.Tell(new CrawlerMessages.PipedRequest(new WebApiResponseDto { IsError = true }, mergeObject, messageId));
+
+
                                     return;
                                 }
                             }
@@ -291,38 +297,28 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
                                 _log.Error("Api connection error inner catch WebApiErrorResponse", e);
                             }
 
-                            if (webApuResponse.attempt <= _systemConfiguration.HttpRetries)
+                            if (webApiResponse.Attempt <= _systemConfiguration.HttpRetries)
                             {
                                 self.Tell(
-                                    new CrawlerMessages.WebApiErrorResponse { url = webApuResponse.url, MergeObjectDto = mergeObject, attempt = ++webApuResponse.attempt });
+                                    new CrawlerMessages.WebApiErrorResponse ((1+webApiResponse.Attempt), mergeObject, webApiResponse.Url, messageId));
                             }
                             else
                             {
-                                SendBadResponse(mergeObject, $"--- NetworkIssue ---");
+                                self.Tell(new CrawlerMessages.PipedRequest(new WebApiResponseDto { IsError = true }, mergeObject, messageId));
                             }
                         });
             }
             catch (Exception e)
             {
-                _log.Error($"cannot read api outer catch WebApiErrorResponse for:{webApuResponse.MergeObjectDto.DataId} ", e);
-                SendBadResponse(webApuResponse.MergeObjectDto, _errorStatus);
-
+                _log.Error($"cannot read api outer catch WebApiErrorResponse for:{webApiResponse.MergeObjectDto.DataId} ", e);
+                Self.Tell(new CrawlerMessages.PipedRequest(new WebApiResponseDto { IsError = true }, webApiResponse.MergeObjectDto, webApiResponse.MessageId));
             }
             finally
             {
                 _lastActivity = DateTime.Now;
             }
         }
-
-        /// <summary>The send bad response.</summary>
-        /// <param name="mergeObject">The merge object.</param>
-        /// <param name="status">The status.</param>
-        private void SendBadResponse(MergeObjectDto mergeObject, string status = "none")
-        {
-            _actorDictionary["FileWriterActor"].Tell(new FileWriterMessages.SaveWebResponse(mergeObject));
-            _actorDictionary["FlowControlActor"].Tell(new FlowControlMessages.WebApiGotBadResponse());
-        }
-
+        
         /// <summary>The setup http client.</summary>
         private void SetupHttpClient()
         {
