@@ -43,7 +43,7 @@ namespace Profesor79.Merge.ActorSystem.FileReader
         private readonly ISystemConfiguration _systemConfiguration;
 
         /// <summary>The _crawler.</summary>
-        private IActorRef _crawler;
+        private IActorRef _atLeastOneDelivery;
 
         /// <summary>The _flow control.</summary>
         private IActorRef _flowControl;
@@ -66,7 +66,7 @@ namespace Profesor79.Merge.ActorSystem.FileReader
                 b =>
                     {
                         _actorDictionary = b.ActorDictionary;
-                        _crawler = _actorDictionary["WebCrawlerActor"];
+                        _atLeastOneDelivery = _actorDictionary["DemoAtLeastOnceDeliveryActor"];
                         _flowControl = _actorDictionary["FlowControlActor"];
                     });
 
@@ -134,7 +134,7 @@ namespace Profesor79.Merge.ActorSystem.FileReader
 
                 _linesReadByRegex++;
                 _log.Debug($"Sending to crawler: {mergeObject.DataId}");
-                _crawler.Tell(new CrawlerMessages.GetData(mergeObject, _systemConfiguration.ApiEndPoint));
+                _atLeastOneDelivery.Tell(new CrawlerMessages.GetData(mergeObject, _systemConfiguration.ApiEndPoint));
                 _flowControl.Tell(new FlowControlMessages.ValidLine());
                 return true;
             }
@@ -159,7 +159,7 @@ namespace Profesor79.Merge.ActorSystem.FileReader
                 var mergeObject = new MergeObjectDto { DataId = int.Parse(quotesMatch[0]) };
 
                 _log.Debug($"Sending to crawler: {mergeObject.DataId}");
-                _crawler.Tell(new CrawlerMessages.GetData(mergeObject, _systemConfiguration.ApiEndPoint));
+                _atLeastOneDelivery.Tell(new CrawlerMessages.GetData(mergeObject, _systemConfiguration.ApiEndPoint));
                 _flowControl.Tell(new FlowControlMessages.ValidLine());
                 return true;
             }

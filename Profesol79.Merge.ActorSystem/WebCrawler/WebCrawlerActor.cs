@@ -79,7 +79,7 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
                         Stash.UnstashAll();
                     });
 
-            Receive<AtLeastOnceDeliveryActor.ReliableDeliveryEnvelope<CrawlerMessages.GetData>>(
+            Receive<DemoAtLeastOnceDeliveryActor.ReliableDeliveryEnvelope<CrawlerMessages.GetData>>(
                 m =>
                     {
                         if (_gotBook)

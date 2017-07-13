@@ -24,8 +24,10 @@ namespace Profesor79.Merge.ActorSystem.RootActor
 
     using Akka.Actor;
     using Akka.DI.Core;
+    using Akka.Persistence;
     using Akka.Routing;
 
+    using Profesor79.Merge.ActorSystem.At_LestOneDelivery;
     using Profesor79.Merge.ActorSystem.BaseObjects;
     using Profesor79.Merge.ActorSystem.FileReader;
     using Profesor79.Merge.ActorSystem.FileWriter;
@@ -117,6 +119,8 @@ namespace Profesor79.Merge.ActorSystem.RootActor
 
 
             CreateCrawlerByConfig();
+
+            _actorDictionary.Add("DemoAtLeastOnceDeliveryActor", Context.ActorOf(Props.Create(()=>new DemoAtLeastOnceDeliveryActor(_actorDictionary["WebCrawlerActor"]))));
             
         }
 

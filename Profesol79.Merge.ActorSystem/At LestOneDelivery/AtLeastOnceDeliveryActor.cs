@@ -19,7 +19,7 @@ namespace Profesor79.Merge.ActorSystem.At_LestOneDelivery
     using Profesor79.Merge.Models;
 
     /// <summary>The at least once delivery actor.</summary>
-    public class AtLeastOnceDeliveryActor : AtLeastOnceDeliveryReceiveActor
+    public class DemoAtLeastOnceDeliveryActor : AtLeastOnceDeliveryReceiveActor
     {
         /// <summary>The _recurring snapshot cleanup.</summary>
         private ICancelable _recurringSnapshotCleanup;
@@ -27,9 +27,9 @@ namespace Profesor79.Merge.ActorSystem.At_LestOneDelivery
         /// <summary>The _target actor.</summary>
         private IActorRef _targetActor;
 
-        /// <summary>Initializes a new instance of the <see cref="AtLeastOnceDeliveryActor"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="DemoAtLeastOnceDeliveryActor"/> class.</summary>
         /// <param name="targetActor">The target actor.</param>
-        public AtLeastOnceDeliveryActor(IActorRef targetActor)
+        public DemoAtLeastOnceDeliveryActor(IActorRef targetActor)
         {
             _targetActor = targetActor;
 
