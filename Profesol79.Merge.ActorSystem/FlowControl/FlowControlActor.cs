@@ -117,7 +117,8 @@ namespace Profesor79.Merge.ActorSystem.FlowControl
         /// <summary>The check if finished.</summary>
         private void CheckIfFinished()
         {
-            if (_endOfInputFile && _validLines == _apiResponses && _apiResponses == _linesSaved)
+            
+             if (_endOfInputFile && _validLines ==  _linesSaved)
             {
                 _log.Info($"Job done!");
                 _actorDictionary["root"].Tell(new RootActorMessages.ProcessFinished());

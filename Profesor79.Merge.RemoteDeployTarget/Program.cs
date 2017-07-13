@@ -115,7 +115,7 @@ namespace Profesor79.Merge.RemoteDeployTarget
         
 remote {
                     helios.tcp {
-                        port = 8090 #let os pick random port
+                        port = 0 #let os pick random port
                         hostname = __hostname__
                     }
                 }

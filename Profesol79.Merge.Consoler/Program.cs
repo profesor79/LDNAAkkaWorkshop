@@ -91,8 +91,6 @@ namespace Profesor79.Merge.Consoler
         {
             var hostname = System.Net.Dns.GetHostName();
             System.IO.File.WriteAllText(@"C:\dockerExchange\clusterMaster.txt", hostname, Encoding.UTF8);
-            Log.Logger.Information("Waiting for nodes.");
-            Thread.Sleep(5 * 1000); // wait for workers
         }
 
 

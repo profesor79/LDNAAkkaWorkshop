@@ -13,8 +13,10 @@ namespace Profesor79.Merge.ActorSystem.At_LestOneDelivery
     using System;
 
     using Akka.Actor;
+    using Akka.Event;
     using Akka.Persistence;
 
+    using Profesor79.Merge.ActorSystem.BaseObjects;
     using Profesor79.Merge.ActorSystem.WebCrawler;
     using Profesor79.Merge.Models;
 
@@ -23,6 +25,7 @@ namespace Profesor79.Merge.ActorSystem.At_LestOneDelivery
     {
         /// <summary>The _recurring snapshot cleanup.</summary>
         private ICancelable _recurringSnapshotCleanup;
+        public readonly ILoggingAdapter _log = Context.GetLogger();
 
         /// <summary>The _target actor.</summary>
         private IActorRef _targetActor;
@@ -57,8 +60,14 @@ namespace Profesor79.Merge.ActorSystem.At_LestOneDelivery
 
 
             Command<ReliableDeliveryAck>(ack =>
-            {
-                ConfirmDelivery(ack.MessageId);
+                {
+                    _confirmed++;
+                    if (_confirmed % 100 == 0)
+                    {
+                        _log.Info($"confirmed requests: {_confirmed},<");
+                    }
+
+                    ConfirmDelivery(ack.MessageId);
             });
 
             Command<CleanSnapshots>(clean =>
@@ -80,7 +89,11 @@ namespace Profesor79.Merge.ActorSystem.At_LestOneDelivery
         }
 
         /// <summary>The persistence id.</summary>
-        public override string PersistenceId => Context.Self.Path.Name;
+        public override string PersistenceId => perssistenceid;
+
+        private string perssistenceid = Guid.NewGuid().ToString();
+
+        private ulong _confirmed =0;
 
         /// <summary>The post stop.</summary>
         protected override void PostStop()
@@ -94,8 +107,8 @@ namespace Profesor79.Merge.ActorSystem.At_LestOneDelivery
         {
              
             _recurringSnapshotCleanup =
-                Context.System.Scheduler.ScheduleTellRepeatedlyCancelable(TimeSpan.FromSeconds(10),
-                    TimeSpan.FromSeconds(10), Self, new CleanSnapshots(), ActorRefs.NoSender);
+                Context.System.Scheduler.ScheduleTellRepeatedlyCancelable(TimeSpan.FromSeconds(30),
+                    TimeSpan.FromSeconds(30), Self, new CleanSnapshots(), ActorRefs.NoSender);
 
             base.PreStart();
         }

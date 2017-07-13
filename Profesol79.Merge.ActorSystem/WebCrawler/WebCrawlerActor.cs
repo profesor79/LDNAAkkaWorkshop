@@ -230,6 +230,8 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
 
             _actorDictionary["FileWriterActor"].Tell(new FileWriterMessages.SaveWebResponse(mergeObject));
 
+            _actorDictionary["DemoAtLeastOnceDeliveryActor"].Tell(new DemoAtLeastOnceDeliveryActor.ReliableDeliveryAck(pipedRequest.MessageId));
+
             //confirm delivery
             _processed++;
 

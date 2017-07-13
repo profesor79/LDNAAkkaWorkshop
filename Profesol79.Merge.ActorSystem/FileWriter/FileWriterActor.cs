@@ -8,7 +8,7 @@
 // </copyright>
 // <summary>
 // Created: 2017-05-15, 2:37 PM
-// Last changed by: profesor79, 2017-05-26, 8:20 AM 
+// Last changed by: profesor79, 2017-07-13, 12:21 PM 
 // </summary>
 //   --------------------------------------------------------------------------------------------------------------------
 
@@ -36,6 +36,10 @@ namespace Profesor79.Merge.ActorSystem.FileWriter
         /// <summary>The _lines.</summary>
         private readonly List<string> _lines = new List<string>();
 
+        /// <summary>The _sorted list.</summary>
+        private readonly SortedSet<long> _sortedList = new SortedSet<long>();
+
+        /// <summary>The _system configuration.</summary>
         private readonly ISystemConfiguration _systemConfiguration;
 
         /// <summary>The _cancel timer.</summary>
@@ -46,7 +50,7 @@ namespace Profesor79.Merge.ActorSystem.FileWriter
 
         /// <summary>Initializes a new instance of the <see cref="FileWriterActor"/> class.</summary>
         /// <param name="fileWriter">The file writer.</param>
-        /// <param name = "systemConfiguration" ></param>
+        /// <param name="systemConfiguration"></param>
         public FileWriterActor(IFileWriter fileWriter, ISystemConfiguration systemConfiguration)
         {
             _fileWriter = fileWriter;
@@ -78,6 +82,13 @@ namespace Profesor79.Merge.ActorSystem.FileWriter
         /// <summary>Gets or sets the stash.</summary>
         public IStash Stash { get; set; }
 
+        /// <summary>The post stop.</summary>
+        protected override void PostStop()
+        {
+            _cancelTimer?.Cancel();
+            base.PostStop();
+        }
+
         /// <summary>The pre start.</summary>
         protected override void PreStart()
         {
@@ -93,17 +104,19 @@ namespace Profesor79.Merge.ActorSystem.FileWriter
 
             base.PreStart();
         }
-        protected override void PostStop()
-        {
-            _cancelTimer?.Cancel();
-            base.PostStop();
-        }
-
 
         /// <summary>The add line to list.</summary>
         /// <param name="data">The data.</param>
         private void AddLineToList(MergeObjectDto data)
         {
+            // when using at least one delivery then message can be duplicatad
+
+            if (_sortedList.Contains(data.DataId))
+            {
+                Console.WriteLine("-*-");
+                return;
+            }
+            _sortedList.Add(data.DataId);
             _lines.Add($"{data.DataId},{data.SaleValue},{data.ActorName}");
         }
 
@@ -115,7 +128,7 @@ namespace Profesor79.Merge.ActorSystem.FileWriter
                     {
                         if (_lines.Any())
                         {
-                            //   _log.Info($"Saving {_lines.Count} lines");
+                            // _log.Info($"Saving {_lines.Count} lines");
                             SaveLinesToFile();
                         }
                     });

@@ -155,7 +155,7 @@ namespace Profesor79.Merge.ActorSystem.RootActor
             var remoteEcho222 =
                 Context.ActorOf(
                     Props.Create(() => new WebCrawlerActor(new AppSettingsConfiguration(), Self))
-                        .WithRouter(new ClusterRouterPool(new RoundRobinPool(5), new ClusterRouterPoolSettings(5, 1, true, "crawler"))),
+                        .WithRouter(new ClusterRouterPool(new RoundRobinPool(5), new ClusterRouterPoolSettings(5, 1, false, "crawler"))),
                     "WebCrawlerActor2a");
 
             _actorDictionary.Add("WebCrawlerActor", remoteEcho222);

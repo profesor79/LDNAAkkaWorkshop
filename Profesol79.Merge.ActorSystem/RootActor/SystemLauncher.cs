@@ -89,6 +89,10 @@ namespace Profesor79.Merge.ActorSystem.RootActor
             // nothing more to do with it :-)
             var propsResolver = new NinjectDependencyResolver(container, MergeActorSystem);
 
+            Console.WriteLine("Waiting for nodes.");
+            //Log.Logger.Information();
+            Thread.Sleep(10 * 1000); // wait for workers
+
             // first actor 
             _root = MergeActorSystem.ActorOf(MergeActorSystem.DI().Props<RootActor>(), "root");
 
