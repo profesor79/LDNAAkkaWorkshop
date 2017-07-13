@@ -74,7 +74,7 @@ namespace Profesor79.Merge.Domain
                 }
             }
 
-            _fileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None);
+            _fileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.Read);
             _streamWriter = new StreamWriter(_fileStream, Encoding.UTF8, 512, true);
         }
 

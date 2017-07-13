@@ -113,7 +113,7 @@ namespace Profesor79.Merge.ActorSystem.FileWriter
 
             if (_sortedList.Contains(data.DataId))
             {
-                Console.WriteLine("-*-");
+                Console.Write("-*-");
                 return;
             }
             _sortedList.Add(data.DataId);
