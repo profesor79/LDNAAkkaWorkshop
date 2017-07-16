@@ -21,6 +21,7 @@ namespace Profesor79.Merge.ActorSystem.FileWriter
     using Akka.Actor;
 
     using Profesor79.Merge.ActorSystem.BaseObjects;
+    using Profesor79.Merge.ActorSystem.Persistence;
     using Profesor79.Merge.ActorSystem.RootActor;
     using Profesor79.Merge.ActorSystem.ValidatorActor;
     using Profesor79.Merge.ActorSystem.WebCrawler;
@@ -99,11 +100,25 @@ namespace Profesor79.Merge.ActorSystem.FileWriter
             base.PostStop();
         }
 
-
         /// <summary>The add line to list.</summary>
         /// <param name="data">The data.</param>
-        private void AddLineToList(MergeObjectDto data)
+        /// <param name = "linePipedRequestMessageId" ></param>
+        private void AddLineToList(MergeObjectDto data, long linePipedRequestMessageId)
         {
+            // what if we receive two instances
+            var sortedList = new SortedSet<int>();
+
+
+            //get the persistence actor and confirm message
+            var confirmMessage = new ReliableDeliveryAck(linePipedRequestMessageId);
+
+            _actorDictionary["PersistenceActor"].Tell(confirmMessage);
+
+            if (sortedList.Contains(data.DataId))
+            {
+                return; // only one record 
+            }
+
             _lines.Add($"{data.DataId},{data.SaleValue},{data.ActorName}");
         }
 
@@ -120,7 +135,7 @@ namespace Profesor79.Merge.ActorSystem.FileWriter
                         }
                     });
 
-            Receive<FileWriterMessages.SaveWebResponse>(line => { AddLineToList(line.MergeObjectDto); });
+            Receive<FileWriterMessages.SaveWebResponse>(line => { AddLineToList(line.MergeObjectDto, line.PipedRequestMessageId); });
 
             Receive<FileWriterMessages.CloseFile>(
                 a =>

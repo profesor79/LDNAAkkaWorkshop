@@ -43,7 +43,7 @@ namespace Profesor79.Merge.ActorSystem.FileReader
         private readonly ISystemConfiguration _systemConfiguration;
 
         /// <summary>The _crawler.</summary>
-        private IActorRef _crawler;
+        private IActorRef _persistenceActor;
 
         /// <summary>The _flow control.</summary>
         private IActorRef _flowControl;
@@ -66,7 +66,7 @@ namespace Profesor79.Merge.ActorSystem.FileReader
                 b =>
                     {
                         _actorDictionary = b.ActorDictionary;
-                        _crawler = _actorDictionary["WebCrawlerActor"];
+                        _persistenceActor = _actorDictionary["PersistenceActor"];
                         _flowControl = _actorDictionary["FlowControlActor"];
                     });
 
@@ -144,7 +144,8 @@ namespace Profesor79.Merge.ActorSystem.FileReader
         private void SendMessage(MergeObjectDto mergeObject)
         {
             _log.Debug($"Sending to crawler: {mergeObject.DataId}");
-            _crawler.Tell(new CrawlerMessages.GetData(mergeObject, _systemConfiguration.ApiEndPoint, DateTime.UtcNow));
+            // mark to not compile and change actor destinateo
+            _persistenceActor.Tell(new CrawlerMessages.GetData(mergeObject, _systemConfiguration.ApiEndPoint, DateTime.UtcNow));
             _flowControl.Tell(new FlowControlMessages.ValidLine());
         }
 

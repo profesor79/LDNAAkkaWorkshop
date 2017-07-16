@@ -68,10 +68,17 @@ namespace Profesor79.Merge.ActorSystem.FileWriter
         {
             /// <summary>Initializes a new instance of the <see cref="SaveWebResponse"/> class.</summary>
             /// <param name="mergeObjectDto">The merge object dto.</param>
-            public SaveWebResponse(MergeObjectDto mergeObjectDto) { MergeObjectDto = mergeObjectDto; }
+            /// <param name = "pipedRequestMessageId" ></param>
+            public SaveWebResponse(MergeObjectDto mergeObjectDto, long pipedRequestMessageId)
+            {
+                MergeObjectDto = mergeObjectDto;
+                PipedRequestMessageId = pipedRequestMessageId;
+            }
 
             /// <summary>Gets the merge object dto.</summary>
             public MergeObjectDto MergeObjectDto { get; }
+
+            public long PipedRequestMessageId { get; }
         }
 
         /// <summary>The timer.</summary>

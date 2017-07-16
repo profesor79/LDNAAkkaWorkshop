@@ -117,7 +117,7 @@ namespace Profesor79.Merge.UnitTests
             var merge = new MergeObjectDto { DataId = 1 };
 
             // act
-            _sut.Tell(new FileWriterMessages.SaveWebResponse(merge));
+            //_sut.Tell(new FileWriterMessages.SaveWebResponse(merge));
 
             // assert
             NoMessageSent();

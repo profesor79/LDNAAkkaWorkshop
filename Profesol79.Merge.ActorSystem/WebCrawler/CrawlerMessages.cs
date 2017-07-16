@@ -54,14 +54,18 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
             /// <summary>Initializes a new instance of the <see cref="PipedRequest"/> class.</summary>
             /// <param name="requestResult">The request result.</param>
             /// <param name="mergeObject">The merge object.</param>
-            public PipedRequest(WebApiResponseDto requestResult, MergeObjectDto mergeObject)
+            /// <param name = "messageId" ></param>
+            public PipedRequest(WebApiResponseDto requestResult, MergeObjectDto mergeObject, long messageId)
             {
                 RequestResult = requestResult;
                 MergeObject = mergeObject;
+                MessageId = messageId;
             }
 
             /// <summary>Gets the merge object.</summary>
             public MergeObjectDto MergeObject { get; }
+
+            public long MessageId { get; }
 
             /// <summary>Gets the request result.</summary>
             public WebApiResponseDto RequestResult { get; }
@@ -75,14 +79,21 @@ namespace Profesor79.Merge.ActorSystem.WebCrawler
         /// <summary>The web api error response.</summary>
         public class WebApiErrorResponse
         {
-            /// <summary>Gets or sets the attempt.</summary>
-            public int attempt { get; set; }
+            public int Attempt { get; }
 
-            /// <summary>Gets or sets the merge object dto.</summary>
-            public MergeObjectDto MergeObjectDto { get; set; }
+            public MergeObjectDto MergeObjectDto { get; }
 
-            /// <summary>Gets or sets the url.</summary>
-            public string url { get; set; }
+            public string Url { get; }
+
+            public long MessageId { get; }
+
+            public WebApiErrorResponse(int attempt, MergeObjectDto mergeObjectDto, string url, long messageId)
+            {
+                Attempt = attempt;
+                MergeObjectDto = mergeObjectDto;
+                Url = url;
+                MessageId = messageId;
+            }
         }
 
         /// <summary>The timer.</summary>

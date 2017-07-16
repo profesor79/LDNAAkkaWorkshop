@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InputFile", "InputFile", "{B712BAFE-6507-497F-A1B9-892D0C0AAA91}"
 	ProjectSection(SolutionItems) = preProject
@@ -64,7 +64,6 @@ Global
 		{1D605057-329E-441D-8E97-632B44D2DADD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D605057-329E-441D-8E97-632B44D2DADD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CD08DE2B-3888-4B9A-93BA-25AE7E21F280}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CD08DE2B-3888-4B9A-93BA-25AE7E21F280}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD08DE2B-3888-4B9A-93BA-25AE7E21F280}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD08DE2B-3888-4B9A-93BA-25AE7E21F280}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BA37B177-6068-42FC-9A7A-29834EC549BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

@@ -32,6 +32,7 @@ namespace Profesor79.Merge.ActorSystem.RootActor
     using Profesor79.Merge.ActorSystem.FileReader;
     using Profesor79.Merge.ActorSystem.FileWriter;
     using Profesor79.Merge.ActorSystem.FlowControl;
+    using Profesor79.Merge.ActorSystem.Persistence;
     using Profesor79.Merge.ActorSystem.ValidatorActor;
     using Profesor79.Merge.ActorSystem.WebCrawler;
     using Profesor79.Merge.Contracts;
@@ -141,6 +142,12 @@ namespace Profesor79.Merge.ActorSystem.RootActor
 
 
             CreateCrawlerByConfig();
+
+
+            // PersistenceActor with constructor of crawler actor
+            var persitence = Context.ActorOf(
+                Props.Create(() => new PersistenceActor(_actorDictionary["WebCrawlerActor"])));
+            _actorDictionary.Add("PersistenceActor", persitence);
 
         }
 
